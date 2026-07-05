@@ -1,11 +1,14 @@
-import { LangToggle, LanguageProvider } from './i18n'
+import { LanguageProvider } from './i18n'
+import { Nav } from './sections/Nav'
+import { Hero } from './sections/Hero'
+import { Marquee } from './sections/Marquee'
 
 function App() {
   return (
     <LanguageProvider>
-      <header className="flex items-center justify-end p-6">
-        <LangToggle />
-      </header>
+      <Nav />
+      <Hero />
+      <Marquee />
       <main>
         <section id="about" />
         <section id="projects" />
