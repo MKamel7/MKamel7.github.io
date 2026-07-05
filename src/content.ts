@@ -123,7 +123,7 @@ const de: Content = {
   hero: {
     chip: 'Offen für Werkstudentenstellen · Regensburg',
     headline: 'MO KAMEL',
-    subline: 'Robotikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und sicher ausfallen.',
+    subline: 'Robotikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
     cta: 'Projekte ansehen',
   },
   about: {
@@ -187,7 +187,7 @@ const de: Content = {
     awards: [
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
       { title: 'MATE ROV 2021', detail: 'Platz 2 weltweit von 20 Teams, regional Platz 1. Technische Dokumentation mit 101,5/100 bewertet.' },
-      { title: 'IOI 2024', detail: 'Chef-Organisator: über 1.000 Teilnehmende, 216 Organisatoren aus über 860 Bewerbungen ausgewählt.' },
+      { title: 'IOI 2024', detail: 'Chef-Organisator: über 1.000 Teilnehmende, 216 Organisatoren aus über 860 Bewerbern ausgewählt.' },
     ],
   },
   contact: {

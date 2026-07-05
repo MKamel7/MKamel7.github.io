@@ -48,9 +48,14 @@ export function Contact() {
         </FadeIn>
         <div className="mt-24 flex items-center justify-between border-t border-line py-8 text-xs text-muted">
           <span>{t.footer}</span>
-          <a href="#" className="inline-flex items-center gap-1.5 hover:text-ink">
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="inline-flex items-center gap-1.5 hover:text-ink"
+            aria-label="Back to top"
+          >
             <ArrowUp size={14} />
-          </a>
+          </button>
         </div>
       </div>
     </section>
