@@ -7,15 +7,15 @@ export function Hero() {
   const t = content[lang]
 
   return (
-    <header className="relative flex min-h-[100dvh] flex-col justify-end px-6 pb-10 md:px-10 md:pb-14">
+    <header id="top" className="relative flex min-h-screen flex-col justify-end px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))] [min-height:100svh] md:px-10 md:pb-[calc(3.5rem+env(safe-area-inset-bottom))]">
       <FadeIn delay={0.1}>
         <span className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-xs text-muted">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="h-1.5 w-1.5 rounded-full bg-signal" />
           {t.hero.chip}
         </span>
       </FadeIn>
       <FadeIn delay={0.2}>
-        <h1 className="display-gradient mt-4 whitespace-nowrap font-black uppercase leading-[0.9] tracking-[-0.04em] text-[clamp(4rem,15vw,13rem)]">
+        <h1 className="display-gradient mt-4 whitespace-nowrap font-black uppercase leading-[0.9] tracking-[-0.04em] text-[clamp(2.5rem,14vw,13rem)]">
           {t.hero.headline}
         </h1>
       </FadeIn>

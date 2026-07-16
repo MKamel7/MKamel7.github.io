@@ -1,7 +1,7 @@
 import type { Lang } from './i18n';
 
 export interface Content {
-  nav: { about: string; projects: string; experience: string; contact: string };
+  nav: { about: string; projects: string; experience: string; education: string; contact: string };
   hero: {
     chip: string;
     headline: string;
@@ -30,6 +30,10 @@ export interface Content {
     awardsHeading: string;
     awards: { title: string; detail: string }[];
   };
+  education: {
+    heading: string;
+    entries: { degree: string; institution: string; period: string; focus: string; status?: string }[];
+  };
   contact: {
     heading: string;
     body: string;
@@ -39,11 +43,11 @@ export interface Content {
 }
 
 const en: Content = {
-  nav: { about: 'About', projects: 'Projects', experience: 'Experience', contact: 'Contact' },
+  nav: { about: 'About', projects: 'Projects', experience: 'Experience', education: 'Education', contact: 'Contact' },
   hero: {
     chip: 'Open to Werkstudent roles · Regensburg',
     headline: 'MO KAMEL',
-    subline: 'Robotics engineer. I make machines think, move, and fail safely.',
+    subline: 'Mechatronics engineer. I make machines think, move, and fail safely.',
     cta: 'View projects',
   },
   about: {
@@ -62,7 +66,7 @@ const en: Content = {
   skills: {
     heading: 'Skills',
     groups: [
-      { label: 'Robot software', items: ['ROS 1 & 2 (Humble)', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
+      { label: 'Robot software', items: ['ROS 1 & 2', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
       { label: 'Programming', items: ['Python', 'Embedded C/C++', 'Git & GitHub Actions', 'CMake', 'Docker'] },
       { label: 'ML & data', items: ['TensorFlow', 'PyTorch', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
@@ -73,34 +77,58 @@ const en: Content = {
     heading: 'Experience',
     entries: [
       {
-        title: 'M.Eng. Mechatronic & Cyber-Physical Systems',
-        org: 'TH Deggendorf',
-        period: '2026 - 2027 (in progress)',
-        note: 'Focus: advanced robotics, autonomous systems, modelling and simulation, functional safety.',
+        title: 'Lagerhelfer',
+        org: 'DHL',
+        period: 'Apr 2026 - Present',
+        note: 'Warehouse and parcel handling alongside full-time studies.',
       },
       {
-        title: 'B.Sc. Mechanical Engineering - Mechatronics',
-        org: 'AASTMT Alexandria',
-        period: '2018 - 2023',
-        note: 'A+ graduation thesis: embedded driver monitoring system on Jetson Nano and Raspberry Pi.',
-      },
-      {
-        title: 'Inspection Engineer',
-        org: 'AMOC, Alexandria',
-        period: '2023 - 2024',
-        note: 'Root-caused an industrial explosion in two weeks. Authored an ISO 7751 hose specification adopted company-wide. Supervised 6-8 inspectors per round.',
-      },
-      {
-        title: 'Mechatronics Engineer',
-        org: 'Invictus UMVs',
-        period: '2021 - 2022',
-        note: 'Frame design, 8-thruster propulsion, control architecture, and the autonomous vision pipeline for the Brotta II ROV.',
+        title: 'Career break & travelling',
+        org: '',
+        period: 'Aug 2025 - Mar 2026',
+        note: 'A planned break to travel, recharge, and plan the next step.',
       },
       {
         title: 'Student Research Assistant',
         org: 'PPMI (Verian Group)',
-        period: '2025',
+        period: 'May - Jul 2025',
         note: 'EU study on the safety of minors on social media platforms.',
+      },
+      {
+        title: 'Chef',
+        org: 'Burger King',
+        period: 'Dec 2024 - Mar 2025',
+        note: 'Preparing meals in the kitchen alongside studies.',
+      },
+      {
+        title: 'Inspection Engineer',
+        org: 'AMOC, Alexandria',
+        period: 'Oct 2023 - Sep 2024',
+        note: 'Root-caused an industrial explosion in two weeks. Authored an ISO 7751 hose specification adopted company-wide. Supervised 6-8 inspectors per round.',
+      },
+      {
+        title: 'Real Estate Agent',
+        org: 'REI Lead Pros (US, remote)',
+        period: 'Apr - Oct 2022',
+        note: 'Remote US real estate sales. Ranked 7th company-wide.',
+      },
+      {
+        title: 'Mechatronics Engineer',
+        org: 'Invictus UMVs',
+        period: 'Jan 2021 - Mar 2022',
+        note: 'Frame design, 8-thruster propulsion, control architecture, and the autonomous vision pipeline for the Brotta II ROV.',
+      },
+      {
+        title: 'Mechatronics Engineering Intern',
+        org: 'Invictus UMVs',
+        period: 'Jul - Dec 2020',
+        note: 'Hands-on prototyping and testing that led into the Brotta II engineering role.',
+      },
+      {
+        title: 'Mechanical Engineering Intern',
+        org: 'AMOC, Alexandria',
+        period: 'Jul 2019',
+        note: 'Equipment maintenance, safety audits, and ISO compliance observation.',
       },
     ],
     awardsHeading: 'Awards & leadership',
@@ -110,20 +138,45 @@ const en: Content = {
       { title: 'IOI 2024', detail: 'Chief of Organizers: 1,000+ participants, 216 organizers selected from 860+ candidates.' },
     ],
   },
+  education: {
+    heading: 'Education',
+    entries: [
+      {
+        degree: 'M.Eng. Mechatronic & Cyber-Physical Systems',
+        institution: 'TH Deggendorf, Cham',
+        period: 'Mar 2026 - Sep 2027',
+        focus: 'Advanced robotics, autonomous systems, modelling and simulation, functional safety.',
+        status: 'In progress',
+      },
+      {
+        degree: 'International Business',
+        institution: 'Jade Hochschule, Wilhelmshaven',
+        period: 'Sep 2024 - Feb 2026',
+        focus: 'International management and project management.',
+        status: 'Coursework',
+      },
+      {
+        degree: 'B.Sc. Mechanical Engineering - Mechatronics',
+        institution: 'AASTMT, Alexandria',
+        period: 'Sep 2018 - Jul 2023',
+        focus: 'Robotics, embedded systems, and computer vision. A+ graduation thesis on an embedded driver-monitoring system.',
+      },
+    ],
+  },
   contact: {
     heading: 'Get in touch',
-    body: 'Open to Werkstudent and internship roles in robotics, AI/ML, and automation.',
+    body: 'Open to Werkstudent and internship roles in robotics, AI/ML, automation, and mechatronics.',
     emailLabel: 'Email me',
   },
   footer: '© 2026 Mo Kamel',
 };
 
 const de: Content = {
-  nav: { about: 'Über mich', projects: 'Projekte', experience: 'Werdegang', contact: 'Kontakt' },
+  nav: { about: 'Über mich', projects: 'Projekte', experience: 'Werdegang', education: 'Ausbildung', contact: 'Kontakt' },
   hero: {
     chip: 'Offen für Werkstudentenstellen · Regensburg',
     headline: 'MO KAMEL',
-    subline: 'Robotikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
+    subline: 'Mechatronikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
     cta: 'Projekte ansehen',
   },
   about: {
@@ -142,7 +195,7 @@ const de: Content = {
   skills: {
     heading: 'Kompetenzen',
     groups: [
-      { label: 'Robotik-Software', items: ['ROS 1 & 2 (Humble)', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
+      { label: 'Robotik-Software', items: ['ROS 1 & 2', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
       { label: 'Programmierung', items: ['Python', 'Embedded C/C++', 'Git & GitHub Actions', 'CMake', 'Docker'] },
       { label: 'ML & Daten', items: ['TensorFlow', 'PyTorch', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
@@ -153,34 +206,58 @@ const de: Content = {
     heading: 'Werdegang',
     entries: [
       {
-        title: 'M.Eng. Mechatronic & Cyber-Physical Systems',
-        org: 'TH Deggendorf',
-        period: '2026 - 2027 (laufend)',
-        note: 'Schwerpunkte: Robotik, autonome Systeme, Modellierung und Simulation, funktionale Sicherheit.',
+        title: 'Lagerhelfer',
+        org: 'DHL',
+        period: 'Apr 2026 - heute',
+        note: 'Lager- und Paketabwicklung neben dem Vollzeitstudium.',
       },
       {
-        title: 'B.Sc. Mechanical Engineering - Mechatronics',
-        org: 'AASTMT Alexandria',
-        period: '2018 - 2023',
-        note: 'Abschlussarbeit mit Bestnote (A+): eingebettetes Fahrerüberwachungssystem auf Jetson Nano und Raspberry Pi.',
-      },
-      {
-        title: 'Inspection Engineer',
-        org: 'AMOC, Alexandria',
-        period: '2023 - 2024',
-        note: 'Ursachenanalyse einer Industrieexplosion in zwei Wochen. ISO-7751-Schlauchspezifikation verfasst und unternehmensweit übernommen. 6-8 Inspektoren pro Runde angeleitet.',
-      },
-      {
-        title: 'Mechatronics Engineer',
-        org: 'Invictus UMVs',
-        period: '2021 - 2022',
-        note: 'Rahmenkonstruktion, Antrieb mit 8 Thrustern, Regelungsarchitektur und autonome Vision-Pipeline für das ROV Brotta II.',
+        title: 'Berufliche Auszeit & Reisen',
+        org: '',
+        period: 'Aug 2025 - Mär 2026',
+        note: 'Eine geplante Auszeit zum Reisen, Auftanken und Planen des nächsten Schritts.',
       },
       {
         title: 'Student Research Assistant',
         org: 'PPMI (Verian Group)',
-        period: '2025',
+        period: 'Mai - Jul 2025',
         note: 'EU-Studie zur Sicherheit Minderjähriger auf Social-Media-Plattformen.',
+      },
+      {
+        title: 'Koch',
+        org: 'Burger King',
+        period: 'Dez 2024 - Mär 2025',
+        note: 'Essenszubereitung in der Küche neben dem Studium.',
+      },
+      {
+        title: 'Inspection Engineer',
+        org: 'AMOC, Alexandria',
+        period: 'Okt 2023 - Sep 2024',
+        note: 'Ursachenanalyse einer Industrieexplosion in zwei Wochen. ISO-7751-Schlauchspezifikation verfasst und unternehmensweit übernommen. 6-8 Inspektoren pro Runde angeleitet.',
+      },
+      {
+        title: 'Real Estate Agent',
+        org: 'REI Lead Pros (USA, remote)',
+        period: 'Apr - Okt 2022',
+        note: 'Immobilienvertrieb (USA, remote). Unternehmensweit auf Platz 7.',
+      },
+      {
+        title: 'Mechatronics Engineer',
+        org: 'Invictus UMVs',
+        period: 'Jan 2021 - Mär 2022',
+        note: 'Rahmenkonstruktion, Antrieb mit 8 Thrustern, Regelungsarchitektur und autonome Vision-Pipeline für das ROV Brotta II.',
+      },
+      {
+        title: 'Mechatronics Engineering Intern',
+        org: 'Invictus UMVs',
+        period: 'Jul - Dez 2020',
+        note: 'Prototyping und Tests, die in die Brotta-II-Ingenieursrolle mündeten.',
+      },
+      {
+        title: 'Mechanical Engineering Intern',
+        org: 'AMOC, Alexandria',
+        period: 'Jul 2019',
+        note: 'Anlagenwartung, Sicherheitsaudits und Beobachtung der ISO-Konformität.',
       },
     ],
     awardsHeading: 'Auszeichnungen & Leitung',
@@ -190,9 +267,34 @@ const de: Content = {
       { title: 'IOI 2024', detail: 'Chef-Organisator: über 1.000 Teilnehmende, 216 Organisatoren aus über 860 Bewerbern ausgewählt.' },
     ],
   },
+  education: {
+    heading: 'Ausbildung',
+    entries: [
+      {
+        degree: 'M.Eng. Mechatronic & Cyber-Physical Systems',
+        institution: 'TH Deggendorf, Cham',
+        period: 'Mär 2026 - Sep 2027',
+        focus: 'Robotik, autonome Systeme, Modellierung und Simulation, funktionale Sicherheit.',
+        status: 'Laufend',
+      },
+      {
+        degree: 'International Business',
+        institution: 'Jade Hochschule, Wilhelmshaven',
+        period: 'Sep 2024 - Feb 2026',
+        focus: 'Internationales Management und Projektmanagement.',
+        status: 'Studienleistungen',
+      },
+      {
+        degree: 'B.Sc. Mechanical Engineering - Mechatronics',
+        institution: 'AASTMT, Alexandria',
+        period: 'Sep 2018 - Jul 2023',
+        focus: 'Robotik, eingebettete Systeme und Computer Vision. Abschlussarbeit mit Bestnote (A+) zu einem eingebetteten Fahrerüberwachungssystem.',
+      },
+    ],
+  },
   contact: {
     heading: 'Kontakt aufnehmen',
-    body: 'Offen für Werkstudenten- und Praktikumsstellen in Robotik, KI/ML und Automatisierung.',
+    body: 'Offen für Werkstudenten- und Praktikumsstellen in Robotik, KI/ML, Automatisierung und Mechatronik.',
     emailLabel: 'E-Mail schreiben',
   },
   footer: '© 2026 Mo Kamel',

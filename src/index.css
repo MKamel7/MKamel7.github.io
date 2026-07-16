@@ -7,11 +7,25 @@
   --color-muted: #98A2B0;
   --color-accent: #F4602A;
   --color-accent-soft: #FF7A45;
+  --color-signal: #F4602A;
   --font-display: "Archivo Variable", "Archivo", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
-html { scroll-behavior: smooth; }
-body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-display); }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  /* Keep normal-flow content clear of the notch in landscape (0 in portrait). */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
 .display-gradient {
   background: linear-gradient(180deg, #6B7482 0%, #D4DDE6 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
