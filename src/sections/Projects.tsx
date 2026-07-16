@@ -54,7 +54,7 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
           <a
             href={project.repo}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-soft"
           >
             {repoLabel}

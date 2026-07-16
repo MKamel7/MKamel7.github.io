@@ -30,7 +30,7 @@ export function Contact() {
           <a
             href={links.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-ink"
           >
             GitHub
@@ -39,7 +39,7 @@ export function Contact() {
           <a
             href={links.linkedin}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-ink"
           >
             LinkedIn
