@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Digital Twin Dashboard - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  /* Brand tokens (from the portfolio) */
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --surface-2:#1B1E24;
+    --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.14);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45;
+    --ok:#F4602A; --miss:#E5544B; --grid:#232830;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  /* 4:3 capture stage */
+  .stage{
+    position:relative;width:1280px;height:960px;background:
+      radial-gradient(120% 90% at 12% -8%, #16181d 0%, var(--bg) 55%);
+    color:var(--ink);font-family:var(--font);overflow:hidden;
+    display:flex;flex-direction:column;gap:14px;padding:26px 28px;
+  }
+  .stage::after{ /* subtle scanline / vignette to read as a screen */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 120% at 50% 40%,transparent 60%,rgba(0,0,0,.35) 100%);
+  }
+
+  /* Header */
+  header{display:flex;align-items:center;gap:18px}
+  .title h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  .title p{font-size:12.5px;color:var(--muted);margin-top:6px;font-family:var(--mono)}
+  .live{margin-left:auto;display:flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;
+    color:var(--accent);border:1px solid rgba(244,96,42,.4);
+    background:rgba(244,96,42,.08);padding:8px 14px;border-radius:8px}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 0 rgba(244,96,42,.7);animation:pulse 1.9s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(244,96,42,.6)}70%{box-shadow:0 0 0 10px rgba(244,96,42,0)}100%{box-shadow:0 0 0 0 rgba(244,96,42,0)}}
+  .clock{font-family:var(--mono);font-size:12px;color:var(--muted);
+    border:1px solid var(--line);padding:8px 12px;border-radius:8px}
+
+  /* Status tiles */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .tile .v{font-size:24px;font-weight:800;margin-top:8px;letter-spacing:-0.01em}
+  .tile .v.accent{color:var(--accent)}
+
+  /* Main 3-column grid */
+  .grid{flex:1;display:grid;grid-template-columns:1.1fr 1.35fr 1.25fr;gap:14px;min-height:0}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .panel h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);padding:13px 16px;border-bottom:1px solid var(--line)}
+  .panel .body{padding:12px 14px;overflow:hidden;flex:1;min-height:0}
+
+  /* Blind cases list */
+  .case{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:10px;
+    padding:8px 10px;border-radius:8px;font-family:var(--mono);font-size:12.5px;
+    border:1px solid transparent}
+  .case + .case{margin-top:5px}
+  .case .id{color:var(--muted)}
+  .case .lab{color:var(--ink)}
+  .case .sev{font-size:10.5px;color:var(--muted)}
+  .case.active{background:var(--surface-2);border-color:var(--line-2)}
+  .case.done{background:rgba(244,96,42,.06);border-color:rgba(244,96,42,.25)}
+  .case .tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line-2);
+    display:grid;place-items:center;color:transparent;font-size:10px}
+  .case.done .tick{border-color:var(--accent);color:var(--accent);background:rgba(244,96,42,.12)}
+
+  /* Prediction table */
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}
+  thead th{text-align:left;color:var(--muted);font-weight:600;font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+  tbody td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink)}
+  tbody tr{opacity:0;transform:translateY(6px)}
+  tbody tr.in{opacity:1;transform:none;transition:opacity .35s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+  td.ok{color:var(--accent);font-weight:700}
+  .pred{color:var(--accent-soft)}
+
+  /* Confusion matrix */
+  .cm{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;margin-bottom:14px}
+  .cm i{aspect-ratio:1;border-radius:3px;background:#171a20;border:1px solid rgba(255,255,255,.03)}
+  .cm i.diag{background:rgba(244,96,42,.10)}
+  .cm i.hot{background:var(--accent);box-shadow:0 0 10px rgba(244,96,42,.55)}
+
+  /* Residual plot */
+  .plot{position:relative;height:150px;border:1px solid var(--line);border-radius:8px;
+    background:linear-gradient(180deg,#0f1116,#0c0e12);overflow:hidden}
+  .plot svg{position:absolute;inset:0;width:100%;height:100%}
+  .axis{stroke:var(--grid);stroke-width:1}
+  .trace{fill:none;stroke-width:2;stroke-linecap:round;
+    stroke-dasharray:2600;stroke-dashoffset:2600}
+  .legend{position:absolute;top:8px;right:10px;display:flex;gap:12px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .legend b{display:inline-block;width:16px;height:2px;vertical-align:middle;margin-right:5px}
+
+  /* Console */
+  .console{height:150px;background:#0d0f13;border:1px solid var(--line);border-radius:12px;
+    padding:12px 16px;font-family:var(--mono);font-size:11.5px;line-height:1.72;overflow:hidden}
+  .console .ln{opacity:0}
+  .console .ln.in{opacity:1;transition:opacity .25s ease}
+  .t{color:#5b6572}.info{color:var(--muted)}.run{color:var(--accent-soft)}.pass{color:var(--accent);font-weight:700}
+
+  @media (prefers-reduced-motion: reduce){
+    .dot{animation:none}
+    tbody tr{transition:none}
+  }
+  /* misclassification (realistic: one miss) */
+  .case.miss.done{background:rgba(229,84,75,.06);border-color:rgba(229,84,75,.28)}
+  .case .tick.x{border-color:var(--line-2);color:var(--miss)}
+  .case.done .tick.x{border-color:var(--miss);color:var(--miss);background:rgba(229,84,75,.14)}
+  td.no{color:var(--miss);font-weight:700}
+  td.pred.bad{color:var(--miss)}
+  .cm i.misshot{background:var(--miss);box-shadow:0 0 10px rgba(229,84,75,.5)}
+  /* freeze mode: crisp single frames for capture */
+  .freeze *{transition:none !important;animation:none !important}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <header>
+    <div class="title">
+      <h1>Robotic Digital Twin &mdash; Fault Diagnosis</h1>
+      <p>3-DOF arm &middot; blind raw-file diagnosis &middot; hierarchical classifier</p>
+    </div>
+    <div class="live"><span class="dot"></span>LIVE MODE</div>
+    <div class="clock" id="clock">12:02:18</div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Model</div><div class="v" id="tModel">Ready</div></div>
+    <div class="tile"><div class="k">Model Accuracy</div><div class="v accent" id="tAcc">0.0%</div></div>
+    <div class="tile"><div class="k">Correct Samples</div><div class="v" id="tSamp">0 / 10</div></div>
+    <div class="tile"><div class="k">Feature Extractor</div><div class="v" style="font-size:18px">Phase 4 exact</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- Blind cases -->
+    <div class="panel">
+      <h2>10 Blind Test Cases</h2>
+      <div class="body" id="cases"></div>
+    </div>
+
+    <!-- Prediction results -->
+    <div class="panel">
+      <h2>Prediction Results</h2>
+      <div class="body">
+        <table>
+          <thead><tr><th>#</th><th>case</th><th>predicted</th><th>ok</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Visual diagnostics -->
+    <div class="panel">
+      <h2>Visual Diagnostics</h2>
+      <div class="body">
+        <div class="cm" id="cm"></div>
+        <div class="plot">
+          <div class="legend"><span><b style="background:#5aa9ff"></b>J1</span><span><b style="background:#F4602A"></b>J2</span><span><b style="background:#ffcf4d"></b>J3</span></div>
+          <svg viewBox="0 0 520 150" preserveAspectRatio="none">
+            <line class="axis" x1="0" y1="75" x2="520" y2="75"></line>
+            <path id="j1" class="trace" stroke="#5aa9ff"></path>
+            <path id="j2" class="trace" stroke="#F4602A"></path>
+            <path id="j3" class="trace" stroke="#ffcf4d"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="console" id="console"></div>
+</div>
+
+<script>
+// 5th element = wrong predicted label (a realistic miss); absent = correct.
+// D04 (mild S1 imbalance) is the one the live demo misreads as healthy.
+const cases = [
+  ["D01","bearing","J3","S3"],["D02","imbalance","J3","S3"],
+  ["D03","healthy","none","S0"],["D04","imbalance","J1","S1","healthy"],
+  ["D05","healthy","none","S0"],["D06","gear_wear","J3","S2"],
+  ["D07","imbalance","J1","S2"],["D08","imbalance","J2","S3"],
+  ["D09","bearing","J2","S1"],["D10","gear_wear","J1","S2"],
+];
+const MISS_INDEX = cases.findIndex(c=>c[4]!==undefined);
+const logs = [
+  ["12:01:50","run","[RUNNING] Generating 10 raw blind demo files using Simulink..."],
+  ["12:01:50","pass","[PASS] Raw generation completed: 10 / 10"],
+  ["12:02:04","info","[INFO] Removing ground-truth fields (labels manifest-only)"],
+  ["12:02:04","run","[RUNNING] Extracting 366 features per case..."],
+  ["12:02:11","run","[RUNNING] Predicting latest generated batch..."],
+  ["12:02:18","pass","[DONE] Batch: 9/10 correct · model accuracy 94.4%"],
+];
+
+// build static case list + prediction rows + confusion cells
+const casesEl = document.getElementById('cases');
+cases.forEach(c=>{
+  const wrong = c[4]!==undefined;
+  const d=document.createElement('div');d.className='case'+(wrong?' miss':'');d.dataset.id=c[0];
+  d.innerHTML=`<span class="id">${c[0]}</span>
+    <span class="lab">${c[1]} <span class="sev">/ ${c[2]} / ${c[3]}</span></span>
+    <span class="tick ${wrong?'x':''}">${wrong?'&#10007;':'&#10003;'}</span>`;
+  casesEl.appendChild(d);
+});
+const rowsEl=document.getElementById('rows');
+cases.forEach(c=>{
+  const trueLabel = c[1]==='healthy' ? 'healthy' : `${c[1]}_${c[2]}_${c[3]}`;
+  const wrong = c[4]!==undefined;
+  const pred = wrong ? c[4] : trueLabel;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${c[0].slice(1)}</td><td>${c[0]}</td><td class="pred ${wrong?'bad':''}">${pred}</td><td class="${wrong?'no':'ok'}">${wrong?'&#10007;':'&#10003;'}</td>`;
+  rowsEl.appendChild(tr);
+});
+const cmEl=document.getElementById('cm');
+const cmCells=[];
+for(let r=0;r<8;r++)for(let col=0;col<8;col++){
+  const i=document.createElement('i');
+  if(r===col)i.classList.add('diag');
+  cmEl.appendChild(i);cmCells.push({el:i,diag:r===col});
+}
+const consoleEl=document.getElementById('console');
+logs.forEach(l=>{
+  const d=document.createElement('div');d.className='ln';
+  d.innerHTML=`<span class="t">[${l[0]}]</span> <span class="${l[1]}">${l[2]}</span>`;
+  consoleEl.appendChild(d);
+});
+
+// residual trace path generator (noisy decay, seeded per joint)
+function tracePath(seed,amp,decay){
+  let p='M0 75';
+  for(let x=0;x<=520;x+=8){
+    const n=Math.sin(x*0.35+seed)*Math.exp(-x*decay)*amp
+           +Math.sin(x*0.09+seed*2)*3
+           +(Math.sin(x*1.7+seed*5))*1.6;
+    p+=` L${x} ${75-n}`;
+  }
+  return p;
+}
+document.getElementById('j1').setAttribute('d',tracePath(0.4,34,0.010));
+document.getElementById('j2').setAttribute('d',tracePath(2.1,26,0.009));
+document.getElementById('j3').setAttribute('d',tracePath(4.0,30,0.011));
+
+const rowEls=[...rowsEl.children];
+const caseEls=[...casesEl.children];
+const lnEls=[...consoleEl.children];
+const tAcc=document.getElementById('tAcc'),tSamp=document.getElementById('tSamp'),tModel=document.getElementById('tModel');
+
+const LOOP=8200; // ms
+function reset(){
+  rowEls.forEach(r=>r.classList.remove('in'));
+  caseEls.forEach(c=>{c.classList.remove('done','active')});
+  lnEls.forEach(l=>l.classList.remove('in'));
+  cmCells.forEach(c=>c.el.classList.remove('hot','misshot'));
+  ['j1','j2','j3'].forEach(id=>document.getElementById(id).style.strokeDashoffset='2600');
+  tAcc.textContent='0.0%';tSamp.textContent='0 / 10';tModel.textContent='Running';
+}
+function at(t){
+  // console streams first 1.6s
+  lnEls.forEach((l,i)=>l.classList.toggle('in', t> i*230+150));
+  // traces draw in
+  const draw=Math.max(0,Math.min(1,(t-500)/1400));
+  ['j1','j2','j3'].forEach(id=>document.getElementById(id).style.strokeDashoffset=String(2600*(1-draw)));
+  // per-case reveal 1.1s..6.1s
+  const N=cases.length, start=1200, span=4600, step=span/N;
+  let processed=0, correct=0;
+  for(let i=0;i<N;i++){
+    const tc=start+i*step;
+    const active = t>=tc && t<tc+step;
+    caseEls[i].classList.toggle('active',active);
+    const isDone=t>=tc+step*0.55;
+    caseEls[i].classList.toggle('done',isDone);
+    rowEls[i].classList.toggle('in',isDone);
+    if(isDone){processed++; if(cases[i][4]===undefined) correct++;}
+  }
+  // confusion: correct predictions light the diagonal; the one miss lands off-diagonal
+  const diagCells=cmCells.filter(c=>c.diag);
+  diagCells.forEach((c,i)=>{
+    if(i===3){ c.el.classList.remove('hot'); return; }      // missed class stays off its diagonal
+    c.el.classList.toggle('hot', processed > (i/diagCells.length)*10 );
+  });
+  cmCells[3*8+2].el.classList.toggle('misshot', processed > MISS_INDEX);
+  // counters: model accuracy climbs to the reported 94.4%; live batch = 9/10
+  const acc = 94.4 * (processed/N);
+  tAcc.textContent = acc.toFixed(1)+'%';
+  tSamp.textContent = correct+' / 10';
+  tModel.textContent = processed===N ? 'Ready' : 'Running';
+}
+const params=new URLSearchParams(location.search);
+if(params.has('t')){                 // deterministic freeze frame for capture
+  document.documentElement.classList.add('freeze');
+  const t=Math.max(0,Math.min(LOOP-1,parseInt(params.get('t'),10)||0));
+  reset(); at(t);
+  window.LOOP=LOOP;
+  window.setFrame=(tt)=>{const v=Math.max(0,Math.min(LOOP-1,tt|0));reset();at(v);};
+  document.body.dataset.ready='1';
+}else{
+  function frame(now){
+    const t=now%LOOP;
+    if(t<40) reset();
+    at(t);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>

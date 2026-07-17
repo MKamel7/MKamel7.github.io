@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Brotta II ROV - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.16);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  .stage{position:relative;width:1280px;height:960px;color:var(--ink);font-family:var(--font);overflow:hidden;
+    background:
+      radial-gradient(90% 70% at 62% 42%, #12151b 0%, #0b0c0e 62%),
+      #0b0c0e;}
+  /* blueprint grid */
+  .stage::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:48px 48px;
+    -webkit-mask-image:radial-gradient(80% 70% at 60% 45%,#000 30%,transparent 78%);
+            mask-image:radial-gradient(80% 70% at 60% 45%,#000 30%,transparent 78%);}
+  .stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 120% at 50% 40%,transparent 58%,rgba(0,0,0,.45) 100%);}
+
+  /* header */
+  .head{position:absolute;top:34px;left:40px;z-index:5}
+  .head h1{font-size:30px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  .head p{margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:.04em}
+  .badge{position:absolute;top:38px;right:40px;z-index:5;display:flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--accent);
+    border:1px solid rgba(244,96,42,.4);background:rgba(244,96,42,.08);padding:9px 14px;border-radius:8px}
+  .badge .d{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+  /* ROV image */
+  .rovwrap{position:absolute;left:250px;top:196px;width:790px;height:512px;z-index:2}
+  .rovwrap img{width:100%;height:100%;object-fit:contain;
+    filter:drop-shadow(0 26px 40px rgba(0,0,0,.55));}
+  .scan{position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen;
+    background:linear-gradient(90deg,transparent,rgba(244,96,42,.16) 48%,rgba(255,122,69,.28) 50%,transparent 52%);
+    width:60px;left:-60px}
+
+  /* callouts */
+  svg.wire{position:absolute;inset:0;width:1280px;height:960px;z-index:4;pointer-events:none;overflow:visible}
+  .wire .lead{fill:none;stroke:var(--accent);stroke-width:1.6}
+  .wire .anchor{fill:var(--accent)}
+  .wire .anchor-r{fill:none;stroke:var(--accent);stroke-width:1.4}
+  .call{position:absolute;z-index:5;font-family:var(--mono);white-space:nowrap}
+  .call .l{font-size:14px;font-weight:700;color:var(--ink)}
+  .call .s{font-size:11px;color:var(--muted);margin-top:3px}
+  .call.r{text-align:right}
+
+  /* stat bar */
+  .stats{position:absolute;left:40px;right:40px;bottom:34px;z-index:5;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .stat{background:rgba(20,22,26,.72);border:1px solid var(--line);border-radius:12px;padding:13px 16px;backdrop-filter:blur(2px)}
+  .stat .v{font-size:22px;font-weight:800;letter-spacing:-0.01em}
+  .stat .v.a{color:var(--accent)}
+  .stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .vision{position:absolute;left:40px;bottom:150px;z-index:5;font-family:var(--mono);font-size:11px;color:var(--muted);
+    border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:rgba(20,22,26,.6)}
+  .vision b{color:var(--accent-soft);font-weight:700}
+
+  .freeze *{transition:none !important;animation:none !important}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="head">
+    <h1>Brotta II &mdash; Underwater ROV</h1>
+    <p>Invictus UMVs &middot; MATE ROV 2021 &middot; 8-thruster vectored propulsion</p>
+  </div>
+  <div class="badge"><span class="d"></span>2nd WORLDWIDE</div>
+
+  <div class="rovwrap">
+    <img src="assets/rov_hero_cut.png" alt="ROV render" />
+    <div class="scan" id="scan"></div>
+  </div>
+
+  <svg class="wire" id="wire" viewBox="0 0 1280 960"></svg>
+
+  <div class="vision" id="vision">CNN vision pipeline &middot; <b>Crown-of-Thorns starfish + bleached coral</b> &middot; 9&times;3 IMU grid map</div>
+
+  <div class="stats" id="stats"></div>
+</div>
+
+<script>
+// callout definitions: label anchor (near text) + component point on the ROV
+const rov = {x:250,y:196,w:790,h:512};
+function P(fx,fy){return {x:rov.x+fx*rov.w, y:rov.y+fy*rov.h};}
+const calls = [
+  { l:'8&times; T200 thrusters', s:'4 heave + 4 surge, vectored', lx:70, ly:250, align:'l', pt:P(0.13,0.20) },
+  { l:'Stereo + 4 cameras', s:'depth map, MJPG over UDP', lx:70, ly:430, align:'l', pt:P(0.30,0.30) },
+  { l:'Gripper', s:'8.8 kg&middot;cm geared servo', lx:70, ly:600, align:'l', pt:P(0.17,0.86) },
+  { l:'10 mm HDPE frame', s:'2D-routed, port assembly', lx:1210, ly:250, align:'r', pt:P(0.86,0.40) },
+  { l:'6 sealed enclosures', s:'PMMA / alu / PA6 housings', lx:1210, ly:430, align:'r', pt:P(0.53,0.19) },
+];
+const stats = [
+  { v:'2nd / 20', k:'worldwide &middot; MATE 2021', a:true },
+  { v:'101.5/100', k:'technical report', a:true },
+  { v:'0.52&times;0.34&times;0.38 m', k:'vehicle envelope', a:false },
+  { v:'48V &middot; 605W', k:'DC-DC &middot; 95.5% eff', a:false },
+];
+
+// build stats
+const statsEl=document.getElementById('stats');
+stats.forEach(s=>{const d=document.createElement('div');d.className='stat';
+  d.innerHTML=`<div class="v ${s.a?'a':''}" data-final="${s.v}">${s.v}</div><div class="k">${s.k}</div>`;
+  statsEl.appendChild(d);});
+
+// build callouts (label div + svg wire + anchor)
+const wire=document.getElementById('wire');
+const stage=document.getElementById('stage');
+const svgNS='http://www.w3.org/2000/svg';
+const callObjs=calls.map((c,i)=>{
+  const div=document.createElement('div');
+  div.className='call'+(c.align==='r'?' r':'');
+  div.style.left=(c.align==='r'?'auto':c.lx+'px');
+  div.style.right=(c.align==='r'?(1280-c.lx)+'px':'auto');
+  div.style.top=c.ly+'px';
+  div.innerHTML=`<div class="l">${c.l}</div><div class="s">${c.s}</div>`;
+  stage.appendChild(div);
+  // wire start point near the label
+  const sx=c.align==='r'? c.lx-8 : c.lx+8;
+  const sy=c.ly+14;
+  const path=document.createElementNS(svgNS,'path');
+  path.setAttribute('class','lead');
+  const midx=(sx+c.pt.x)/2;
+  const d=`M${sx} ${sy} L${midx} ${sy} L${c.pt.x} ${c.pt.y}`;
+  path.setAttribute('d',d);
+  wire.appendChild(path);
+  const len=path.getTotalLength();
+  path.style.strokeDasharray=len;
+  const dot=document.createElementNS(svgNS,'circle');
+  dot.setAttribute('class','anchor');dot.setAttribute('cx',c.pt.x);dot.setAttribute('cy',c.pt.y);dot.setAttribute('r','3.5');
+  wire.appendChild(dot);
+  const ring=document.createElementNS(svgNS,'circle');
+  ring.setAttribute('class','anchor-r');ring.setAttribute('cx',c.pt.x);ring.setAttribute('cy',c.pt.y);ring.setAttribute('r','8');
+  wire.appendChild(ring);
+  return {div,path,dot,ring,len};
+});
+
+const rovImg=document.querySelector('.rovwrap img');
+const scan=document.getElementById('scan');
+const visionEl=document.getElementById('vision');
+const statEls=[...statsEl.children];
+
+const LOOP=8400;
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function ease(p){return 1-Math.pow(1-p,3);} // ease-out cubic
+
+function reset(){
+  callObjs.forEach(o=>{o.path.style.strokeDashoffset=o.len;o.div.style.opacity=0;o.dot.style.opacity=0;o.ring.style.opacity=0;});
+  visionEl.style.opacity=0;statEls.forEach(s=>s.style.opacity=0);
+}
+function at(t){
+  // ROV entrance + gentle bob (JS-driven so it captures in freeze)
+  const intro=ease(clamp(t/600,0,1));
+  const bob=Math.sin(t/1000*Math.PI*2*0.22)*7;
+  rovImg.style.opacity=intro;
+  rovImg.style.transform=`translateY(${(1-intro)*24+bob}px) scale(${0.985+intro*0.015})`;
+  // callouts staggered 700..4700
+  callObjs.forEach((o,i)=>{
+    const tc=700+i*720;
+    const p=ease(clamp((t-tc)/650,0,1));
+    o.path.style.strokeDashoffset=o.len*(1-p);
+    o.dot.style.opacity=p;o.ring.style.opacity=p*0.8;
+    o.div.style.opacity=ease(clamp((t-tc-180)/450,0,1));
+  });
+  // stat counters reveal 1400.. staggered
+  statEls.forEach((s,i)=>{ s.style.opacity=ease(clamp((t-(1600+i*380))/500,0,1)); });
+  visionEl.style.opacity=ease(clamp((t-4600)/600,0,1));
+  // scan sweep across the ROV once, 3.4s..5.4s
+  const sp=clamp((t-3400)/2000,0,1);
+  scan.style.transform=`translateX(${sp*(rov.w+60)}px)`;
+  scan.style.opacity = (sp>0 && sp<1)?1:0;
+}
+
+const params=new URLSearchParams(location.search);
+if(params.has('t')){
+  document.documentElement.classList.add('freeze');
+  reset(); at(clamp(parseInt(params.get('t'),10)||0,0,LOOP-1));
+  window.LOOP=LOOP;
+  window.setFrame=(tt)=>{reset();at(clamp(tt|0,0,LOOP-1));};
+  document.body.dataset.ready='1';
+}else{
+  function frame(now){const t=now%LOOP;if(t<40)reset();at(t);requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ export const projects: Project[] = [
     id: 'dms',
     title: 'Driver Monitoring System',
     category: 'featured',
+    media: '/media/dms.mp4',
     metrics: [
       { value: '97.8%', label: { en: 'mAP@0.5 phone detection', de: 'mAP@0.5 Telefonerkennung' } },
       { value: '18-20 FPS', label: { en: 'drowsiness on Jetson Nano', de: 'Müdigkeitserkennung auf Jetson Nano' } },
@@ -23,6 +24,7 @@ export const projects: Project[] = [
     id: 'rov',
     title: 'Brotta II Underwater ROV',
     category: 'featured',
+    media: '/media/rov.mp4',
     metrics: [
       { value: '2nd', label: { en: 'worldwide, MATE ROV 2021', de: 'weltweit, MATE ROV 2021' } },
       { value: '101.5/100', label: { en: 'technical documentation', de: 'technische Dokumentation' } },
@@ -52,14 +54,45 @@ export const projects: Project[] = [
     id: 'digital-twin',
     title: 'Robotic Arm Digital Twin',
     category: 'featured',
+    media: '/media/digital-twin.mp4',
     metrics: [
-      { value: '94.4%', label: { en: 'SVM fault-diagnosis accuracy', de: 'Genauigkeit SVM-Fehlerdiagnose' } },
+      { value: '94.4%', label: { en: 'hierarchical fault-diagnosis accuracy', de: 'Genauigkeit hierarchische Fehlerdiagnose' } },
     ],
     desc: {
-      en: 'M.Eng. coursework case study: digital twin of a robotic arm for predictive maintenance. SVM fault diagnosis at 94.4% accuracy, including a noise-robustness study, built in MATLAB and Simulink.',
-      de: 'Fallstudie im Masterstudium: digitaler Zwilling eines Roboterarms für Predictive Maintenance. SVM-Fehlerdiagnose mit 94,4% Genauigkeit inklusive Untersuchung der Rauschrobustheit, umgesetzt in MATLAB und Simulink.',
+      en: 'M.Eng. coursework case study: a Simscape digital twin of a robotic arm for predictive maintenance. A hierarchical classifier reaches 94.4% fault-diagnosis accuracy across fault type, joint, and severity, with a noise-robustness study, built in MATLAB and Simulink.',
+      de: 'Fallstudie im Masterstudium: ein Simscape-Digital-Twin eines Roboterarms für Predictive Maintenance. Ein hierarchischer Klassifikator erreicht 94,4% Genauigkeit bei der Fehlerdiagnose (Fehlertyp, Gelenk und Schweregrad), inklusive Untersuchung der Rauschrobustheit, umgesetzt in MATLAB und Simulink.',
     },
-    tags: ['MATLAB', 'Simulink', 'SVM'],
+    tags: ['MATLAB', 'Simulink', 'Simscape', 'Machine Learning'],
+  },
+  {
+    id: 'fire-robot',
+    title: 'Autonomous Fire-Fighting Robot',
+    category: 'featured',
+    media: '/media/fire-robot.mp4',
+    metrics: [
+      { value: '3', label: { en: 'sensor types: smoke, flame, proximity', de: 'Sensortypen: Rauch, Flamme, Abstand' } },
+      { value: 'FEA', label: { en: 'stress-verified chassis', de: 'FEM-geprüftes Chassis' } },
+    ],
+    desc: {
+      en: 'B.Sc. Mechatronics course project: an autonomous robot that detects and extinguishes fires. Smoke, flame and proximity sensing with obstacle-avoidance navigation in dynamic environments, an onboard water tank, pump and hose for suppression, and full structural stress-analysis simulations to reinforce weak points.',
+      de: 'Mechatronik-Projekt (B.Sc.): ein autonomer Roboter, der Brände erkennt und löscht. Rauch-, Flammen- und Abstandssensorik mit Hindernisvermeidung in dynamischen Umgebungen, ein Wassertank mit Pumpe und Schlauch zur Löschung und vollständige Struktur-/Spannungsanalyse-Simulationen zur Verstärkung von Schwachstellen.',
+    },
+    tags: ['Arduino', 'Sensor fusion', 'Obstacle avoidance', 'Mechatronics'],
+  },
+  {
+    id: 'smart-home',
+    title: 'Autonomous Smart Home',
+    category: 'featured',
+    media: '/media/smart-home.mp4',
+    metrics: [
+      { value: '4', label: { en: 'automated subsystems', de: 'automatisierte Subsysteme' } },
+      { value: 'BT', label: { en: 'Android app control', de: 'Android-App-Steuerung' } },
+    ],
+    desc: {
+      en: 'B.Sc. Mechatronics course project: an Arduino Mega home-automation system with an Android app over Bluetooth. Temperature-driven HVAC, light-sensing auto-dimming at night, proximity-based garage (auto-open on key-chip approach, auto-close inside), and a keypad-secured main door with a security system.',
+      de: 'Mechatronik-Projekt (B.Sc.): ein Arduino-Mega-Hausautomationssystem mit Android-App über Bluetooth. Temperaturgesteuerte HLK, lichtabhängiges Dimmen bei Nacht, näherungsbasierte Garage (Auto-Öffnen bei Annäherung des Schlüssel-Chips, Auto-Schließen im Inneren) und eine tastaturgesicherte Haustür mit Sicherheitssystem.',
+    },
+    tags: ['Arduino Mega', 'Bluetooth', 'Home automation', 'Sensors'],
   },
   {
     id: 'p1',

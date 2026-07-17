@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Driver Monitoring System - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --surface-2:#1B1E24; --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.16);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45;
+    --mesh:#6FD3E6; --ok:#46d18a; --warn:#E5544B; --axX:#ff5a5a; --axY:#46d18a; --axZ:#5aa9ff;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  .stage{position:relative;width:1280px;height:960px;color:var(--ink);font-family:var(--font);overflow:hidden;
+    background:radial-gradient(100% 80% at 40% 20%,#12151b 0%,#0b0c0e 60%),#0b0c0e;
+    display:grid;grid-template-columns:1fr 384px;grid-template-rows:auto 1fr;gap:16px;padding:26px 28px}
+
+  header{grid-column:1 / -1;display:flex;align-items:center;gap:16px}
+  header h1{font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  header p{margin-top:7px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .pill{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;font-weight:700;
+    letter-spacing:.08em;padding:10px 16px;border-radius:9px;border:1px solid var(--line-2);color:var(--muted)}
+  .pill .d{width:9px;height:9px;border-radius:50%;background:currentColor}
+  .pill.mon{color:var(--ok);border-color:rgba(70,209,138,.4);background:rgba(70,209,138,.08)}
+  .pill.phone{color:var(--accent);border-color:rgba(244,96,42,.45);background:rgba(244,96,42,.1)}
+  .pill.drowsy{color:var(--warn);border-color:rgba(229,84,75,.5);background:rgba(229,84,75,.12)}
+
+  .feed{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:radial-gradient(120% 100% at 50% 30%,#0f1620 0%,#0a0d12 70%)}
+  .feed::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(255,255,255,.016) 0 1px,transparent 1px 3px);opacity:.6}
+  .feed svg{position:absolute;inset:0;width:100%;height:100%}
+  .rec{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px;z-index:3}
+  .rec .b{width:9px;height:9px;border-radius:50%;background:var(--warn)}
+  .stamp{position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:11px;color:var(--muted);z-index:3}
+  .reticle{position:absolute;width:26px;height:26px;border:2px solid var(--line-2);z-index:3}
+  .reticle.tl{top:12px;left:12px;border-right:0;border-bottom:0}
+  .reticle.tr{top:12px;right:12px;border-left:0;border-bottom:0}
+  .reticle.bl{bottom:12px;left:12px;border-right:0;border-top:0}
+  .reticle.br{bottom:12px;right:12px;border-left:0;border-top:0}
+  .poseHUD{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:11px;color:var(--muted);z-index:3;line-height:1.6}
+  .poseHUD b{color:var(--ink);font-weight:700}
+  .alertband{position:absolute;left:0;right:0;bottom:0;padding:12px 18px;font-family:var(--mono);font-size:14px;font-weight:700;
+    letter-spacing:.06em;color:var(--warn);background:linear-gradient(0deg,rgba(229,84,75,.16),transparent);z-index:3;opacity:0;text-align:right}
+
+  .side{display:flex;flex-direction:column;gap:14px;min-height:0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px}
+  .card h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .fpsrow{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);padding:7px 0}
+  .fpsrow + .fpsrow{border-top:1px solid var(--line)}
+  .fpsrow .dev{font-size:12.5px;color:var(--muted)} .fpsrow .dev.on{color:var(--ink)}
+  .fpsrow .val{font-size:20px;font-weight:800} .fpsrow .val.on{color:var(--accent)}
+  .fpsrow .u{font-size:11px;color:var(--muted);margin-left:4px}
+
+  .pose3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+  .pcell{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:9px 10px}
+  .pcell .k{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.05em}
+  .pcell .v{font-family:var(--mono);font-size:18px;font-weight:800;margin-top:3px}
+  .pcell.x .v{color:var(--axX)} .pcell.y .v{color:var(--axY)} .pcell.z .v{color:var(--axZ)}
+  .ear{display:flex;align-items:center;gap:12px}
+  .earbar{flex:1;height:12px;border-radius:6px;background:var(--surface-2);position:relative;overflow:hidden}
+  .earbar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--ok);border-radius:6px}
+  .earbar .thr{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--muted);left:32%}
+  .earlbl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:8px}
+  .earval{font-family:var(--mono);font-size:16px;font-weight:700;width:52px;text-align:right}
+
+  .modelstat{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;padding:6px 0;color:var(--muted)}
+  .modelstat b{color:var(--ink);font-weight:700}
+  .drow{display:flex;gap:6px;margin-bottom:11px}
+  .drow span{flex:1;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.02em;padding:7px 0;border-radius:7px;border:1px solid var(--line);color:var(--muted);background:var(--surface-2)}
+  .drow span.on{color:#0b0c0e;font-weight:700;background:var(--c,var(--ok));border-color:var(--c,var(--ok))}
+  .drowbar{height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden}
+  .drowbar .dfill{height:100%;border-radius:5px;width:0}
+  .log{flex:1;min-height:0;background:#0d0f13;border:1px solid var(--line);border-radius:13px;padding:13px 15px;
+    font-family:var(--mono);font-size:11.5px;line-height:1.7;overflow:hidden}
+  .log .ln{opacity:0}
+  .log .t{color:#5b6572}.log .g{color:var(--ok)}.log .o{color:var(--accent-soft)}.log .r{color:var(--warn);font-weight:700}
+  .freeze *{transition:none !important;animation:none !important}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <header>
+    <div>
+      <h1>Driver Monitoring System</h1>
+      <p>MediaPipe face mesh &middot; head-pose estimation &middot; YOLOv8 phone detection &middot; Jetson Nano / Raspberry Pi</p>
+    </div>
+    <div class="pill mon" id="pill"><span class="d"></span><span id="pillText">MONITORING</span></div>
+  </header>
+
+  <div class="feed" id="feed">
+    <div class="reticle tl"></div><div class="reticle tr"></div><div class="reticle bl"></div><div class="reticle br"></div>
+    <div class="rec"><span class="b"></span>REC</div>
+    <div class="stamp" id="stamp">CAM 0 &middot; 00:00</div>
+    <svg id="cam" viewBox="0 0 720 760" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="poseHUD" id="poseHUD"></div>
+    <div class="alertband" id="band">! DROWSINESS ALERT &middot; EYES CLOSED</div>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h2>Inference throughput</h2>
+      <div class="fpsrow"><span class="dev on">Jetson Nano</span><span><span class="val on" id="fpsJ">19</span><span class="u">FPS</span></span></div>
+      <div class="fpsrow"><span class="dev">Raspberry Pi</span><span><span class="val" id="fpsR">10</span><span class="u">FPS</span></span></div>
+    </div>
+    <div class="card">
+      <h2>Head pose &amp; eyes</h2>
+      <div class="pose3">
+        <div class="pcell x"><div class="k">YAW</div><div class="v" id="pYaw">0&deg;</div></div>
+        <div class="pcell y"><div class="k">PITCH</div><div class="v" id="pPitch">0&deg;</div></div>
+        <div class="pcell z"><div class="k">ROLL</div><div class="v" id="pRoll">0&deg;</div></div>
+      </div>
+      <div class="earlbl">EYE ASPECT RATIO</div>
+      <div class="ear">
+        <div class="earbar"><div class="thr"></div><div class="fill" id="earFill"></div></div>
+        <div class="earval" id="earVal">0.31</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Drowsiness level</h2>
+      <div class="drow" id="drowSegs"><span>AWAKE</span><span>MILD</span><span>MODERATE</span><span>SEVERE</span></div>
+      <div class="drowbar"><div class="dfill" id="drowFill"></div></div>
+    </div>
+    <div class="card">
+      <h2>Models</h2>
+      <div class="modelstat"><span>YOLOv8 &middot; phone</span><b>97.8% mAP@.5</b></div>
+      <div class="modelstat"><span>MediaPipe &middot; drowsiness</span><b>97.47% acc</b></div>
+      <div class="modelstat"><span>Recognition &middot; GPAct Expo</span><b>1st / 15</b></div>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<script>
+const cam=document.getElementById('cam');
+const NS='http://www.w3.org/2000/svg';
+function E(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+
+// ---- 3D head (wireframe, front-bright / back-dim) ----
+const CX=360, CY=352, FOC=720;
+const rx=118, ry=150, rz=124;
+const LAT=10, LON=18;
+const RAD=Math.PI/180;
+const grid=[];
+for(let i=0;i<=LAT;i++){const lat=(-84+168*(i/LAT))*RAD, row=[];
+  for(let j=0;j<LON;j++){const lon=(-180+360*(j/LON))*RAD;
+    row.push({x:rx*Math.cos(lat)*Math.sin(lon), y:ry*Math.sin(lat), z:rz*Math.cos(lat)*Math.cos(lon)});}
+  grid.push(row);
+}
+function surf(la,lo,s){s=s||1;la*=RAD;lo*=RAD;
+  return {x:rx*Math.cos(la)*Math.sin(lo)*s, y:ry*Math.sin(la)*s, z:rz*Math.cos(la)*Math.cos(lo)*s};}
+const F={leftEye:surf(10,-30,1.02),rightEye:surf(10,30,1.02),
+  nose:{x:0,y:ry*Math.sin(-2*RAD),z:rz*Math.cos(-2*RAD)+18},
+  mouth:surf(-33,0,1.03),browL:surf(22,-30,1.03),browR:surf(22,30,1.03)};
+function rot(p,ya,pi,ro){
+  const cy=Math.cos(ya),sy=Math.sin(ya),cx=Math.cos(pi),sx=Math.sin(pi),cz=Math.cos(ro),sz=Math.sin(ro);
+  let x=p.x*cy+p.z*sy, z=-p.x*sy+p.z*cy, y=p.y;
+  let y2=y*cx - z*sx, z2=y*sx + z*cx, x2=x;
+  return {x:x2*cz - y2*sz, y:x2*sz + y2*cz, z:z2};
+}
+function proj(p){const s=FOC/(FOC-p.z);return {x:CX+p.x*s, y:CY-p.y*s, z:p.z, s};}
+
+// svg layers
+const meshBack=E('path',{fill:'none',stroke:'rgba(111,211,230,.15)','stroke-width':1});
+const meshFront=E('path',{fill:'none',stroke:'rgba(111,211,230,.5)','stroke-width':1.2});
+cam.append(meshBack,meshFront);
+const browLp=E('polyline',{fill:'none',stroke:'#8fb0bd','stroke-width':2,'stroke-linecap':'round'});
+const browRp=E('polyline',{fill:'none',stroke:'#8fb0bd','stroke-width':2,'stroke-linecap':'round'});
+const mouthp=E('path',{fill:'none',stroke:'#8fb0bd','stroke-width':2,'stroke-linecap':'round'});
+cam.append(browLp,browRp,mouthp);
+const eyeLo=E('ellipse',{fill:'none',stroke:'#FF7A45','stroke-width':2.4});
+const eyeRo=E('ellipse',{fill:'none',stroke:'#FF7A45','stroke-width':2.4});
+const pupL=E('circle',{r:3.4,fill:'#cfeaf2'}), pupR=E('circle',{r:3.4,fill:'#cfeaf2'});
+cam.append(eyeLo,eyeRo,pupL,pupR);
+// pose axis triad
+const axX=E('line',{stroke:'var(--axX)','stroke-width':3,'stroke-linecap':'round'});
+const axY=E('line',{stroke:'var(--axY)','stroke-width':3,'stroke-linecap':'round'});
+const axZ=E('line',{stroke:'var(--axZ)','stroke-width':3,'stroke-linecap':'round'});
+const axXd=E('circle',{r:4,fill:'var(--axX)'}),axYd=E('circle',{r:4,fill:'var(--axY)'}),axZd=E('circle',{r:4,fill:'var(--axZ)'});
+cam.append(axX,axY,axZ,axXd,axYd,axZd);
+
+// ---- phone (drawn), held low; driver looks down at it ----
+const phone=E('g',{});
+const pbody=E('rect',{x:250,y:565,width:118,height:196,rx:16,fill:'#0c1016',stroke:'#2a3340','stroke-width':2,transform:'rotate(-13 309 663)'});
+const pscreen=E('rect',{x:260,y:577,width:98,height:172,rx:9,fill:'url(#pg)',transform:'rotate(-13 309 663)'});
+const pline1=E('rect',{x:272,y:598,width:64,height:8,rx:4,fill:'rgba(244,96,42,.65)',transform:'rotate(-13 309 663)'});
+const pline2=E('rect',{x:272,y:614,width:44,height:6,rx:3,fill:'rgba(255,255,255,.28)',transform:'rotate(-13 309 663)'});
+const pnotch=E('circle',{cx:309,cy:583,r:3,fill:'#2a3340',transform:'rotate(-13 309 663)'});
+phone.append(pbody,pscreen,pline1,pline2,pnotch);
+// YOLO box on phone
+const ybox=E('rect',{x:238,y:556,width:150,height:214,rx:4,fill:'none',stroke:'var(--accent)','stroke-width':2.6});
+const ylab=E('rect',{x:238,y:534,width:118,height:22,fill:'var(--accent)'});
+const ytxt=E('text',{x:246,y:550,fill:'#0b0c0e','font-family':'JetBrains Mono','font-size':13,'font-weight':700});
+ytxt.textContent='phone 0.97';
+phone.append(ybox,ylab,ytxt);
+cam.appendChild(phone);
+// screen gradient def
+const defs=E('defs',{});
+defs.innerHTML='<linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2432"/><stop offset="1" stop-color="#0e141d"/></linearGradient>';
+cam.appendChild(defs);
+// scan line
+const scan=E('rect',{x:0,y:0,width:720,height:3,fill:'rgba(111,211,230,.4)'});
+cam.appendChild(scan);
+
+// ---- telemetry ----
+const pill=document.getElementById('pill'),pillText=document.getElementById('pillText');
+const band=document.getElementById('band'),stamp=document.getElementById('stamp'),poseHUD=document.getElementById('poseHUD');
+const fpsJ=document.getElementById('fpsJ');
+const earFill=document.getElementById('earFill'),earVal=document.getElementById('earVal');
+const pYaw=document.getElementById('pYaw'),pPitch=document.getElementById('pPitch'),pRoll=document.getElementById('pRoll');
+const drowFill=document.getElementById('drowFill');
+const drowSegEls=[...document.getElementById('drowSegs').children];
+const logEl=document.getElementById('log');
+const logs=[
+  [0,'g','[00:00] system armed · driver in frame'],
+  [0,'g','[00:00] FaceMesh 468 pts · head-pose solver ready'],
+  [4200,'o','[00:04] head pitch -29° · gaze off-road'],
+  [4200,'o','[00:04] YOLOv8: phone 0.97 · distraction logged'],
+  [8800,'r','[00:08] EAR 0.18 < 0.20 · drowsiness MILD'],
+  [10600,'r','[00:10] EAR 0.11 · drowsiness SEVERE · buzzer'],
+];
+logs.forEach(l=>{const d=document.createElement('div');d.className='ln';d.innerHTML=`<span class="${l[1]}">${l[2]}</span>`;logEl.appendChild(d);});
+const lnEls=[...logEl.children];
+
+const LOOP=13000;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const ease=p=>1-Math.pow(1-p,3);
+
+function render(yawD,pitchD,rollD,open){
+  const ya=yawD*RAD, pi=pitchD*RAD, ro=rollD*RAD;
+  // wireframe: lat rings + lon meridians, front bright / back dim
+  let front='',back='';
+  for(let i=0;i<=LAT;i++)for(let j=0;j<LON;j++){
+    const a=proj(rot(grid[i][j],ya,pi,ro)), b=proj(rot(grid[i][(j+1)%LON],ya,pi,ro));
+    const s=`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+    (a.z+b.z)/2>0? front+=s: back+=s;
+  }
+  for(let j=0;j<LON;j++)for(let i=0;i<LAT;i++){
+    const a=proj(rot(grid[i][j],ya,pi,ro)), b=proj(rot(grid[i+1][j],ya,pi,ro));
+    const s=`M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+    (a.z+b.z)/2>0? front+=s: back+=s;
+  }
+  meshFront.setAttribute('d',front); meshBack.setAttribute('d',back);
+  // features
+  const le=proj(rot(F.leftEye,ya,pi,ro)), re=proj(rot(F.rightEye,ya,pi,ro)), no=proj(rot(F.nose,ya,pi,ro));
+  const bl=proj(rot(F.browL,ya,pi,ro)), br=proj(rot(F.browR,ya,pi,ro)), mo=proj(rot(F.mouth,ya,pi,ro));
+  const eh=Math.max(0.6, open*11);
+  eyeLo.setAttribute('cx',le.x);eyeLo.setAttribute('cy',le.y);eyeLo.setAttribute('rx',17*le.s);eyeLo.setAttribute('ry',eh*le.s);
+  eyeRo.setAttribute('cx',re.x);eyeRo.setAttribute('cy',re.y);eyeRo.setAttribute('rx',17*re.s);eyeRo.setAttribute('ry',eh*re.s);
+  const pv=clamp((open-0.2)/0.8,0,1);
+  pupL.setAttribute('cx',le.x);pupL.setAttribute('cy',le.y);pupL.style.opacity=pv;
+  pupR.setAttribute('cx',re.x);pupR.setAttribute('cy',re.y);pupR.style.opacity=pv;
+  browLp.setAttribute('points',`${bl.x-22},${bl.y} ${bl.x},${bl.y-5} ${bl.x+20},${bl.y}`);
+  browRp.setAttribute('points',`${br.x-20},${br.y} ${br.x},${br.y-5} ${br.x+22},${br.y}`);
+  mouthp.setAttribute('d',`M${mo.x-26} ${mo.y} Q ${mo.x} ${mo.y+9} ${mo.x+26} ${mo.y}`);
+  // head-pose axis triad from the nose
+  function ax(dir,len){const e={x:F.nose.x+dir.x*len,y:F.nose.y+dir.y*len,z:F.nose.z+dir.z*len};return proj(rot(e,ya,pi,ro));}
+  const X=ax({x:1,y:0,z:0},96), Y=ax({x:0,y:1,z:0},96), Z=ax({x:0,y:0,z:1},96);
+  axX.setAttribute('x1',no.x);axX.setAttribute('y1',no.y);axX.setAttribute('x2',X.x);axX.setAttribute('y2',X.y);
+  axY.setAttribute('x1',no.x);axY.setAttribute('y1',no.y);axY.setAttribute('x2',Y.x);axY.setAttribute('y2',Y.y);
+  axZ.setAttribute('x1',no.x);axZ.setAttribute('y1',no.y);axZ.setAttribute('x2',Z.x);axZ.setAttribute('y2',Z.y);
+  axXd.setAttribute('cx',X.x);axXd.setAttribute('cy',X.y);
+  axYd.setAttribute('cx',Y.x);axYd.setAttribute('cy',Y.y);
+  axZd.setAttribute('cx',Z.x);axZd.setAttribute('cy',Z.y);
+}
+
+function reset(){lnEls.forEach(l=>l.style.opacity=0);band.style.opacity=0;phone.style.opacity=0;}
+function at(t){
+  scan.setAttribute('y',(t/LOOP*760)%760);
+  const sec=Math.floor(t/1000); stamp.textContent='CAM 0 · 00:'+String(sec).padStart(2,'0');
+  fpsJ.textContent=String(Math.round(19+Math.sin(t/300)));
+  lnEls.forEach((l,i)=>l.style.opacity = t>logs[i][0]+150?1:0);
+
+  // gentle head-pose motion throughout (shows the pose tracker working)
+  let yaw=13*Math.sin(t/1700), pitch=5*Math.sin(t/2300), roll=0, open=1, ear=0.31, state='mon', phoneOn=false, drow=0;
+  if(t>1600&&t<1880) open=1-Math.abs(1740-t)/140*0.85;              // blink
+  // PHONE USE 3800..7200 (held ~3s so it reads)
+  if(t>3800&&t<7200){
+    const k=ease(clamp((t-3800)/750,0,1))*ease(clamp((7200-t)/750,0,1));
+    pitch=lerp(pitch,29,k); yaw=lerp(yaw,-8,k*0.8); phoneOn=k>0.12; if(k>0.5)state='phone';
+  }
+  // DROWSINESS 7900..12600 with escalating level
+  if(t>7900&&t<12600){
+    const ramp=clamp((t-7900)/3700,0,1), rel=clamp((t-12100)/500,0,1);
+    drow=ramp*(1-rel);
+    open=lerp(1,0.05,drow); ear=lerp(0.31,0.10,drow);
+    pitch=lerp(pitch,17,drow); roll=lerp(roll,14,drow);
+    if(drow>0.1)state='drowsy';
+  }
+  render(yaw,pitch,roll,open);
+  phone.style.opacity=phoneOn?1:0;
+  const ec = state==='drowsy'?'#E5544B':(state==='phone'?'#F4602A':'#FF7A45');
+  eyeLo.setAttribute('stroke',ec); eyeRo.setAttribute('stroke',ec);
+
+  // pose readout
+  pYaw.innerHTML=Math.round(yaw)+'&deg;'; pPitch.innerHTML=Math.round(-pitch)+'&deg;'; pRoll.innerHTML=Math.round(roll)+'&deg;';
+  poseHUD.innerHTML=`yaw <b>${Math.round(yaw)}&deg;</b> · pitch <b>${Math.round(-pitch)}&deg;</b> · roll <b>${Math.round(roll)}&deg;</b> · EAR <b>${ear.toFixed(2)}</b>`;
+  // EAR meter
+  const earPct=clamp((ear-0.05)/0.30,0,1)*100;
+  earFill.style.width=earPct+'%'; earFill.style.background=ear<0.20?'var(--warn)':'var(--ok)';
+  earVal.textContent=ear.toFixed(2); earVal.style.color=ear<0.20?'var(--warn)':'var(--ink)';
+  // drowsiness level (AWAKE / MILD / MODERATE / SEVERE)
+  const lvl = drow<0.02?0 : drow<0.4?1 : drow<0.72?2 : 3;
+  const lblTxt=['AWAKE','MILD','MODERATE','SEVERE'][lvl];
+  const lvlCol=['var(--ok)','#e8c14a','var(--accent)','var(--warn)'][lvl];
+  drowSegEls.forEach((s,i)=>{s.classList.toggle('on',i===lvl);s.style.setProperty('--c',lvlCol);});
+  drowFill.style.width=(drow*100).toFixed(0)+'%'; drowFill.style.background=lvlCol;
+  // pill + band
+  pill.className='pill '+(state==='phone'?'phone':state==='drowsy'?'drowsy':'mon');
+  pillText.textContent = state==='phone'?'PHONE USE':state==='drowsy'?('DROWSY · '+lblTxt):'MONITORING';
+  band.innerHTML = state==='phone' ? '! DISTRACTION · EYES OFF ROAD (phone)' : ('! DROWSINESS · '+lblTxt+' · EYES CLOSING');
+  band.style.color = state==='phone' ? 'var(--accent)' : 'var(--warn)';
+  band.style.background = state==='phone' ? 'linear-gradient(0deg,rgba(244,96,42,.16),transparent)' : 'linear-gradient(0deg,rgba(229,84,75,.16),transparent)';
+  band.style.opacity = (state==='phone'||state==='drowsy') ? 1 : 0;
+}
+
+const params=new URLSearchParams(location.search);
+if(params.has('t')){
+  document.documentElement.classList.add('freeze');
+  reset(); at(clamp(parseInt(params.get('t'),10)||0,0,LOOP-1));
+  window.LOOP=LOOP; window.setFrame=(tt)=>{reset();at(clamp(tt|0,0,LOOP-1));};
+  document.body.dataset.ready='1';
+}else{
+  function frame(now){const t=now%LOOP;if(t<40)reset();at(t);requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
