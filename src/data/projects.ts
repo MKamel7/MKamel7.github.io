@@ -9,6 +9,7 @@ export const projects: Project[] = [
     title: 'Driver Monitoring System',
     category: 'featured',
     media: '/media/dms.mp4',
+    poster: '/media/dms-poster.jpg',
     metrics: [
       { value: '97.8%', label: { en: 'mAP@0.5 phone detection', de: 'mAP@0.5 Telefonerkennung' } },
       { value: '18-20 FPS', label: { en: 'drowsiness on Jetson Nano', de: 'Müdigkeitserkennung auf Jetson Nano' } },
@@ -25,6 +26,7 @@ export const projects: Project[] = [
     title: 'Brotta II Underwater ROV',
     category: 'featured',
     media: '/media/rov.mp4',
+    poster: '/media/rov-poster.jpg',
     metrics: [
       { value: '2nd', label: { en: 'worldwide, MATE ROV 2021', de: 'weltweit, MATE ROV 2021' } },
       { value: '101.5/100', label: { en: 'technical documentation', de: 'technische Dokumentation' } },
@@ -55,6 +57,7 @@ export const projects: Project[] = [
     title: 'Robotic Arm Digital Twin',
     category: 'featured',
     media: '/media/digital-twin.mp4',
+    poster: '/media/digital-twin-poster.jpg',
     metrics: [
       { value: '94.4%', label: { en: 'hierarchical fault-diagnosis accuracy', de: 'Genauigkeit hierarchische Fehlerdiagnose' } },
     ],
@@ -69,6 +72,7 @@ export const projects: Project[] = [
     title: 'Autonomous Fire-Fighting Robot',
     category: 'featured',
     media: '/media/fire-robot.mp4',
+    poster: '/media/fire-robot-poster.jpg',
     metrics: [
       { value: '3', label: { en: 'sensor types: smoke, flame, proximity', de: 'Sensortypen: Rauch, Flamme, Abstand' } },
       { value: 'FEA', label: { en: 'stress-verified chassis', de: 'FEM-geprüftes Chassis' } },
@@ -84,6 +88,7 @@ export const projects: Project[] = [
     title: 'Autonomous Smart Home',
     category: 'featured',
     media: '/media/smart-home.mp4',
+    poster: '/media/smart-home-poster.jpg',
     metrics: [
       { value: '4', label: { en: 'automated subsystems', de: 'automatisierte Subsysteme' } },
       { value: 'BT', label: { en: 'Android app control', de: 'Android-App-Steuerung' } },

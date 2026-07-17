@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 interface MediaSlotProps {
   media?: string
   poster?: string
@@ -6,22 +8,47 @@ interface MediaSlotProps {
   className?: string
 }
 
+// Plays only while on screen (pauses off-screen) so stacked cards don't all
+// decode at once. Shows the poster image until it plays.
+function LazyVideo({ media, poster, className }: { media: string; poster?: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          v.play().catch(() => {})
+        } else {
+          v.pause()
+        }
+      },
+      { threshold: 0.2 },
+    )
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <div className={`h-full w-full overflow-hidden ${className ?? ''}`}>
+      <video
+        ref={ref}
+        muted
+        loop
+        playsInline
+        preload="none"
+        poster={poster}
+        className="h-full w-full object-cover"
+      >
+        <source src={media} type="video/mp4" />
+      </video>
+    </div>
+  )
+}
+
 export function MediaSlot({ media, poster, title, label, className }: MediaSlotProps) {
   if (media?.endsWith('.mp4')) {
-    return (
-      <div className={`h-full w-full overflow-hidden ${className ?? ''}`}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={poster}
-          className="h-full w-full object-cover"
-        >
-          <source src={media} type="video/mp4" />
-        </video>
-      </div>
-    )
+    return <LazyVideo media={media} poster={poster} className={className} />
   }
 
   if (

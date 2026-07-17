@@ -1,16 +1,24 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { MediaSlot } from '../components/MediaSlot'
 import { projects } from '../data/projects'
-import { useLang } from '../i18n'
-import { content } from '../content'
 
-const row1 = [...projects.slice(0, 4), ...projects.slice(0, 4), ...projects.slice(0, 4)]
-const row2 = [...projects.slice(4), ...projects.slice(4), ...projects.slice(4)]
+// Only finished projects (those with a rendered demo) appear in the marquee,
+// and as lightweight static poster images — the autoplaying mp4s live in the
+// Projects section below, so the top strip stays smooth.
+const finished = projects.filter((p) => p.poster)
+const half = Math.ceil(finished.length / 2)
+const rowA = [...finished.slice(0, half), ...finished.slice(0, half), ...finished.slice(0, half)]
+const rowB = [...finished.slice(half), ...finished.slice(half), ...finished.slice(half)]
+
+function Card({ src, title }: { src: string; title: string }) {
+  return (
+    <div className="h-[200px] w-[320px] shrink-0 overflow-hidden rounded-[20px] border border-line md:h-[240px] md:w-[400px]">
+      <img src={src} alt={title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+    </div>
+  )
+}
 
 export function Marquee() {
-  const { lang } = useLang()
-  const t = content[lang]
   const sectionRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
@@ -29,36 +37,16 @@ export function Marquee() {
           className="flex w-max gap-3"
           style={shouldReduceMotion ? undefined : { x: row1X, willChange: 'transform' }}
         >
-          {row1.map((project, i) => (
-            <div
-              key={`${project.id}-${i}`}
-              className="h-[200px] w-[320px] shrink-0 overflow-hidden rounded-[20px] border border-line md:h-[240px] md:w-[400px]"
-            >
-              <MediaSlot
-                media={project.media}
-                poster={project.poster}
-                title={project.title}
-                label={t.projects.demoSoon}
-              />
-            </div>
+          {rowA.map((project, i) => (
+            <Card key={`${project.id}-a-${i}`} src={project.poster!} title={project.title} />
           ))}
         </motion.div>
         <motion.div
           className="flex w-max gap-3"
           style={shouldReduceMotion ? undefined : { x: row2X, willChange: 'transform' }}
         >
-          {row2.map((project, i) => (
-            <div
-              key={`${project.id}-${i}`}
-              className="h-[200px] w-[320px] shrink-0 overflow-hidden rounded-[20px] border border-line md:h-[240px] md:w-[400px]"
-            >
-              <MediaSlot
-                media={project.media}
-                poster={project.poster}
-                title={project.title}
-                label={t.projects.demoSoon}
-              />
-            </div>
+          {rowB.map((project, i) => (
+            <Card key={`${project.id}-b-${i}`} src={project.poster!} title={project.title} />
           ))}
         </motion.div>
       </div>
