@@ -15,9 +15,6 @@ export function Contact() {
             {t.contact.heading}
           </h2>
         </FadeIn>
-        <FadeIn delay={0.1}>
-          <p className="mt-6 max-w-md leading-relaxed text-muted">{t.contact.body}</p>
-        </FadeIn>
         <FadeIn delay={0.2}>
           <a
             href={`mailto:${links.email}`}

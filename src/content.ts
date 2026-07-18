@@ -45,7 +45,7 @@ export interface Content {
 const en: Content = {
   nav: { about: 'About', projects: 'Projects', experience: 'Experience', education: 'Education', contact: 'Contact' },
   hero: {
-    chip: 'Open to Werkstudent roles · Regensburg',
+    chip: 'Open to Werkstudent roles and internships · Regensburg',
     headline: 'MO KAMEL',
     subline: 'Mechatronics engineer. I make machines think, move, and fail safely.',
     cta: 'View projects',
@@ -174,7 +174,7 @@ const en: Content = {
 const de: Content = {
   nav: { about: 'Über mich', projects: 'Projekte', experience: 'Werdegang', education: 'Ausbildung', contact: 'Kontakt' },
   hero: {
-    chip: 'Offen für Werkstudentenstellen · Regensburg',
+    chip: 'Offen für Werkstudentenstellen und Praktika · Regensburg',
     headline: 'MO KAMEL',
     subline: 'Mechatronikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
     cta: 'Projekte ansehen',
