@@ -164,7 +164,7 @@ const en: Content = {
     ],
   },
   contact: {
-    heading: 'Get in touch',
+    heading: 'Contact',
     body: 'Open to Werkstudent and internship roles in robotics, AI/ML, automation, and mechatronics.',
     emailLabel: 'Email me',
   },
