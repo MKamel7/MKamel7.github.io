@@ -1,4 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
+import { createPortal } from 'react-dom'
+
+// Only one demo player can be open at a time: opening one broadcasts an event
+// that closes any other that's open.
+const OPEN_EVENT = 'projectvideo:open'
 
 interface ProjectVideoProps {
   media: string
@@ -10,6 +15,21 @@ interface ProjectVideoProps {
 // on-screen text is readable. Nothing autoplays, so the page stays smooth.
 export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
   const [open, setOpen] = useState(false)
+  const id = useId()
+
+  // close this player if another one opens
+  useEffect(() => {
+    const onOtherOpen = (e: Event) => {
+      if ((e as CustomEvent).detail?.id !== id) setOpen(false)
+    }
+    window.addEventListener(OPEN_EVENT, onOtherOpen)
+    return () => window.removeEventListener(OPEN_EVENT, onOtherOpen)
+  }, [id])
+
+  const openPlayer = () => {
+    window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: { id } }))
+    setOpen(true)
+  }
 
   useEffect(() => {
     if (!open) return
@@ -28,7 +48,7 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openPlayer}
         aria-label={`Play ${title} demo`}
         className="group relative block h-full w-full cursor-pointer overflow-hidden bg-surface"
       >
@@ -49,9 +69,9 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
         </span>
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-2 backdrop-blur-sm md:p-4"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-3 backdrop-blur-sm md:p-6"
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
@@ -76,7 +96,8 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
           >
             &times;
           </button>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   )
