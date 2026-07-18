@@ -81,7 +81,7 @@ export const projects: Project[] = [
     ],
     desc: {
       en: 'B.Sc. Mechatronics course project: an autonomous robot that detects and extinguishes fires. Smoke, flame and proximity sensing with obstacle-avoidance navigation in dynamic environments, an onboard water tank, pump and hose for suppression, and full structural stress-analysis simulations to reinforce weak points.',
-      de: 'Mechatronik-Projekt (B.Sc.): ein autonomer Roboter, der Brände erkennt und löscht. Rauch-, Flammen- und Abstandssensorik mit Hindernisvermeidung in dynamischen Umgebungen, ein Wassertank mit Pumpe und Schlauch zur Löschung und vollständige Struktur-/Spannungsanalyse-Simulationen zur Verstärkung von Schwachstellen.',
+      de: 'Mechatronik-Projekt (B.Sc.): ein autonomer Roboter, der Brände erkennt und löscht. Rauch-, Flammen- und Abstandssensorik für Erkennung und sichere Annäherung, Hindernisvermeidung in dynamischen Umgebungen, ein Wassertank mit Pumpe und Schlauch zum Löschen sowie vollständige strukturelle Spannungsanalysen (FEM) zur Verstärkung von Schwachstellen.',
     },
     tags: ['Arduino', 'Sensor fusion', 'Obstacle avoidance', 'Mechatronics'],
   },
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     ],
     desc: {
       en: 'B.Sc. Mechatronics course project: an Arduino Mega home-automation system with an Android app over Bluetooth. Temperature-driven HVAC, light-sensing auto-dimming at night, proximity-based garage (auto-open on key-chip approach, auto-close inside), and a keypad-secured main door with a security system.',
-      de: 'Mechatronik-Projekt (B.Sc.): ein Arduino-Mega-Hausautomationssystem mit Android-App über Bluetooth. Temperaturgesteuerte HLK, lichtabhängiges Dimmen bei Nacht, näherungsbasierte Garage (Auto-Öffnen bei Annäherung des Schlüssel-Chips, Auto-Schließen im Inneren) und eine tastaturgesicherte Haustür mit Sicherheitssystem.',
+      de: 'Mechatronik-Projekt (B.Sc.): ein Arduino-Mega-Hausautomationssystem mit Android-App über Bluetooth. Temperaturgesteuerte Heizung und Kühlung, lichtabhängiges Dimmen bei Nacht, näherungsbasierte Garage (automatisches Öffnen bei Annäherung des Schlüssel-Chips, automatisches Schließen von innen) und eine per Zahlencode gesicherte Haustür mit Alarmanlage.',
     },
     tags: ['Arduino Mega', 'Bluetooth', 'Home automation', 'Sensors'],
   },
