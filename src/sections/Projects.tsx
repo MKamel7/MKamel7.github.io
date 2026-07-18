@@ -4,6 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import { FadeIn } from '../components/motion/FadeIn'
 import { MediaSlot } from '../components/MediaSlot'
+import { ProjectVideo } from '../components/ProjectVideo'
 import { projects } from '../data/projects'
 import { useLang } from '../i18n'
 import { content } from '../content'
@@ -63,7 +64,11 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
         )}
       </div>
       <div className="aspect-[4/3] overflow-hidden rounded-[20px] border border-line">
-        <MediaSlot media={project.media} poster={project.poster} title={project.title} label={demoSoon} />
+        {project.media ? (
+          <ProjectVideo media={project.media} poster={project.poster} title={project.title} />
+        ) : (
+          <MediaSlot media={project.media} poster={project.poster} title={project.title} label={demoSoon} />
+        )}
       </div>
     </div>
   )
