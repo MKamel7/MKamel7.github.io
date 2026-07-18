@@ -42,6 +42,8 @@ export const projects: Project[] = [
     id: 'warehouse',
     title: 'Multi-Agent Warehouse Logistics',
     category: 'featured',
+    media: '/media/warehouse.mp4',
+    poster: '/media/warehouse-poster.jpg',
     metrics: [
       { value: '3', label: { en: 'robot fleet, coordinated', de: 'Roboter-Flotte, koordiniert' } },
       { value: 'ROS 2', label: { en: 'Humble with Nav2', de: 'Humble mit Nav2' } },
