@@ -51,33 +51,31 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
 
       {open && (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm md:p-8"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-2 backdrop-blur-sm md:p-4"
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-label={`${title} demo`}
         >
-          <div className="relative w-full max-w-[1180px]" onClick={(e) => e.stopPropagation()}>
-            <div className="mb-2 font-mono text-xs text-muted">{title}</div>
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <video
-              src={media}
-              poster={poster}
-              autoPlay
-              loop
-              controls
-              playsInline
-              className="h-auto w-full rounded-[16px] border border-line shadow-2xl"
-            />
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close"
-              className="absolute -right-3 -top-3 grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-lg text-ink transition-colors hover:text-accent"
-            >
-              &times;
-            </button>
-          </div>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video
+            src={media}
+            poster={poster}
+            autoPlay
+            loop
+            controls
+            playsInline
+            onClick={(e) => e.stopPropagation()}
+            className="h-auto max-h-[95vh] w-auto max-w-[97vw] rounded-[12px] border border-line shadow-2xl"
+          />
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close"
+            className="fixed right-4 top-4 z-[121] grid h-11 w-11 place-items-center rounded-full border border-line bg-surface/90 text-xl text-ink transition-colors hover:text-accent"
+          >
+            &times;
+          </button>
         </div>
       )}
     </>
