@@ -39,6 +39,24 @@ export const projects: Project[] = [
     tags: ['SolidWorks', 'CNN', 'OpenCV', 'Embedded C', 'Control systems'],
   },
   {
+    id: 'palletizing',
+    title: 'UR5e Palletizing Cell',
+    category: 'featured',
+    media: '/media/palletizing.mp4',
+    poster: '/media/palletizing-poster.jpg',
+    repo: 'https://github.com/MKamel7/robot-arm-ik',
+    metrics: [
+      { value: '≤0.1 mm', label: { en: 'placement accuracy (IK residual)', de: 'Platziergenauigkeit (IK-Residuum)' } },
+      { value: '6-DOF', label: { en: 'UR5/UR5e kinematics + IK from scratch', de: 'UR5/UR5e-Kinematik + IK von Grund auf' } },
+      { value: '24', label: { en: 'automated tests, CI', de: 'automatisierte Tests, CI' } },
+    ],
+    desc: {
+      en: 'An industrial palletizing cell in the MuJoCo physics engine, driven by a 6-DOF inverse-kinematics library I wrote from scratch in NumPy (forward kinematics, Jacobian, damped-least-squares and closed-form IK, cross-validated against the MuJoCo UR5e model to about 1 mm). A UR5e with a Robotiq gripper stacks parts bin-to-pallet across multiple layers, checks each path for collisions and re-routes around a machine fixture, and rejects out-of-reach targets, with a live production-metrics readout.',
+      de: 'Eine industrielle Palettierzelle in der MuJoCo-Physik-Engine, angetrieben von einer 6-DOF-Inverskinematik-Bibliothek, die ich von Grund auf in NumPy geschrieben habe (Vorwärtskinematik, Jacobi-Matrix, Damped-Least-Squares und geschlossene IK, gegen das MuJoCo-UR5e-Modell auf etwa 1 mm validiert). Ein UR5e mit Robotiq-Greifer stapelt Teile mehrlagig von der Kiste auf die Palette, prüft jede Bahn auf Kollisionen und weicht einer Maschinenvorrichtung aus, und weist unerreichbare Zielpunkte zurück, mit einer Live-Anzeige der Produktionskennzahlen.',
+    },
+    tags: ['MuJoCo', 'NumPy', 'Inverse kinematics', 'Collision avoidance', 'Python'],
+  },
+  {
     id: 'warehouse',
     title: 'Multi-Agent Warehouse Logistics',
     category: 'featured',
