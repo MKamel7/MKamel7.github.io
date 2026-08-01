@@ -123,6 +123,8 @@ export const projects: Project[] = [
     id: 'p1',
     title: 'Embedded Test & Measurement Framework',
     category: 'featured',
+    media: '/media/p1.mp4',
+    poster: '/media/p1-poster.jpg',
     repo: 'https://github.com/MKamel7/embedded-test-automation',
     metrics: [
       { value: '80', label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100% Branch Coverage' } },
@@ -139,6 +141,8 @@ export const projects: Project[] = [
     id: 'p2',
     title: 'Fault-Injection Harness',
     category: 'featured',
+    media: '/media/p2.mp4',
+    poster: '/media/p2-poster.jpg',
     repo: 'https://github.com/MKamel7/fault-injection-harness',
     metrics: [
       { value: '27', label: { en: 'hazard-derived faults, 23 detected in time', de: 'aus Gefährdungsanalyse abgeleitete Fehler, 23 rechtzeitig erkannt' } },

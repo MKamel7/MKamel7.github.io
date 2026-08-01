@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Embedded Test Framework - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --line:rgba(255,255,255,0.08);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45;
+    --ok:#46d18a; --blue:#5aa9ff; --bad:#ff5f56; --warn:#f2c14e;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  .stage{position:relative;width:1280px;height:960px;color:var(--ink);font-family:var(--font);overflow:hidden;
+    background:radial-gradient(100% 80% at 45% 20%,#12151b 0%,#0b0c0e 60%),#0b0c0e;
+    display:grid;grid-template-columns:1fr 372px;grid-template-rows:auto 1fr;gap:16px;padding:26px 28px}
+  header{grid-column:1 / -1;display:flex;align-items:center;gap:16px}
+  header h1{font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  header p{margin-top:7px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .pill{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;font-weight:700;
+    letter-spacing:.05em;padding:10px 16px;border-radius:9px;border:1px solid rgba(244,96,42,.45);color:var(--accent);background:rgba(244,96,42,.1)}
+  .pill .d{width:9px;height:9px;border-radius:50%;background:currentColor}
+  .main{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:radial-gradient(120% 100% at 50% 45%,#101319 0%,#0a0d12 80%);padding:18px 20px 14px;
+    display:flex;flex-direction:column;gap:14px}
+  .main h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .main .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:5px;min-height:16px}
+  .seeds{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+  .seed{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;
+    border:1px solid var(--line);border-radius:10px;padding:11px 14px;background:#0d0f13}
+  .seed .n{color:var(--muted);width:20px}
+  .seed .nm{flex:1}
+  .seed .vd{font-weight:700;letter-spacing:.04em}
+  .scatter{flex:1;min-height:0;position:relative;border:1px solid var(--line);border-radius:11px;background:#0d0f13;padding:12px 14px 8px}
+  .scatter h3{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .scatter svg{position:absolute;left:14px;right:14px;top:38px;bottom:26px;width:calc(100% - 28px);height:calc(100% - 64px)}
+  .side{display:flex;flex-direction:column;gap:13px;min-height:0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px}
+  .card h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12.5px;padding:6px 0;color:var(--muted)}
+  .row + .row{border-top:1px solid var(--line)}
+  .row b{color:var(--ink);font-weight:700;font-size:14px}
+  .row b.ok{color:var(--ok)} .row b.acc{color:var(--accent)}
+  .rel{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:6px 0;opacity:0}
+  .rel + .rel{border-top:1px solid var(--line)}
+  .rel b{color:var(--ink)}
+  .log{flex:1;min-height:0;background:#0d0f13;border:1px solid var(--line);border-radius:13px;padding:13px 15px;
+    font-family:var(--mono);font-size:11.5px;line-height:1.75;overflow:hidden}
+  .log .ln{opacity:0}.log .t{color:#5b6572}.log .g{color:var(--ok)}.log .o{color:var(--accent-soft)}
+  .log .b{color:var(--blue)}.log .r{color:var(--bad)}
+  .kicker{position:absolute;left:20px;right:20px;top:calc(50% - 26px);text-align:center;pointer-events:none;opacity:0}
+  .kicker .k{display:inline-block;font-size:30px;font-weight:900;letter-spacing:-0.02em;
+    padding:14px 26px;border-radius:12px;background:rgba(11,12,14,.88);border:1px solid rgba(244,96,42,.5);color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="stage">
+  <header>
+    <div>
+      <h1>Embedded Test &amp; Measurement Framework</h1>
+      <p>HIL-style automation &middot; property-based fuzzing &middot; fault seeding &middot; 100% branch coverage</p>
+    </div>
+    <div class="pill"><span class="d"></span><span id="pillText">SUITE RUNNING</span></div>
+  </header>
+
+  <div class="main">
+    <div>
+      <h2>Fault seeding &mdash; three deliberately broken controllers</h2>
+      <div class="sub" id="sub">The suite must REJECT every one of them. If it passes them, it proves nothing.</div>
+    </div>
+    <div class="seeds">
+      <div class="seed" id="s0"><span class="n">01</span><span class="nm">overheat trip raised above the limit</span><span class="vd" id="v0">&mdash;</span></div>
+      <div class="seed" id="s1"><span class="n">02</span><span class="nm">SET_SPEED range check off by one</span><span class="vd" id="v1">&mdash;</span></div>
+      <div class="seed" id="s2"><span class="n">03</span><span class="nm">fault latch clears itself on cooldown</span><span class="vd" id="v2">&mdash;</span></div>
+    </div>
+    <div class="scatter">
+      <h3 id="scTitle">Values the property suite generated for SET_SPEED</h3>
+      <svg id="svg" viewBox="0 0 768 516" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="kicker" id="kicker"><span class="k" id="kickerText"></span></div>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h2>Suite</h2>
+      <div class="row"><span>tests</span><b class="acc" id="mTests">0</b></div>
+      <div class="row"><span>branch coverage</span><b class="ok" id="mCov">0%</b></div>
+      <div class="row"><span>seeded defects rejected</span><b id="mSeed">0 of 3</b></div>
+      <div class="row"><span>released at</span><b id="mVer">v1.1</b></div>
+    </div>
+    <div class="card">
+      <h2>Releases, each from an outside finding</h2>
+      <div class="rel" id="rel0">v1.5 &middot; <b>second temperature source</b></div>
+      <div class="rel" id="rel1">v2.2 &middot; <b>diverse third channel</b></div>
+      <div class="rel" id="rel2">v3.0 &middot; <b>thermal model rebuilt</b></div>
+      <div class="rel" id="rel3">v3.1 &middot; <b>current sensor, honest reset</b></div>
+    </div>
+    <div class="log" id="log">
+      <div class="ln"><span class="t">[00:01]</span> <span class="b">pytest</span> protocol, control, faults, watchdog</div>
+      <div class="ln"><span class="t">[00:03]</span> <span class="g">seed 01 rejected</span> &middot; overheat trip</div>
+      <div class="ln"><span class="t">[00:04]</span> <span class="g">seed 03 rejected</span> &middot; fault latch</div>
+      <div class="ln"><span class="t">[00:06]</span> <span class="r">seed 02 SURVIVED</span> &middot; range check</div>
+      <div class="ln"><span class="t">[00:08]</span> unbounded floats: 0 samples in (6000, 6001]</div>
+      <div class="ln"><span class="t">[00:10]</span> <span class="o">adding boundary-neighbourhood sampling</span></div>
+      <div class="ln"><span class="t">[00:12]</span> <span class="g">seed 02 rejected</span> &middot; 3 of 3</div>
+      <div class="ln"><span class="t">[00:13]</span> 80 passed &middot; 100% branch &middot; ruff, mypy strict</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Every figure here comes from the repository: three seeded defects, the range
+// defect that survived because SET_SPEED was fuzzed with unbounded floats and
+// only values in (6000, 6001] expose a one-unit boundary error, and the 80
+// tests at 100% branch coverage the suite reports today.
+const W = 768, H = 516, PADL = 8, PADR = 8, PADB = 26, PADT = 8;
+const LO = 0, HI = 6100, BAND_LO = 6000, BAND_HI = 6001;
+const x = v => PADL + ((v - LO) / (HI - LO)) * (W - PADL - PADR);
+const svg = document.getElementById('svg');
+function el(n, a){ const e = document.createElementNS('http://www.w3.org/2000/svg', n);
+  for (const k in a) e.setAttribute(k, a[k]); return e; }
+
+// Deterministic pseudo-random, so every capture is identical.
+let seed = 12345;
+function rnd(){ seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+const broad = [], narrow = [];
+for (let i = 0; i < 150; i++) broad.push({ v: rnd() * 5990, y: PADT + rnd() * (H - PADT - PADB) });
+seed = 999;
+for (let i = 0; i < 46; i++) narrow.push({ v: 5996 + rnd() * 5.4, y: PADT + rnd() * (H - PADT - PADB) });
+
+function draw(nBroad, nNarrow, bandHot){
+  svg.innerHTML = '';
+  // the band that exposes the defect
+  svg.appendChild(el('rect', {x:x(BAND_LO) - 3, y:PADT - 2, width:Math.max(6, x(BAND_HI) - x(BAND_LO) + 6),
+    height:H - PADT - PADB + 4, fill: bandHot ? 'rgba(70,209,138,.16)' : 'rgba(255,95,86,.14)',
+    stroke: bandHot ? 'rgba(70,209,138,.8)' : 'rgba(255,95,86,.7)', 'stroke-width':1.4, rx:3}));
+
+  for (let i = 0; i < nBroad; i++) {
+    const p = broad[i];
+    svg.appendChild(el('circle', {cx:x(p.v), cy:p.y, r:3.4, fill:'#5aa9ff', opacity:.55}));
+  }
+  for (let i = 0; i < nNarrow; i++) {
+    const p = narrow[i];
+    svg.appendChild(el('circle', {cx:x(p.v), cy:p.y, r:3.8, fill:'#46d18a', opacity:.95}));
+  }
+  for (const v of [0, 2000, 4000]) {
+    const lb = el('text', {x:x(v), y:H - 5, 'text-anchor':'middle', fill:'#5b6572',
+      'font-size':11, 'font-family':'JetBrains Mono, monospace'});
+    lb.textContent = String(v);
+    svg.appendChild(lb);
+  }
+  // 6000 sits under the band, so it is anchored end to stay clear of it
+  const last = el('text', {x:x(6000) - 6, y:H - 5, 'text-anchor':'end', fill:'#5b6572',
+    'font-size':11, 'font-family':'JetBrains Mono, monospace'});
+  last.textContent = '6000 rpm';
+  svg.appendChild(last);
+}
+
+const seeds = [
+  { el:'s0', v:'v0', at:2.4, verdict:'REJECTED', colour:'#46d18a' },
+  { el:'s1', v:'v1', at:3.6, verdict:'SURVIVED', colour:'#ff5f56' },
+  { el:'s2', v:'v2', at:3.0, verdict:'REJECTED', colour:'#46d18a' },
+];
+const logs = [...document.querySelectorAll('#log .ln')];
+const kicker = document.getElementById('kicker'), kickerText = document.getElementById('kickerText');
+
+window.setFrame = function(ms){
+  const t = ms / 1000;
+
+  seeds.forEach(s => {
+    const box = document.getElementById(s.el), vd = document.getElementById(s.v);
+    const on = t >= s.at;
+    const flipped = s.v === 'v1' && t >= 7.0;
+    vd.textContent = on ? (flipped ? 'REJECTED' : s.verdict) : '—';
+    vd.style.color = on ? (flipped ? '#46d18a' : s.colour) : '#98A2B0';
+    box.style.borderColor = on
+      ? (flipped ? 'rgba(70,209,138,.5)' : (s.verdict === 'SURVIVED' ? 'rgba(255,95,86,.55)' : 'rgba(70,209,138,.4)'))
+      : 'rgba(255,255,255,0.08)';
+  });
+
+  const broadN = Math.round(Math.max(0, Math.min(1, (t - 3.9) / 1.9)) * broad.length);
+  const narrowN = Math.round(Math.max(0, Math.min(1, (t - 6.5) / 0.9)) * narrow.length);
+  draw(broadN, narrowN, t >= 6.6);
+
+  document.getElementById('scTitle').textContent = t < 6.4
+    ? 'SET_SPEED values generated  ·  unbounded floats  ·  only (6000, 6001] exposes the defect'
+    : 'With boundary-neighbourhood sampling added  ·  the band is finally reached';
+  document.getElementById('sub').textContent = t < 3.6
+    ? 'The suite must REJECT every one of them. If it passes them, it proves nothing.'
+    : (t < 6.4
+      ? 'Seed 02 survived. The fuzzer essentially never generated a value in the band that exposes it.'
+      : 'Sampling near the boundary. The defect is caught, and the suite is now worth trusting.');
+
+  document.getElementById('pillText').textContent = t > 8.0 ? 'SUITE GREEN' : 'SUITE RUNNING';
+
+  const f = Math.max(0, Math.min(1, (t - 0.5) / 1.6));
+  document.getElementById('mTests').textContent = Math.round(80 * f);
+  document.getElementById('mCov').textContent = Math.round(100 * f) + '%';
+  const rejected = t >= 7.0 ? 3 : (t >= 3.0 ? 2 : (t >= 2.4 ? 1 : 0));
+  document.getElementById('mSeed').textContent = rejected + ' of 3';
+  document.getElementById('mVer').textContent = t > 7.4 ? 'v3.1' : 'v1.1';
+
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('rel' + i).style.opacity = t > 7.4 + i * 0.18 ? '1' : '0';
+  }
+  logs.forEach((ln, i) => { ln.style.opacity = t > 0.8 + i * 0.82 ? '1' : '0'; });
+
+  const kt = (t - 8.5) / 0.35;
+  kicker.style.opacity = String(Math.max(0, Math.min(1, kt)));
+  kickerText.textContent = 'Fault seeding tests the tests.';
+};
+window.setFrame(0);
+</script>
+</body>
+</html>
