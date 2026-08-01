@@ -141,7 +141,7 @@ export const projects: Project[] = [
     id: 'p4',
     title: 'Virtual Production Cell',
     category: 'featured',
-    poster: '/media/p4-shot-execute.png',
+    poster: '/media/p4-poster.jpg',
     repo: 'https://github.com/MKamel7/virtual-production-cell',
     shots: [
       { src: '/media/p4-shot-execute.png', caption: {
