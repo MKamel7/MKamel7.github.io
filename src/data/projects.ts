@@ -155,7 +155,8 @@ export const projects: Project[] = [
     id: 'pick-place',
     title: 'Vision-Guided Pick & Place',
     category: 'featured',
-    media: '/media/pick-place.gif',
+    media: '/media/pick-place.mp4',
+    poster: '/media/pick-place-poster.jpg',
     repo: 'https://github.com/MKamel7/moveit-ur5-pick-place',
     metrics: [
       { value: '3', label: { en: 'colours segmented from RGB-D, operator picks one', de: 'Farben aus RGB-D segmentiert, Bediener wählt eine' } },
