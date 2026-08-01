@@ -138,6 +138,37 @@ export const projects: Project[] = [
     tags: ['Python', 'pytest', 'Hypothesis', 'HIL', 'CI'],
   },
   {
+    id: 'p4',
+    title: 'Virtual Production Cell',
+    category: 'featured',
+    poster: '/media/p4-shot-execute.png',
+    repo: 'https://github.com/MKamel7/virtual-production-cell',
+    shots: [
+      { src: '/media/p4-shot-execute.png', caption: {
+        en: 'The control program running on a CODESYS SoftPLC. PackML state 6, Execute, with the plant driven live over Modbus TCP.',
+        de: 'Das Steuerungsprogramm läuft auf einer CODESYS-SoftPLC. PackML-Zustand 6, Execute, die Anlage wird live über Modbus TCP angesteuert.' } },
+      { src: '/media/p4-shot-watchdog.png', caption: {
+        en: 'The same cell moments after the plant process was killed. The heartbeat stopped, the link watchdog fired, and PackML went to state 9, Aborted, with every actuator dropped.',
+        de: 'Dieselbe Zelle kurz nach dem Abschalten des Anlagenprozesses. Der Heartbeat blieb stehen, der Link-Watchdog löste aus, PackML ging in Zustand 9, Aborted, und alle Aktoren fielen ab.' } },
+      { src: '/media/p4-shot-channels.png', caption: {
+        en: 'The Modbus client configuration: read discrete inputs, read input registers, write multiple coils, each cyclic at 20 ms against the plant’s 50 ms scan.',
+        de: 'Die Modbus-Client-Konfiguration: Diskrete Eingänge lesen, Eingangsregister lesen, mehrere Spulen schreiben, jeweils zyklisch mit 20 ms gegen den 50-ms-Zyklus der Anlage.' } },
+      { src: '/media/p4-shot-mapping.png', caption: {
+        en: 'The process image mapped bit by bit onto the PLC’s variables. The address map is generated from one enum, so the two halves cannot disagree.',
+        de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus einem einzigen Enum erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
+    ],
+    metrics: [
+      { value: '223', label: { en: 'tests, 100% branch coverage', de: 'Tests, 100% Branch Coverage' } },
+      { value: '14', label: { en: 'safety requirements traced to tests', de: 'Sicherheitsanforderungen auf Tests zurückgeführt' } },
+      { value: '62.5%', label: { en: 'baseline OEE across three scenarios', de: 'Basis-OEE über drei Szenarien' } },
+    ],
+    desc: {
+      en: 'Virtual commissioning of a packaging cell: real IEC 61131-3 Structured Text on a CODESYS runtime driving a simulated plant over Modbus TCP, with a PackML state model and PackTags interface per ISA-TR88.00.02. A hazard-derived safety case traces five hazards through fourteen requirements down to the tests that verify them, with a gate that fails the build on a gap in either direction. Scenario runs report OEE, and the shape of each loss is the finding: a guard opening costs availability, a starved infeed costs performance. The supervisory interface is OPC UA with Basic256Sha256 sign-and-encrypt and anonymous access refused.',
+      de: 'Virtuelle Inbetriebnahme einer Verpackungszelle: echtes IEC-61131-3-Strukturtextprogramm auf einer CODESYS-Laufzeit, das eine simulierte Anlage über Modbus TCP steuert, mit PackML-Zustandsmodell und PackTags-Schnittstelle nach ISA-TR88.00.02. Ein aus einer Gefährdungsanalyse abgeleiteter Sicherheitsnachweis führt fünf Gefährdungen über vierzehn Anforderungen bis zu den Tests, die sie verifizieren, mit einem Gate, das den Build bei einer Lücke in beide Richtungen scheitern lässt. Szenarienläufe berichten OEE, und die Art des Verlusts ist das Ergebnis: eine geöffnete Schutztür kostet Verfügbarkeit, ein leerer Zulauf kostet Leistung. Die Leitebene ist OPC UA mit Basic256Sha256, signiert und verschlüsselt, anonymer Zugriff wird abgelehnt.',
+    },
+    tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'Functional safety'],
+  },
+  {
     id: 'p2',
     title: 'Fault-Injection Harness',
     category: 'featured',

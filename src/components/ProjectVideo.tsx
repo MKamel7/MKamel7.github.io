@@ -8,7 +8,8 @@ import type { Localized } from '../types'
 const OPEN_EVENT = 'projectvideo:open'
 
 interface ProjectVideoProps {
-  media: string
+  // Optional: a project can have real stills before it has a demo video.
+  media?: string
   poster?: string
   title: string
   shots?: { src: string; caption: Localized }[]
@@ -18,8 +19,9 @@ interface ProjectVideoProps {
 // Card shows a static poster + play button. Clicking opens a large player so the
 // on-screen text is readable. Nothing autoplays, so the page stays smooth.
 export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: ProjectVideoProps) {
-  // -1 is the video; 0..n-1 select a still.
-  const [shown, setShown] = useState(-1)
+  // -1 is the video; 0..n-1 select a still. With no video, open on the first
+  // still instead of on an element that does not exist.
+  const [shown, setShown] = useState(media ? -1 : 0)
   const [open, setOpen] = useState(false)
   const id = useId()
 
@@ -34,7 +36,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
 
   const openPlayer = () => {
     window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: { id } }))
-    setShown(-1)
+    setShown(media ? -1 : 0)
     setOpen(true)
   }
 
@@ -56,7 +58,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
       <button
         type="button"
         onClick={openPlayer}
-        aria-label={`Play ${title} demo`}
+        aria-label={media ? `Play ${title} demo` : `View ${title} screenshots`}
         className="group relative block h-full w-full cursor-pointer overflow-hidden bg-surface"
       >
         {poster ? (
@@ -66,13 +68,20 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
         )}
         <span className="absolute inset-0 grid place-items-center bg-gradient-to-t from-black/55 to-black/10 transition-colors group-hover:from-black/65">
           <span className="grid h-16 w-16 place-items-center rounded-full bg-accent text-bg shadow-xl transition-transform duration-200 group-hover:scale-110 md:h-20 md:w-20">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
-              <path d="M8 5v14l11-7z" />
-            </svg>
+            {media ? (
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            ) : (
+              /* No demo yet, so the affordance is enlarge rather than play. */
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+                <path d="M4 4h7V2H2v9h2V4zm16 16h-7v2h9v-9h-2v7z" />
+              </svg>
+            )}
           </span>
         </span>
         <span className="pointer-events-none absolute bottom-3 left-4 font-mono text-[11px] tracking-wide text-ink/85">
-          click to play &middot; enlarge
+          {media ? 'click to play · enlarge' : `${shots.length} screenshots · click to enlarge`}
         </span>
       </button>
 
@@ -88,7 +97,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
             onClick={(e) => e.stopPropagation()}
             className="flex max-h-[95vh] flex-col items-center gap-3"
           >
-            {shown === -1 ? (
+            {shown === -1 && media ? (
               /* eslint-disable-next-line jsx-a11y/media-has-caption */
               <video
                 src={media}
@@ -114,6 +123,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
 
             {shots.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-2">
+                {media && (
                 <button
                   type="button"
                   onClick={() => setShown(-1)}
@@ -123,6 +133,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
                 >
                   demo
                 </button>
+                )}
                 {shots.map((shot, i) => (
                   <button
                     key={shot.src}
