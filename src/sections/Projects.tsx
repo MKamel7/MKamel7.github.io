@@ -115,6 +115,9 @@ export function Projects() {
             />
           ))}
         </div>
+        {/* Rendered only when something is actually in the pipeline. Everything
+            shipped, so the heading would otherwise sit above nothing. */}
+        {pipeline.length > 0 && (
         <div className="mt-24">
           <h3 className="text-xl font-bold tracking-tight">{t.projects.pipelineHeading}</h3>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -130,6 +133,7 @@ export function Projects() {
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   )
