@@ -161,6 +161,17 @@ export const projects: Project[] = [
     category: 'featured',
     media: '/media/pick-place.mp4',
     poster: '/media/pick-place-poster.jpg',
+    shots: [
+      { src: '/media/pick-place-shot-detect.png', caption: {
+        en: 'The overhead RGB-D camera segmenting the three coloured parts. The operator-selected colour is boxed thicker and becomes the pick target.',
+        de: 'Die RGB-D-Kamera über der Zelle segmentiert die drei farbigen Teile. Die vom Bediener gewählte Farbe wird dicker umrandet und zum Greifziel.' } },
+      { src: '/media/pick-place-shot-segment.png', caption: {
+        en: 'Largest-blob HSV segmentation on the depth-aligned frame, the step that turns a pixel into a 3D pose in the robot base frame.',
+        de: 'HSV-Segmentierung des größten Blobs im tiefenausgerichteten Bild, der Schritt, der aus einem Pixel eine 3D-Pose im Roboterbasis-System macht.' } },
+      { src: '/media/pick-place-shot-gazebo.png', caption: {
+        en: 'The UR5e with a Robotiq 2F-85 gripper in Gazebo, driven by the same URDF that feeds ros2_control and MoveIt.',
+        de: 'Der UR5e mit Robotiq-2F-85-Greifer in Gazebo, angetrieben von derselben URDF, die auch ros2_control und MoveIt speist.' } },
+    ],
     repo: 'https://github.com/MKamel7/moveit-ur5-pick-place',
     metrics: [
       { value: '3', label: { en: 'colours segmented from RGB-D, operator picks one', de: 'Farben aus RGB-D segmentiert, Bediener wählt eine' } },

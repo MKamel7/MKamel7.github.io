@@ -1,5 +1,7 @@
 import { useEffect, useId, useState } from 'react'
 import { createPortal } from 'react-dom'
+import type { Lang } from '../i18n'
+import type { Localized } from '../types'
 
 // Only one demo player can be open at a time: opening one broadcasts an event
 // that closes any other that's open.
@@ -9,11 +11,15 @@ interface ProjectVideoProps {
   media: string
   poster?: string
   title: string
+  shots?: { src: string; caption: Localized }[]
+  lang?: Lang
 }
 
 // Card shows a static poster + play button. Clicking opens a large player so the
 // on-screen text is readable. Nothing autoplays, so the page stays smooth.
-export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
+export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: ProjectVideoProps) {
+  // -1 is the video; 0..n-1 select a still.
+  const [shown, setShown] = useState(-1)
   const [open, setOpen] = useState(false)
   const id = useId()
 
@@ -28,6 +34,7 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
 
   const openPlayer = () => {
     window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: { id } }))
+    setShown(-1)
     setOpen(true)
   }
 
@@ -77,17 +84,61 @@ export function ProjectVideo({ media, poster, title }: ProjectVideoProps) {
           aria-modal="true"
           aria-label={`${title} demo`}
         >
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <video
-            src={media}
-            poster={poster}
-            autoPlay
-            loop
-            controls
-            playsInline
+          <div
             onClick={(e) => e.stopPropagation()}
-            className="h-auto max-h-[95vh] w-auto max-w-[97vw] rounded-[12px] border border-line shadow-2xl"
-          />
+            className="flex max-h-[95vh] flex-col items-center gap-3"
+          >
+            {shown === -1 ? (
+              /* eslint-disable-next-line jsx-a11y/media-has-caption */
+              <video
+                src={media}
+                poster={poster}
+                autoPlay
+                loop
+                controls
+                playsInline
+                className="h-auto max-h-[80vh] w-auto max-w-[97vw] rounded-[12px] border border-line shadow-2xl"
+              />
+            ) : (
+              <figure className="flex flex-col items-center gap-2">
+                <img
+                  src={shots[shown].src}
+                  alt={shots[shown].caption[lang]}
+                  className="h-auto max-h-[78vh] w-auto max-w-[97vw] rounded-[12px] border border-line shadow-2xl"
+                />
+                <figcaption className="max-w-[70ch] text-center font-mono text-xs text-muted">
+                  {shots[shown].caption[lang]}
+                </figcaption>
+              </figure>
+            )}
+
+            {shots.length > 0 && (
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShown(-1)}
+                  className={`rounded-[8px] border px-3 py-2 font-mono text-[11px] transition-colors ${
+                    shown === -1 ? 'border-accent text-accent' : 'border-line text-muted hover:text-ink'
+                  }`}
+                >
+                  demo
+                </button>
+                {shots.map((shot, i) => (
+                  <button
+                    key={shot.src}
+                    type="button"
+                    onClick={() => setShown(i)}
+                    aria-label={shot.caption[lang]}
+                    className={`overflow-hidden rounded-[8px] border transition-colors ${
+                      shown === i ? 'border-accent' : 'border-line hover:border-line-2'
+                    }`}
+                  >
+                    <img src={shot.src} alt="" loading="lazy" className="h-14 w-20 object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             type="button"
             onClick={() => setOpen(false)}
