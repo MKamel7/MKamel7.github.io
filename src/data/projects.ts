@@ -170,6 +170,35 @@ export const projects: Project[] = [
     tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'Functional safety'],
   },
   {
+    id: 'p3',
+    title: 'ADAS Perception Evaluation',
+    category: 'featured',
+    media: '/media/p3.mp4',
+    poster: '/media/p3-poster.jpg',
+    repo: 'https://github.com/MKamel7/adas-perception-eval',
+    shots: [
+      { src: '/media/p3-shot-distance.png', caption: {
+        en: 'Pedestrians beyond 30 metres. Green was found, red was annotated and nothing matched it, blue is a detection. The measured AP in this band is 0.009.',
+        de: 'Fußgänger jenseits von 30 Metern. Grün wurde gefunden, Rot ist annotiert und wurde von nichts getroffen, Blau ist eine Detektion. Die gemessene AP in diesem Band beträgt 0,009.' } },
+      { src: '/media/p3-shot-occlusion.png', caption: {
+        en: 'Partial occlusion, the archetypal urban case. Pedestrian AP falls from 0.650 fully visible to 0.178 partly occluded, before an annotator would call the object mostly hidden.',
+        de: 'Teilverdeckung, der typische Stadtfall. Die Fußgänger-AP fällt von 0,650 bei voller Sichtbarkeit auf 0,178 bei Teilverdeckung, noch bevor ein Annotator das Objekt als überwiegend verdeckt einstufen würde.' } },
+      { src: '/media/p3-shot-cars.png', caption: {
+        en: 'Cars beyond 50 metres, each red box labelled with the overlap it achieved where 0.50 was needed. 73% of car misses are boxes that landed badly rather than objects never seen.',
+        de: 'Fahrzeuge jenseits von 50 Metern, jede rote Box beschriftet mit der erreichten Überlappung, wobei 0,50 nötig gewesen wäre. 73% der verpassten Fahrzeuge sind schlecht platzierte Boxen und keine nie erkannten Objekte.' } },
+    ],
+    metrics: [
+      { value: '68.7%', label: { en: 'pedestrian recall ceiling at any threshold', de: 'Fußgänger-Recall-Obergrenze bei jedem Schwellenwert' } },
+      { value: '0.000', label: { en: 'AP agreement gap against pycocotools', de: 'AP-Abweichung gegenüber pycocotools' } },
+      { value: '40,570', label: { en: 'annotated objects across the full KITTI split', de: 'annotierte Objekte über den vollständigen KITTI-Split' } },
+    ],
+    desc: {
+      en: 'Slice-based detection metrics on the full KITTI split, built to show what an aggregate number hides. The mAP implementation is not trusted but checked against pycocotools on identical inputs, agreeing to six decimal places, with a companion test that breaks the matcher on purpose to prove the comparison can fail. A pedestrian detector reported at 0.506 mAP scores 0.009 beyond 30 metres and finds nothing at all beyond 50, and every figure carries a bootstrap interval over frames so a slice difference can be told from sampling noise. The operating-point analysis answers the question average precision cannot: pedestrian recall tops out at 68.7% at any confidence threshold, which is an architecture problem rather than a tuning one, while buying car recall from 50% to 80% costs a 26-fold rise in false alarms. Nine triggering conditions in ISO 21448 SOTIF vocabulary are gated in both directions against their evidence by a traceability engine imported from the fault-injection harness, and a sim-to-real comparison on Virtual KITTI 2 found the simulation contains no pedestrians at all, so the headline result could not have been discovered there.',
+      de: 'Slice-basierte Detektionsmetriken auf dem vollständigen KITTI-Split, gebaut um zu zeigen, was eine aggregierte Zahl verbirgt. Die mAP-Implementierung wird nicht geglaubt, sondern gegen pycocotools auf identischen Eingaben geprüft, mit Übereinstimmung auf sechs Nachkommastellen, plus einem Test, der den Matcher absichtlich bricht, um zu beweisen, dass der Vergleich scheitern kann. Ein Fußgängerdetektor mit ausgewiesenen 0,506 mAP erreicht jenseits von 30 Metern 0,009 und jenseits von 50 Metern gar nichts, und jede Kennzahl trägt ein Bootstrap-Intervall über Frames, sodass ein Slice-Unterschied von Stichprobenrauschen unterschieden werden kann. Die Arbeitspunktanalyse beantwortet, was die Average Precision nicht kann: Der Fußgänger-Recall endet bei 68,7% bei jedem Schwellenwert, was ein Architektur- und kein Tuning-Problem ist, während der Kauf von Fahrzeug-Recall von 50% auf 80% einen 26-fachen Anstieg der Fehlalarme kostet. Neun auslösende Bedingungen in der Sprache von ISO 21448 SOTIF werden in beide Richtungen gegen ihre Evidenz abgesichert, durch eine Traceability-Engine aus dem Fault-Injection-Harness, und ein Sim-to-Real-Vergleich auf Virtual KITTI 2 ergab, dass die Simulation überhaupt keine Fußgänger enthält, das Kernergebnis dort also gar nicht auffindbar gewesen wäre.',
+    },
+    tags: ['ONNX Runtime', 'KITTI', 'ISO 21448 SOTIF', 'Evaluation engineering', 'pycocotools', 'Python'],
+  },
+  {
     id: 'p2',
     title: 'Fault-Injection Harness',
     category: 'featured',
