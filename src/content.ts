@@ -53,7 +53,7 @@ const en: Content = {
   about: {
     heading: 'About',
     paragraph:
-      'I build at the seam where hardware meets software, and I measure what I build. An autonomous mobile robot that shares a warehouse with people on foot, a PLC program commissioned against a plant that exists only in simulation, and a perception study that found a detector blind past 30 metres. Currently an M.Eng. student in Mechatronic and Cyber-Physical Systems at TH Deggendorf. Before that, an inspection engineer who root-caused an industrial explosion in two weeks.',
+      'M.Eng. student in Mechatronic and Cyber-Physical Systems at TH Deggendorf, based in Regensburg. I work where the control software meets the machine it drives: ROS 2 on the robot side, IEC 61131-3 and OPC UA on the plant side, and a traceability gate between them that fails the build when a safety requirement loses its test. Every project is documented with the measurement that supports it, and with what it does not do. Previously inspection engineer at a mineral-oil refinery: root-caused a plant explosion in two weeks and wrote the company standard that closed it.',
     languagesLabel: 'Languages',
     languages: 'Arabic (native), English (C2), German (B1, improving), French (B1)',
   },
@@ -66,18 +66,22 @@ const en: Content = {
   skills: {
     heading: 'Skills',
     groups: [
-      { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
+      { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF & xacro', 'tf2', 'RViz', 'colcon', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'ISA-TR88.00.02', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050', 'RTDE', 'OEE'] },
       // AUTOSAR E2E and PROFIsafe are deliberately NOT chips here. A chip reads
       // as toolchain familiarity, and what exists is an implementation of their
       // protection semantics, not Classic/Adaptive Platform or a certified
       // PROFIsafe stack. Both are named on the fault-injection card instead,
       // where the sentence says exactly what was built and links the repository.
       { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fault injection', 'Requirements traceability', 'Test automation'] },
-      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      // Not a generic soft-skill list. Every chip maps to something documented
+      // elsewhere on this page: the explosion root cause, the hose standard, the
+      // 101.5/100 competition report, 216 organizers at IOI, the certifications.
+      { label: 'Methods & collaboration', items: ['Root cause analysis', 'Standards authoring', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural teams', 'Agile & Scrum', 'Jira'] },
     ],
   },
   experience: {
@@ -111,7 +115,7 @@ const en: Content = {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Oct 2023 - Sep 2024',
-        note: 'Root-caused an industrial explosion in two weeks. Authored an ISO 7751 hose specification adopted company-wide. Supervised 6-8 inspectors per round.',
+        note: 'Root-caused an industrial explosion in two weeks, then wrote the company standard that closed it: a two-part hose specification covering procurement through replacement, still in force. Supervised 6-8 inspectors per round.',
       },
       {
         title: 'Real Estate Agent',
@@ -190,7 +194,7 @@ const de: Content = {
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich arbeite an der Nahtstelle zwischen Hardware und Software, und ich messe, was ich baue. Ein autonomer mobiler Roboter, der sich ein Lager mit Menschen zu Fuß teilt, ein SPS-Programm, das gegen eine nur simulierte Anlage in Betrieb genommen wurde, und eine Wahrnehmungsstudie, die einen Detektor jenseits von 30 Metern als blind auswies. Derzeit Masterstudent in Mechatronic and Cyber-Physical Systems an der TH Deggendorf. Davor Inspection Engineer, der die Ursache einer Industrieexplosion in zwei Wochen fand.',
+      'Masterstudent Mechatronic and Cyber-Physical Systems an der TH Deggendorf, wohnhaft in Regensburg. Ich arbeite dort, wo die Steuerungssoftware auf die Maschine trifft: ROS 2 auf der Roboterseite, IEC 61131-3 und OPC UA auf der Anlagenseite, dazwischen ein Traceability-Gate, das den Build scheitern lässt, sobald eine Sicherheitsanforderung ihren Test verliert. Jedes Projekt ist mit der Messung dokumentiert, die es belegt, und mit dem, was es nicht leistet. Zuvor Inspection Engineer in einer Mineralölraffinerie: Ursachenanalyse einer Betriebsexplosion in zwei Wochen und Erstellung der Werksnorm, die die Lücke geschlossen hat.',
     languagesLabel: 'Sprachen',
     languages: 'Arabisch (Muttersprache), Englisch (C2), Deutsch (B1, in Entwicklung), Französisch (B1)',
   },
@@ -203,13 +207,17 @@ const de: Content = {
   skills: {
     heading: 'Kompetenzen',
     groups: [
-      { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
+      { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF & xacro', 'tf2', 'RViz', 'colcon', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'ISA-TR88.00.02', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050', 'RTDE', 'OEE'] },
       { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
-      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      // Not a generic soft-skill list. Every chip maps to something documented
+      // elsewhere on this page: the explosion root cause, the hose standard, the
+      // 101.5/100 competition report, 216 organizers at IOI, the certifications.
+      { label: 'Methods & collaboration', items: ['Root cause analysis', 'Standards authoring', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural teams', 'Agile & Scrum', 'Jira'] },
     ],
   },
   experience: {
@@ -243,7 +251,7 @@ const de: Content = {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Okt 2023 - Sep 2024',
-        note: 'Ursachenanalyse einer Industrieexplosion in zwei Wochen. ISO-7751-Schlauchspezifikation verfasst und unternehmensweit übernommen. 6-8 Inspektoren pro Runde angeleitet.',
+        note: 'Ursachenanalyse einer Betriebsexplosion in zwei Wochen, anschließend Erstellung der Werksnorm, die die Lücke geschlossen hat: eine zweiteilige Schlauchspezifikation von der Beschaffung bis zum Austausch, weiterhin gültig. 6-8 Inspektoren pro Runde angeleitet.',
       },
       {
         title: 'Real Estate Agent',

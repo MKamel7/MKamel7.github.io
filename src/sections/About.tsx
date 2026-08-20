@@ -20,10 +20,10 @@ export function About() {
           className="mt-10 max-w-3xl text-[clamp(1.25rem,2.4vw,1.9rem)] font-medium leading-relaxed text-ink"
         />
         <FadeIn className="mt-10">
-          <span className="font-mono text-xs uppercase tracking-wider text-accent">
+          <span className="font-mono text-sm uppercase tracking-wider text-accent">
             {t.about.languagesLabel}
           </span>
-          <p className="mt-2 text-sm text-muted">{t.about.languages}</p>
+          <p className="mt-2.5 text-lg leading-relaxed text-ink md:text-xl">{t.about.languages}</p>
         </FadeIn>
       </div>
     </section>

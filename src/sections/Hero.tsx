@@ -9,8 +9,8 @@ export function Hero() {
   return (
     <header id="top" className="relative flex min-h-screen flex-col justify-end px-6 pb-[calc(2.5rem+env(safe-area-inset-bottom))] [min-height:100svh] md:px-10 md:pb-[calc(3.5rem+env(safe-area-inset-bottom))]">
       <FadeIn delay={0.1}>
-        <span className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-1.5 text-xs text-muted">
-          <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+        <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/60 px-5 py-2.5 text-[15px] font-medium text-ink md:text-base">
+          <span className="h-2 w-2 rounded-full bg-signal" />
           {t.hero.chip}
         </span>
       </FadeIn>
