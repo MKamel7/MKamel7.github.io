@@ -29,6 +29,8 @@ export interface Content {
     entries: { title: string; org: string; period: string; note: string }[];
     awardsHeading: string;
     awards: { title: string; detail: string }[];
+    volunteeringHeading: string;
+    volunteering: { title: string; period: string; detail: string }[];
   };
   education: {
     heading: string;
@@ -146,8 +148,30 @@ const en: Content = {
     awards: [
       { title: 'GPAct Talent Expo', detail: '1st place nationally among 15 teams for the driver monitoring thesis.' },
       { title: 'MATE ROV 2021', detail: '2nd worldwide of 20 teams, 1st regionally. Technical documentation scored 101.5/100.' },
-      { title: 'IOI 2024', detail: 'Chief of Organizers: 1,000+ participants, 216 organizers selected from 860+ candidates.' },
-      { title: 'Rotaract District 2451', detail: '1st place, Professional Development Committee, 2022, among 76 teams. Founded the Rotaract Alexandria New Era club in 2019.' },
+      { title: 'Rotaract District 2451', detail: '1st place, Professional Development Committee, 2022, among 76 teams.' },
+    ],
+    volunteeringHeading: 'Volunteering',
+    volunteering: [
+      {
+        title: 'Rotaract Alexandria New Era',
+        period: '2019 - present',
+        detail: 'Co-founded the club in 2019, President 2021 to 2022, Club Advisor today and continuing remotely from Regensburg. Seven years across International Understanding, Club Service, Fundraising, Professional Development and Membership, and ran Matbakh Alexandria, a charity kitchen.',
+      },
+      {
+        title: 'Chief of Organizers, IOI 2024',
+        period: 'Jul - Sep 2024',
+        detail: 'Directed operations for the International Olympiad in Informatics: 1,000+ participants across arrivals, competition hall, accommodation, food logistics, sponsor coordination and live crisis management. Selected 216 organizers from 860+ candidates.',
+      },
+      {
+        title: 'Guide, EGOI',
+        period: '2025 and 2026',
+        detail: 'European Girls’ Olympiad in Informatics. Guided international delegations and managed the contest hall at the Deutsche Telekom Campus in Bonn.',
+      },
+      {
+        title: 'Earlier',
+        period: '2018 - 2019',
+        detail: 'Chief of Organizers for the Egyptian Olympiad in Informatics, 2019. AASTMT Student Union and AASTMT Scouts.',
+      },
     ],
   },
   education: {
@@ -282,8 +306,30 @@ const de: Content = {
     awards: [
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
       { title: 'MATE ROV 2021', detail: 'Platz 2 weltweit von 20 Teams, regional Platz 1. Technische Dokumentation mit 101,5/100 bewertet.' },
-      { title: 'IOI 2024', detail: 'Chef-Organisator: über 1.000 Teilnehmende, 216 Organisatoren aus über 860 Bewerbern ausgewählt.' },
-      { title: 'Rotaract District 2451', detail: '1. Platz, Professional Development Committee, 2022, unter 76 Teams. Gründung des Clubs Rotaract Alexandria New Era 2019.' },
+      { title: 'Rotaract District 2451', detail: '1. Platz, Professional Development Committee, 2022, unter 76 Teams.' },
+    ],
+    volunteeringHeading: 'Ehrenamt',
+    volunteering: [
+      {
+        title: 'Rotaract Alexandria New Era',
+        period: '2019 - heute',
+        detail: 'Mitgründer des Clubs 2019, Präsident 2021 bis 2022, heute Club Advisor und weiterhin remote aus Regensburg tätig. Sieben Jahre in den Ressorts International Understanding, Club Service, Fundraising, Professional Development und Mitglieder, dazu Leitung von Matbakh Alexandria, einer Wohltätigkeitsküche.',
+      },
+      {
+        title: 'Chef-Organisator, IOI 2024',
+        period: 'Jul - Sep 2024',
+        detail: 'Gesamtverantwortung für den Ablauf der Internationalen Informatik-Olympiade: über 1.000 Teilnehmende, von An- und Abreise über Wettbewerbshalle, Unterbringung und Verpflegung bis zu Sponsorenbetreuung und Krisenmanagement im laufenden Betrieb. 216 Organisatoren aus über 860 Bewerbern ausgewählt.',
+      },
+      {
+        title: 'Guide, EGOI',
+        period: '2025 und 2026',
+        detail: 'European Girls’ Olympiad in Informatics. Betreuung internationaler Delegationen und Leitung der Wettbewerbshalle auf dem Deutsche-Telekom-Campus in Bonn.',
+      },
+      {
+        title: 'Frühere Tätigkeiten',
+        period: '2018 - 2019',
+        detail: 'Chef-Organisator der Egyptian Olympiad in Informatics, 2019. AASTMT Student Union und AASTMT Scouts.',
+      },
     ],
   },
   education: {

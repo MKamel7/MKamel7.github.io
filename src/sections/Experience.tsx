@@ -99,6 +99,25 @@ export function Experience() {
             ))}
           </div>
         </div>
+
+        {/* Ehrenamt is a section a German reader looks for, so it gets its own
+            label rather than being folded into awards. The split is deliberate:
+            awards are placements that were won, this is work that was done. IOI
+            sits here and not above for exactly that reason. */}
+        <div className="mt-16">
+          <h3 className="text-xl font-bold tracking-tight">{t.experience.volunteeringHeading}</h3>
+          <div className="mt-6 grid gap-8 md:grid-cols-2">
+            {t.experience.volunteering.map((role, i) => (
+              <FadeIn key={role.title} delay={i * 0.08} className="border-t border-line pt-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                  <p className="font-semibold">{role.title}</p>
+                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{role.period}</span>
+                </div>
+                <p className="mt-2 max-w-[60ch] text-sm leading-relaxed text-muted">{role.detail}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
