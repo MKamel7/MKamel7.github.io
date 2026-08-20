@@ -53,7 +53,7 @@ const en: Content = {
   about: {
     heading: 'About',
     paragraph:
-      'I build at the seam where hardware meets software. Underwater robots, driver monitoring on embedded GPUs, multi-robot fleets in simulation. Currently an M.Eng. student in Mechatronic and Cyber-Physical Systems at TH Deggendorf. What I am known for: calm, sharp execution when systems are under pressure.',
+      'I build at the seam where hardware meets software, and I measure what I build. An autonomous mobile robot that shares a warehouse with people on foot, a PLC program commissioned against a plant that exists only in simulation, and a perception study that found a detector blind past 30 metres. Currently an M.Eng. student in Mechatronic and Cyber-Physical Systems at TH Deggendorf. Before that, an inspection engineer who root-caused an industrial explosion in two weeks.',
     languagesLabel: 'Languages',
     languages: 'Arabic (native), English (C2), German (B1, improving), French (B1)',
   },
@@ -66,11 +66,13 @@ const en: Content = {
   skills: {
     heading: 'Skills',
     groups: [
-      { label: 'Robot software', items: ['ROS 1 & 2', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
-      { label: 'Programming', items: ['Python', 'Embedded C/C++', 'Git & GitHub Actions', 'CMake', 'Docker'] },
-      { label: 'ML & data', items: ['TensorFlow', 'PyTorch', 'NumPy', 'Pandas'] },
+      { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
+      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'ISO 3691-4', 'ISO 21448 SOTIF', 'AUTOSAR E2E', 'PROFIsafe', 'Fault injection', 'Requirements traceability', 'Test automation'] },
+      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
-      { label: 'Hardware & control', items: ['PLCs', 'Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
     ],
   },
   experience: {
@@ -136,6 +138,7 @@ const en: Content = {
       { title: 'GPAct Talent Expo', detail: '1st place nationally among 15 teams for the driver monitoring thesis.' },
       { title: 'MATE ROV 2021', detail: '2nd worldwide of 20 teams, 1st regionally. Technical documentation scored 101.5/100.' },
       { title: 'IOI 2024', detail: 'Chief of Organizers: 1,000+ participants, 216 organizers selected from 860+ candidates.' },
+      { title: 'Rotaract District 2451', detail: '1st place, Professional Development Committee, 2022, among 76 teams. Founded the Rotaract Alexandria New Era club in 2019.' },
     ],
   },
   education: {
@@ -182,7 +185,7 @@ const de: Content = {
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich arbeite an der Nahtstelle zwischen Hardware und Software. Unterwasserroboter, Fahrerüberwachung auf Embedded-GPUs, Multi-Roboter-Flotten in der Simulation. Derzeit Masterstudent in Mechatronic and Cyber-Physical Systems an der TH Deggendorf. Was mich auszeichnet: ruhige, präzise Arbeit, wenn Systeme unter Druck stehen.',
+      'Ich arbeite an der Nahtstelle zwischen Hardware und Software, und ich messe, was ich baue. Ein autonomer mobiler Roboter, der sich ein Lager mit Menschen zu Fuß teilt, ein SPS-Programm, das gegen eine nur simulierte Anlage in Betrieb genommen wurde, und eine Wahrnehmungsstudie, die einen Detektor jenseits von 30 Metern als blind auswies. Derzeit Masterstudent in Mechatronic and Cyber-Physical Systems an der TH Deggendorf. Davor Inspection Engineer, der die Ursache einer Industrieexplosion in zwei Wochen fand.',
     languagesLabel: 'Sprachen',
     languages: 'Arabisch (Muttersprache), Englisch (C2), Deutsch (B1, in Entwicklung), Französisch (B1)',
   },
@@ -195,11 +198,13 @@ const de: Content = {
   skills: {
     heading: 'Kompetenzen',
     groups: [
-      { label: 'Robotik-Software', items: ['ROS 1 & 2', 'Linux (Ubuntu)', 'OpenCV', 'YOLOv8', 'MediaPipe'] },
-      { label: 'Programmierung', items: ['Python', 'Embedded C/C++', 'Git & GitHub Actions', 'CMake', 'Docker'] },
-      { label: 'ML & Daten', items: ['TensorFlow', 'PyTorch', 'NumPy', 'Pandas'] },
+      { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
+      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'ISO 3691-4', 'ISO 21448 SOTIF', 'AUTOSAR E2E', 'PROFIsafe', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
+      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
-      { label: 'Hardware & Regelung', items: ['SPS', 'Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
     ],
   },
   experience: {
@@ -265,6 +270,7 @@ const de: Content = {
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
       { title: 'MATE ROV 2021', detail: 'Platz 2 weltweit von 20 Teams, regional Platz 1. Technische Dokumentation mit 101,5/100 bewertet.' },
       { title: 'IOI 2024', detail: 'Chef-Organisator: über 1.000 Teilnehmende, 216 Organisatoren aus über 860 Bewerbern ausgewählt.' },
+      { title: 'Rotaract District 2451', detail: '1. Platz, Professional Development Committee, 2022, unter 76 Teams. Gründung des Clubs Rotaract Alexandria New Era 2019.' },
     ],
   },
   education: {

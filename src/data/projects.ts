@@ -45,8 +45,8 @@ export const projects: Project[] = [
       { value: 'A+', label: { en: 'bachelor thesis grade', de: 'Note der Bachelorarbeit' } },
     ],
     desc: {
-      en: 'Driver monitoring that runs on the hardware it would ship on, not on a workstation. YOLOv8 for phone use and MediaPipe for drowsiness, at 18 to 20 FPS on a Jetson Nano and 10 FPS on a Raspberry Pi. Bachelor thesis graded A+, and first nationally out of 15 teams at the GPAct Talent Expo.',
-      de: 'Fahrerüberwachung, die auf der Hardware läuft, mit der sie ausgeliefert würde, nicht auf einer Workstation. YOLOv8 für Handynutzung und MediaPipe für Müdigkeit, mit 18 bis 20 FPS auf dem Jetson Nano und 10 FPS auf dem Raspberry Pi. Bachelorarbeit mit A+ bewertet und national 1. Platz von 15 Teams bei der GPAct Talent Expo.',
+      en: 'Driver monitoring that runs on the hardware it would ship on, not on a workstation. MediaPipe drowsiness detection at 18 to 20 FPS on a Jetson Nano, YOLOv8 phone detection at 10 FPS on a Raspberry Pi. Bachelor thesis graded A+, and first nationally out of 15 teams at the GPAct Talent Expo.',
+      de: 'Fahrerüberwachung, die auf der Hardware läuft, mit der sie ausgeliefert würde, nicht auf einer Workstation. MediaPipe-Müdigkeitserkennung mit 18 bis 20 FPS auf dem Jetson Nano, YOLOv8-Handyerkennung mit 10 FPS auf dem Raspberry Pi. Bachelorarbeit mit A+ bewertet und national 1. Platz von 15 Teams bei der GPAct Talent Expo.',
     },
     tags: ['YOLOv8', 'MediaPipe', 'Jetson Nano', 'Raspberry Pi', 'OpenCV', 'Python'],
   },
