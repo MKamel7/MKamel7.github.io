@@ -53,7 +53,7 @@ const en: Content = {
   about: {
     heading: 'About',
     paragraph:
-      'I build machines that share a room with people, then spend most of my time trying to break them. The results I like best are the ones that went wrong: a detector blind past 30 metres, a safety claim I had to retract, three of eleven requirements my own tests refused to pass. They are on this site, next to the ones that worked. Before this I was handed an exploded plant and two weeks to explain it, and somewhere in there I ran an olympiad for a thousand people. Same job, really. Find what nobody checked.',
+      'I build machines that share a room with people, then spend most of my time trying to break them. The results I like best are the ones that went wrong: a detector blind past 30 metres, a safety claim I had to retract, three of eleven requirements my own tests refused to pass. They are on this site, next to the ones that worked. Before this I was handed a refinery explosion and two weeks to find the cause, and somewhere in there I ran an olympiad for a thousand people. Same job, really. Find what nobody checked.',
     languagesLabel: 'Languages',
     languages: 'Arabic (native), English (C2), German (B1, improving), French (B1)',
   },
@@ -223,7 +223,7 @@ const de: Content = {
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich baue Maschinen, die sich einen Raum mit Menschen teilen, und verbringe die meiste Zeit damit, sie kaputtzumachen. Am liebsten sind mir die Ergebnisse, die schiefgegangen sind: ein Detektor, der ab 30 Metern blind ist, eine Sicherheitsaussage, die ich zurückziehen musste, drei von elf Anforderungen, die meine eigenen Tests nicht durchgelassen haben. Die stehen hier, direkt neben denen, die funktioniert haben. Davor bekam ich eine explodierte Anlage und zwei Wochen, um sie zu erklären, und irgendwo dazwischen habe ich eine Olympiade für tausend Menschen organisiert. Im Grunde derselbe Job. Finden, was niemand geprüft hat.',
+      'Ich baue Maschinen, die sich einen Raum mit Menschen teilen, und verbringe die meiste Zeit damit, sie kaputtzumachen. Am liebsten sind mir die Ergebnisse, die schiefgegangen sind: ein Detektor, der ab 30 Metern blind ist, eine Sicherheitsaussage, die ich zurückziehen musste, drei von elf Anforderungen, die meine eigenen Tests nicht durchgelassen haben. Die stehen hier, direkt neben denen, die funktioniert haben. Davor bekam ich eine Explosion in einer Mineralölraffinerie und zwei Wochen, um die Ursache zu finden, und irgendwo dazwischen habe ich eine Olympiade für tausend Menschen organisiert. Im Grunde derselbe Job. Finden, was niemand geprüft hat.',
     languagesLabel: 'Sprachen',
     languages: 'Arabisch (Muttersprache), Englisch (C2), Deutsch (B1, in Entwicklung), Französisch (B1)',
   },
