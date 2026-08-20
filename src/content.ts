@@ -88,6 +88,12 @@ const en: Content = {
     heading: 'Experience',
     entries: [
       {
+        title: 'Club Advisor',
+        org: 'Rotaract Alexandria New Era (remote)',
+        period: 'Jul 2026 - Present',
+        note: 'Advising the board of the club I co-founded in 2019, remotely from Regensburg.',
+      },
+      {
         title: 'Lagerhelfer',
         org: 'DHL',
         period: 'Apr 2026 - Present',
@@ -139,7 +145,7 @@ const en: Content = {
         title: 'President',
         org: 'Rotaract Alexandria New Era',
         period: 'Jul 2021 - Jun 2022',
-        note: 'Co-founded the club in 2019 and led it through the 2021-22 term, running leadership workshops and the Matbakh Alexandria charity kitchen. Still involved as Club Advisor, remotely from Regensburg.',
+        note: 'Co-founded the club in 2019 and led it through the 2021-22 term, running leadership workshops and the Matbakh Alexandria charity kitchen.',
       },
       {
         title: 'Mechatronics Engineer',
@@ -166,7 +172,7 @@ const en: Content = {
         note: 'Equipment maintenance, safety audits, and ISO compliance observation.',
       },
     ],
-    awardsHeading: 'Awards & leadership',
+    awardsHeading: 'Awards',
     awards: [
       { title: 'GPAct Talent Expo', detail: '1st place nationally among 15 teams for the driver monitoring thesis.' },
       { title: 'MATE ROV 2021', detail: '2nd worldwide of 20 teams, 1st regionally. Technical documentation scored 101.5/100.' },
@@ -247,6 +253,12 @@ const de: Content = {
     heading: 'Werdegang',
     entries: [
       {
+        title: 'Club Advisor',
+        org: 'Rotaract Alexandria New Era (remote)',
+        period: 'Jul 2026 - heute',
+        note: 'Beratung des Vorstands des Clubs, den ich 2019 mitgegründet habe, remote aus Regensburg.',
+      },
+      {
         title: 'Lagerhelfer',
         org: 'DHL',
         period: 'Apr 2026 - heute',
@@ -298,7 +310,7 @@ const de: Content = {
         title: 'Präsident',
         org: 'Rotaract Alexandria New Era',
         period: 'Jul 2021 - Jun 2022',
-        note: 'Mitgründer des Clubs 2019 und Präsident im Amtsjahr 2021/22, mit Führungsworkshops und der Wohltätigkeitsküche Matbakh Alexandria. Weiterhin als Club Advisor aktiv, remote aus Regensburg.',
+        note: 'Mitgründer des Clubs 2019 und Präsident im Amtsjahr 2021/22, mit Führungsworkshops und der Wohltätigkeitsküche Matbakh Alexandria.',
       },
       {
         title: 'Mechatronics Engineer',
@@ -325,7 +337,7 @@ const de: Content = {
         note: 'Anlagenwartung, Sicherheitsaudits und Beobachtung der ISO-Konformität.',
       },
     ],
-    awardsHeading: 'Auszeichnungen & Leitung',
+    awardsHeading: 'Auszeichnungen',
     awards: [
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
       { title: 'MATE ROV 2021', detail: 'Platz 2 weltweit von 20 Teams, regional Platz 1. Technische Dokumentation mit 101,5/100 bewertet.' },
