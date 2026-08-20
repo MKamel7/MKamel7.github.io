@@ -74,7 +74,7 @@ const en: Content = {
       // PROFIsafe stack. Both are named on the fault-injection card instead,
       // where the sentence says exactly what was built and links the repository.
       { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fault injection', 'Requirements traceability', 'Test automation'] },
-      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'Java', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
@@ -239,7 +239,7 @@ const de: Content = {
       { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF & xacro', 'tf2', 'RViz', 'colcon', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'ISA-TR88.00.02', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050', 'RTDE', 'OEE'] },
       { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
-      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'Java', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
