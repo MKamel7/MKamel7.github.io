@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import type { RefObject } from 'react'
 import type { MotionValue } from 'motion/react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
@@ -10,6 +11,46 @@ import { useLang } from '../i18n'
 import { content } from '../content'
 import type { Project } from '../types'
 import type { Lang } from '../i18n'
+
+// How many cards deep the receding stack goes. Everything further back rests at
+// the same scale and lift as the deepest visible one, so the stack reads the
+// same with six projects as with sixteen. Without a cap the recede was measured
+// from the LAST card rather than from the active one: at thirteen projects the
+// first card sat at 0.52 scale from the moment it appeared, and seven cards were
+// crushed into a 60px band with their text, metrics and repo links clipped.
+const DEPTH = 4
+const SCALE_STEP = 0.03
+const LIFT_STEP = 12 // px each receding card rises, so its top edge stays visible
+const BASE_TOP = 80 // px the active card sits below the viewport top
+const BOTTOM_GAP = 16
+
+// A sticky element taller than the viewport keeps its bottom permanently out of
+// reach: it pins at `top` and the overflow can never be scrolled to. On a
+// 1280x800 laptop three cards were long enough for that to happen, so their
+// tags and repository links were unreachable. Pinning the bottom instead of the
+// top for those cards costs the header a few pixels while pinned, which you
+// have already read on the way in, and gives back the rest.
+function useStickyTop(cardRef: RefObject<HTMLDivElement | null>) {
+  const [top, setTop] = useState(BASE_TOP)
+
+  useLayoutEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    // offsetHeight, not getBoundingClientRect: the card carries a scale
+    // transform and we need the layout height, not the painted one.
+    const measure = () => setTop(Math.min(BASE_TOP, window.innerHeight - el.offsetHeight - BOTTOM_GAP))
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    window.addEventListener('resize', measure)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [cardRef])
+
+  return top
+}
 
 interface StackedCardProps {
   project: Project
@@ -23,13 +64,21 @@ interface StackedCardProps {
 
 function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoon }: StackedCardProps) {
   const shouldReduceMotion = useReducedMotion()
-  const segmentStart = index / count
-  const segmentEnd = (index + 1) / count
-  const targetScale = 1 - (count - 1 - index) * 0.04
-  const scale = useTransform(progress, [segmentStart, segmentEnd], [1, targetScale])
+  const cardRef = useRef<HTMLDivElement>(null)
+  const top = useStickyTop(cardRef)
+  // Full size for its own segment, then one step back for each card that passes
+  // over it, up to DEPTH steps. useTransform clamps at both ends, so a card that
+  // has dropped out of the visible stack simply stops receding. recedeEnd is
+  // deliberately allowed past 1: for the last cards the range runs off the end
+  // of the scroll, which is what holds them at full size. Clamping it to 1 would
+  // collapse the final card's range to [1, 1].
+  const recedeStart = (index + 1) / count
+  const recedeEnd = (index + 1 + DEPTH) / count
+  const scale = useTransform(progress, [recedeStart, recedeEnd], [1, 1 - DEPTH * SCALE_STEP])
+  const lift = useTransform(progress, [recedeStart, recedeEnd], [0, -DEPTH * LIFT_STEP])
 
   const cardBody = (
-    <div className="grid items-start gap-8 rounded-[20px] border border-line bg-surface p-6 md:grid-cols-2 md:p-10">
+    <div ref={cardRef} className="grid items-start gap-8 rounded-[20px] border border-line bg-surface p-6 md:grid-cols-2 md:p-10">
       <div>
         <span className="font-mono text-xs text-muted">{String(index + 1).padStart(2, '0')}</span>
         <h3 className="mt-2 text-3xl font-black leading-none tracking-tight md:text-[2.75rem]">
@@ -74,9 +123,12 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
     </div>
   )
 
+  // One sticky offset for every card. The stagger comes from `lift`, which is
+  // capped, rather than from index, which is not: a per-index offset pushed the
+  // thirteenth card 264px down the viewport and cut its bottom off.
   return (
-    <div className="sticky mb-10 last:mb-0" style={{ top: `calc(5rem + ${index * 22}px)` }}>
-      {shouldReduceMotion ? cardBody : <motion.div style={{ scale }}>{cardBody}</motion.div>}
+    <div className="sticky mb-10 last:mb-0" style={{ top }}>
+      {shouldReduceMotion ? cardBody : <motion.div style={{ scale, y: lift }}>{cardBody}</motion.div>}
     </div>
   )
 }

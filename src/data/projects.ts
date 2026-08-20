@@ -5,6 +5,35 @@ import type { Project } from '../types';
 // missing media renders a styled placeholder tile.
 export const projects: Project[] = [
   {
+    id: 'p5',
+    title: 'Intralogistics AMR',
+    category: 'featured',
+    media: '/media/p5.mp4',
+    poster: '/media/p5-poster.jpg',
+    repo: 'https://github.com/MKamel7/intralogistics-amr',
+    shots: [
+      { src: '/media/p5-shot-survey.png', caption: {
+        en: 'The vehicle driving its own frontier goals to build the map it later navigates on. Nothing about the building is given to it in advance.',
+        de: 'Das Fahrzeug fährt eigene Frontier-Ziele an und baut die Karte, auf der es später navigiert. Nichts über das Gebäude ist ihm vorher bekannt.' } },
+      { src: '/media/p5-shot-planning.png', caption: {
+        en: 'The robot’s own view: the global costmap and the Nav2 plan across the finished map, resampled onto the same clock as the camera so the two agree on when.',
+        de: 'Die Sicht des Roboters: globale Costmap und Nav2-Plan auf der fertigen Karte, auf dieselbe Uhr wie die Kamera resampelt, damit beide über den Zeitpunkt einig sind.' } },
+      { src: '/media/p5-shot-person.png', caption: {
+        en: 'Passing a worker at 0.64 m without stopping. Across 248,000 samples the deepest anyone reached inside the footprint was 0.100 m, against 0.466 m before that fault was closed.',
+        de: 'Vorbeifahrt an einem Mitarbeiter mit 0,64 m Abstand ohne Halt. Über 248.000 Messpunkte drang niemand tiefer als 0,100 m in die Fahrzeugkontur ein, vorher waren es 0,466 m.' } },
+    ],
+    metrics: [
+      { value: '12 of 12', label: { en: 'transport cycles across five runs', de: 'Transportzyklen über fünf Läufe' } },
+      { value: '0', label: { en: 'contacts in 248,000 samples with people in the aisle', de: 'Kontakte in 248.000 Messpunkten mit Personen im Gang' } },
+      { value: '66', label: { en: 'recorded findings, two of them claims later retracted', de: 'dokumentierte Befunde, zwei davon später zurückgezogene Aussagen' } },
+    ],
+    desc: {
+      en: 'An autonomous mobile robot moving load carriers between stations in a warehouse shared with people on foot, on ROS 2 Jazzy, Gazebo Harmonic and Nav2, with a safety layer that sits after the planner and can override it. One robot, not a fleet: there is no dispatcher and no task allocation, and the VDA 5050 interface is the vehicle half, which is what an integrator connects to. Every physical constant is traceable to an archived data sheet and the build fails when one loses its provenance, which is how a scanner mounting position quoted from the manual for a different sensor was caught. The protective fields are generated from the MiR250-class vehicle specification rather than tuned, and the cost of that is stated: 103 protective stops per cycle, 7% of cycle time. The numbers worth having came from instruments built after a measurement went wrong. A p95 sensor-to-command latency of 796 ms was retracted as a probe artifact and is 124 ms over 397 guarded samples. Precision docking is not delivered, and the README says so rather than omitting it.',
+      de: 'Ein autonomer mobiler Roboter, der Ladungsträger zwischen Stationen in einem Lager bewegt, in dem auch Menschen zu Fuß unterwegs sind, auf ROS 2 Jazzy, Gazebo Harmonic und Nav2, mit einer Sicherheitsschicht hinter dem Planer, die ihn überstimmen kann. Ein Roboter, keine Flotte: es gibt keinen Dispatcher und keine Auftragszuteilung, und die VDA-5050-Schnittstelle ist die Fahrzeugseite, also das, woran ein Integrator anschließt. Jede physikalische Konstante ist auf ein archiviertes Datenblatt zurückführbar, und der Build scheitert, sobald eine ihre Herkunft verliert. Genau so fiel eine Scanner-Einbauposition auf, die aus dem Handbuch eines anderen Sensors stammte. Die Schutzfelder werden aus der Spezifikation der MiR250-Klasse erzeugt statt eingestellt, und der Preis dafür wird genannt: 103 Schutzhalte pro Zyklus, 7% der Zykluszeit. Die belastbaren Zahlen stammen aus Messmitteln, die nach einer falschen Messung gebaut wurden. Eine p95-Latenz von 796 ms zwischen Sensor und Stellbefehl wurde als Artefakt der Messsonde zurückgezogen und liegt abgesichert bei 124 ms über 397 Messpunkte. Präzisionsdocking ist nicht umgesetzt, und die README sagt das, statt es wegzulassen.',
+    },
+    tags: ['ROS 2 Jazzy', 'Nav2', 'Gazebo Harmonic', 'C++', 'ISO 3691-4', 'VDA 5050'],
+  },
+  {
     id: 'dms',
     title: 'Driver Monitoring System',
     category: 'featured',
