@@ -161,8 +161,8 @@ export const projects: Project[] = [
       { value: '3', label: { en: 'seeded defects the suite must reject', de: 'eingebaute Fehler, die die Suite erkennen muss' } },
     ],
     desc: {
-      en: 'HIL-style test automation for an embedded motor controller: a deterministic simulated device, a transport-abstracted driver so the same suite runs unchanged against real hardware later, and property-based fuzzing with Hypothesis. Three deliberately broken controllers keep it honest, because a suite that has never rejected anything has not been tested. Six releases came out of it becoming the device under test for the fault-injection harness.',
-      de: 'HIL-artige Testautomatisierung für eine eingebettete Motorsteuerung: ein deterministisch simuliertes Gerät, ein transportabstrahierter Treiber, damit dieselbe Suite später unverändert gegen echte Hardware läuft, und Property-based Fuzzing mit Hypothesis. Drei absichtlich fehlerhafte Steuerungen halten sie ehrlich, denn eine Suite, die noch nie etwas zurückgewiesen hat, ist selbst ungeprüft. Sechs Releases entstanden daraus, dass dieses Projekt zum Prüfling der Fault-Injection-Harness wurde.',
+      en: 'HIL-style test automation for an embedded motor controller: a deterministic simulated device, a transport-abstracted driver so the same suite runs unchanged against real hardware later, and property-based fuzzing with Hypothesis. Three deliberately broken controllers keep it honest, because a suite that has never rejected anything has not been tested itself.',
+      de: 'HIL-artige Testautomatisierung für eine eingebettete Motorsteuerung: ein deterministisch simuliertes Gerät, ein transportabstrahierter Treiber, damit dieselbe Suite später unverändert gegen echte Hardware läuft, und Property-based Fuzzing mit Hypothesis. Drei absichtlich fehlerhafte Steuerungen halten sie ehrlich, denn eine Suite, die noch nie etwas zurückgewiesen hat, ist selbst ungeprüft.',
     },
     tags: ['Python', 'pytest', 'Hypothesis', 'HIL', 'CI'],
   },
@@ -222,8 +222,8 @@ export const projects: Project[] = [
       { value: '40,570', label: { en: 'annotated objects across the full KITTI split', de: 'annotierte Objekte über den vollständigen KITTI-Split' } },
     ],
     desc: {
-      en: 'Slice-based detection metrics on the full KITTI split, built to show what an aggregate number hides. A pedestrian detector reported at 0.506 mAP scores 0.009 beyond 30 metres and finds nothing at all beyond 50. The mAP is not trusted but checked against pycocotools to six decimal places, every figure carries a bootstrap interval, and nine triggering conditions are gated against their evidence in ISO 21448 SOTIF vocabulary.',
-      de: 'Slice-basierte Detektionsmetriken auf dem vollständigen KITTI-Split, gebaut um zu zeigen, was eine aggregierte Zahl verbirgt. Ein Fußgängerdetektor mit ausgewiesenen 0,506 mAP erreicht jenseits von 30 Metern 0,009 und jenseits von 50 Metern gar nichts. Die mAP wird nicht geglaubt, sondern auf sechs Nachkommastellen gegen pycocotools geprüft, jede Kennzahl trägt ein Bootstrap-Intervall, und neun auslösende Bedingungen werden in der Sprache von ISO 21448 SOTIF gegen ihre Evidenz abgesichert.',
+      en: 'Slice-based detection metrics on the full KITTI split, built to show what an aggregate number hides. A pedestrian detector reported at 0.506 mAP scores 0.009 beyond 30 metres and finds nothing at all beyond 50. Every figure carries a bootstrap interval, and nine ISO 21448 SOTIF triggering conditions are gated against their evidence.',
+      de: 'Slice-basierte Detektionsmetriken auf dem vollständigen KITTI-Split, gebaut um zu zeigen, was eine aggregierte Zahl verbirgt. Ein Fußgängerdetektor mit ausgewiesenen 0,506 mAP erreicht jenseits von 30 Metern 0,009 und jenseits von 50 Metern gar nichts. Jede Kennzahl trägt ein Bootstrap-Intervall, und neun auslösende Bedingungen nach ISO 21448 SOTIF werden gegen ihre Evidenz abgesichert.',
     },
     tags: ['ONNX Runtime', 'KITTI', 'ISO 21448 SOTIF', 'Evaluation engineering', 'pycocotools', 'Python'],
   },
@@ -240,8 +240,8 @@ export const projects: Project[] = [
       { value: '7', label: { en: 'findings from an independent review, all closed', de: 'Befunde aus einem unabhängigen Review, alle geschlossen' } },
     ],
     desc: {
-      en: 'Functional-safety fault injection against an embedded motor controller: a hazard-derived fault catalogue with FTTI budgets, bidirectional requirement-to-test traceability that fails the build on a gap either way, and one CRC-and-counter protection layer configured as both AUTOSAR E2E and PROFIsafe. The result worth having is that detection is not protection. A second temperature sensor bounded the damage without preventing it, and only a channel of a different kind closed the gap.',
-      de: 'Fehlerinjektion für funktionale Sicherheit an einer eingebetteten Motorsteuerung: ein aus einer Gefährdungsanalyse abgeleiteter Fehlerkatalog mit FTTI-Budgets, bidirektionale Nachverfolgbarkeit von Anforderung zu Test, die den Build bei einer Lücke in beide Richtungen scheitern lässt, und eine CRC-und-Zähler-Schutzschicht, konfiguriert sowohl als AUTOSAR E2E als auch als PROFIsafe. Das eigentliche Ergebnis: Erkennung ist kein Schutz. Ein zweiter Temperatursensor begrenzte den Schaden, ohne ihn zu verhindern, und erst ein Kanal anderer Art schloss die Lücke.',
+      en: 'Functional-safety fault injection against an embedded motor controller: a hazard-derived fault catalogue with FTTI budgets, bidirectional traceability that fails the build on a gap either way, and a CRC-and-counter layer running as both AUTOSAR E2E and PROFIsafe. Detection is not protection. A second temperature sensor bounded the damage without preventing it; only a channel of a different kind closed the gap.',
+      de: 'Fehlerinjektion für funktionale Sicherheit an einer eingebetteten Motorsteuerung: ein aus der Gefährdungsanalyse abgeleiteter Fehlerkatalog mit FTTI-Budgets, bidirektionale Nachverfolgbarkeit, die den Build bei einer Lücke in beide Richtungen scheitern lässt, und eine CRC-und-Zähler-Schicht, die zugleich als AUTOSAR E2E und als PROFIsafe läuft. Erkennung ist kein Schutz. Ein zweiter Temperatursensor begrenzte den Schaden, ohne ihn zu verhindern; erst ein Kanal anderer Art schloss die Lücke.',
     },
     tags: ['Python', 'Functional safety', 'ISO 26262-inspired', 'AUTOSAR E2E', 'PROFIsafe'],
   },
@@ -269,8 +269,8 @@ export const projects: Project[] = [
       { value: 'URSim', label: { en: 'validated against the real UR driver', de: 'gegen den echten UR-Treiber validiert' } },
     ],
     desc: {
-      en: 'Vision-guided, collision-aware pick and place for a UR5e with MoveIt 2 on ROS 2 Jazzy, built as an industrial colour-sorting cell. An overhead RGB-D camera segments three coloured parts, lifts the chosen one to a 3D pose in the robot base frame from the depth image, and OMPL plans a collision-aware grasp onto a moving conveyor. Validated against the real UR driver on URSim, with an OPC UA server and a live cell dashboard.',
-      de: 'Kamerageführtes, kollisionsbewusstes Pick-and-Place für einen UR5e mit MoveIt 2 unter ROS 2 Jazzy, aufgebaut als industrielle Farbsortierzelle. Eine RGB-D-Kamera über der Zelle segmentiert drei farbige Teile, überführt das gewählte über das Tiefenbild in eine 3D-Pose im Roboterbasis-Koordinatensystem, und OMPL plant einen kollisionsbewussten Griff auf ein laufendes Förderband. Gegen den echten UR-Treiber auf URSim validiert, mit OPC-UA-Server und Live-Dashboard der Zelle.',
+      en: 'Vision-guided pick and place for a UR5e with MoveIt 2 on ROS 2 Jazzy, built as an industrial colour-sorting cell. An overhead RGB-D camera segments three coloured parts, lifts the chosen one to a 3D pose in the robot base frame, and OMPL plans a collision-aware grasp onto a moving conveyor. Validated against the real UR driver on URSim, with an OPC UA server and a live cell dashboard.',
+      de: 'Kamerageführtes Pick-and-Place für einen UR5e mit MoveIt 2 unter ROS 2 Jazzy, aufgebaut als industrielle Farbsortierzelle. Eine RGB-D-Kamera über der Zelle segmentiert drei farbige Teile, überführt das gewählte in eine 3D-Pose im Roboterbasis-Koordinatensystem, und OMPL plant einen kollisionsbewussten Griff auf ein laufendes Förderband. Gegen den echten UR-Treiber auf URSim validiert, mit OPC-UA-Server und Live-Dashboard der Zelle.',
     },
     tags: ['ROS 2 Jazzy', 'MoveIt 2', 'OMPL', 'Gazebo', 'RGB-D perception', 'OPC UA'],
   },
