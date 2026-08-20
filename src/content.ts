@@ -29,8 +29,6 @@ export interface Content {
     entries: { title: string; org: string; period: string; note: string }[];
     awardsHeading: string;
     awards: { title: string; detail: string }[];
-    volunteeringHeading: string;
-    volunteering: { title: string; period: string; detail: string }[];
   };
   education: {
     heading: string;
@@ -96,6 +94,12 @@ const en: Content = {
         note: 'Warehouse and parcel handling alongside full-time studies.',
       },
       {
+        title: 'Guide',
+        org: 'European Girls’ Olympiad in Informatics',
+        period: 'Jul 2025, May 2026',
+        note: 'Guided international delegations and managed the contest hall at the Deutsche Telekom Campus in Bonn.',
+      },
+      {
         title: 'Career break & travelling',
         org: '',
         period: 'Aug 2025 - Mar 2026',
@@ -114,6 +118,12 @@ const en: Content = {
         note: 'Preparing meals in the kitchen alongside studies.',
       },
       {
+        title: 'Chief of Organizers',
+        org: 'IOI 2024, International Olympiad in Informatics',
+        period: 'Jul - Sep 2024',
+        note: 'Directed operations for 1,000+ international participants: arrivals and departures, competition hall, accommodation, food logistics, sponsor coordination and live crisis management. Selected 216 organizers from 860+ candidates.',
+      },
+      {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Oct 2023 - Sep 2024',
@@ -124,6 +134,12 @@ const en: Content = {
         org: 'REI Lead Pros (US, remote)',
         period: 'Apr - Oct 2022',
         note: 'Remote US real estate sales. Ranked 7th company-wide.',
+      },
+      {
+        title: 'President',
+        org: 'Rotaract Alexandria New Era',
+        period: 'Jul 2021 - Jun 2022',
+        note: 'Co-founded the club in 2019 and led it through the 2021-22 term, running leadership workshops and the Matbakh Alexandria charity kitchen. Still involved as Club Advisor, remotely from Regensburg.',
       },
       {
         title: 'Mechatronics Engineer',
@@ -138,6 +154,12 @@ const en: Content = {
         note: 'Hands-on prototyping and testing that led into the Brotta II engineering role.',
       },
       {
+        title: 'Chief of Organizers',
+        org: 'Egyptian Olympiad in Informatics',
+        period: 'Aug - Oct 2019',
+        note: 'Led the organising team for the national informatics olympiad.',
+      },
+      {
         title: 'Mechanical Engineering Intern',
         org: 'AMOC, Alexandria',
         period: 'Jul 2019',
@@ -149,29 +171,6 @@ const en: Content = {
       { title: 'GPAct Talent Expo', detail: '1st place nationally among 15 teams for the driver monitoring thesis.' },
       { title: 'MATE ROV 2021', detail: '2nd worldwide of 20 teams, 1st regionally. Technical documentation scored 101.5/100.' },
       { title: 'Rotaract District 2451', detail: '1st place, Professional Development Committee, 2022, among 76 teams.' },
-    ],
-    volunteeringHeading: 'Volunteering',
-    volunteering: [
-      {
-        title: 'Rotaract Alexandria New Era',
-        period: '2019 - present',
-        detail: 'Co-founded the club in 2019, President 2021 to 2022, Club Advisor today and continuing remotely from Regensburg. Seven years across International Understanding, Club Service, Fundraising, Professional Development and Membership, and ran Matbakh Alexandria, a charity kitchen.',
-      },
-      {
-        title: 'Chief of Organizers, IOI 2024',
-        period: 'Jul - Sep 2024',
-        detail: 'Directed operations for the International Olympiad in Informatics: 1,000+ participants across arrivals, competition hall, accommodation, food logistics, sponsor coordination and live crisis management. Selected 216 organizers from 860+ candidates.',
-      },
-      {
-        title: 'Guide, EGOI',
-        period: '2025 and 2026',
-        detail: 'European Girls’ Olympiad in Informatics. Guided international delegations and managed the contest hall at the Deutsche Telekom Campus in Bonn.',
-      },
-      {
-        title: 'Earlier',
-        period: '2018 - 2019',
-        detail: 'Chief of Organizers for the Egyptian Olympiad in Informatics, 2019. AASTMT Student Union and AASTMT Scouts.',
-      },
     ],
   },
   education: {
@@ -254,6 +253,12 @@ const de: Content = {
         note: 'Lager- und Paketabwicklung neben dem Vollzeitstudium.',
       },
       {
+        title: 'Guide',
+        org: 'European Girls’ Olympiad in Informatics',
+        period: 'Jul 2025, Mai 2026',
+        note: 'Betreuung internationaler Delegationen und Leitung der Wettbewerbshalle auf dem Deutsche-Telekom-Campus in Bonn.',
+      },
+      {
         title: 'Berufliche Auszeit & Reisen',
         org: '',
         period: 'Aug 2025 - Mär 2026',
@@ -272,6 +277,12 @@ const de: Content = {
         note: 'Essenszubereitung in der Küche neben dem Studium.',
       },
       {
+        title: 'Chef-Organisator',
+        org: 'IOI 2024, Internationale Informatik-Olympiade',
+        period: 'Jul - Sep 2024',
+        note: 'Gesamtverantwortung für den Ablauf mit über 1.000 internationalen Teilnehmenden: An- und Abreise, Wettbewerbshalle, Unterbringung, Verpflegung, Sponsorenbetreuung und Krisenmanagement im laufenden Betrieb. 216 Organisatoren aus über 860 Bewerbern ausgewählt.',
+      },
+      {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Okt 2023 - Sep 2024',
@@ -282,6 +293,12 @@ const de: Content = {
         org: 'REI Lead Pros (USA, remote)',
         period: 'Apr - Okt 2022',
         note: 'Immobilienvertrieb (USA, remote). Unternehmensweit auf Platz 7.',
+      },
+      {
+        title: 'Präsident',
+        org: 'Rotaract Alexandria New Era',
+        period: 'Jul 2021 - Jun 2022',
+        note: 'Mitgründer des Clubs 2019 und Präsident im Amtsjahr 2021/22, mit Führungsworkshops und der Wohltätigkeitsküche Matbakh Alexandria. Weiterhin als Club Advisor aktiv, remote aus Regensburg.',
       },
       {
         title: 'Mechatronics Engineer',
@@ -296,6 +313,12 @@ const de: Content = {
         note: 'Prototyping und Tests, die in die Brotta-II-Ingenieursrolle mündeten.',
       },
       {
+        title: 'Chef-Organisator',
+        org: 'Egyptian Olympiad in Informatics',
+        period: 'Aug - Okt 2019',
+        note: 'Leitung des Organisationsteams der nationalen Informatik-Olympiade.',
+      },
+      {
         title: 'Mechanical Engineering Intern',
         org: 'AMOC, Alexandria',
         period: 'Jul 2019',
@@ -307,29 +330,6 @@ const de: Content = {
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
       { title: 'MATE ROV 2021', detail: 'Platz 2 weltweit von 20 Teams, regional Platz 1. Technische Dokumentation mit 101,5/100 bewertet.' },
       { title: 'Rotaract District 2451', detail: '1. Platz, Professional Development Committee, 2022, unter 76 Teams.' },
-    ],
-    volunteeringHeading: 'Ehrenamt',
-    volunteering: [
-      {
-        title: 'Rotaract Alexandria New Era',
-        period: '2019 - heute',
-        detail: 'Mitgründer des Clubs 2019, Präsident 2021 bis 2022, heute Club Advisor und weiterhin remote aus Regensburg tätig. Sieben Jahre in den Ressorts International Understanding, Club Service, Fundraising, Professional Development und Mitglieder, dazu Leitung von Matbakh Alexandria, einer Wohltätigkeitsküche.',
-      },
-      {
-        title: 'Chef-Organisator, IOI 2024',
-        period: 'Jul - Sep 2024',
-        detail: 'Gesamtverantwortung für den Ablauf der Internationalen Informatik-Olympiade: über 1.000 Teilnehmende, von An- und Abreise über Wettbewerbshalle, Unterbringung und Verpflegung bis zu Sponsorenbetreuung und Krisenmanagement im laufenden Betrieb. 216 Organisatoren aus über 860 Bewerbern ausgewählt.',
-      },
-      {
-        title: 'Guide, EGOI',
-        period: '2025 und 2026',
-        detail: 'European Girls’ Olympiad in Informatics. Betreuung internationaler Delegationen und Leitung der Wettbewerbshalle auf dem Deutsche-Telekom-Campus in Bonn.',
-      },
-      {
-        title: 'Frühere Tätigkeiten',
-        period: '2018 - 2019',
-        detail: 'Chef-Organisator der Egyptian Olympiad in Informatics, 2019. AASTMT Student Union und AASTMT Scouts.',
-      },
     ],
   },
   education: {
