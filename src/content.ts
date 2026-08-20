@@ -68,7 +68,12 @@ const en: Content = {
     groups: [
       { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
-      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'ISO 3691-4', 'ISO 21448 SOTIF', 'AUTOSAR E2E', 'PROFIsafe', 'Fault injection', 'Requirements traceability', 'Test automation'] },
+      // AUTOSAR E2E and PROFIsafe are deliberately NOT chips here. A chip reads
+      // as toolchain familiarity, and what exists is an implementation of their
+      // protection semantics, not Classic/Adaptive Platform or a certified
+      // PROFIsafe stack. Both are named on the fault-injection card instead,
+      // where the sentence says exactly what was built and links the repository.
+      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fault injection', 'Requirements traceability', 'Test automation'] },
       { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
@@ -200,7 +205,7 @@ const de: Content = {
     groups: [
       { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050'] },
-      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'ISO 3691-4', 'ISO 21448 SOTIF', 'AUTOSAR E2E', 'PROFIsafe', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
+      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
       { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
