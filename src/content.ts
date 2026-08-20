@@ -186,7 +186,7 @@ const en: Content = {
         degree: 'M.Eng. Mechatronic & Cyber-Physical Systems',
         institution: 'TH Deggendorf, Cham',
         period: 'Mar 2026 - Sep 2027',
-        focus: 'Advanced Robotics · Autonomous Systems · Cyber-Physical Systems · Advanced Modelling and Simulation, with case studies in cooperative multi-agent systems and mechatronic system simulation. Functional Safety, Principles and Design follows in the second semester.',
+        focus: 'Advanced Robotics · Autonomous Systems · Cyber-Physical Systems · Functional Safety, Principles and Design · Advanced Modelling and Simulation · Cooperative and Autonomous Systems',
         status: 'In progress',
       },
       {
@@ -351,7 +351,7 @@ const de: Content = {
         degree: 'M.Eng. Mechatronic & Cyber-Physical Systems',
         institution: 'TH Deggendorf, Cham',
         period: 'Mär 2026 - Sep 2027',
-        focus: 'Advanced Robotics · Autonomous Systems · Cyber-Physical Systems · Advanced Modelling and Simulation, mit Fallstudien zu kooperativen Multi-Agenten-Systemen und mechatronischer Systemsimulation. Funktionale Sicherheit folgt im zweiten Semester.',
+        focus: 'Advanced Robotics · Autonomous Systems · Cyber-Physical Systems · Functional Safety, Principles and Design · Advanced Modelling and Simulation · Cooperative and Autonomous Systems',
         status: 'Laufend',
       },
       {
