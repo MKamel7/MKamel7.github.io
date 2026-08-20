@@ -69,13 +69,10 @@ async function run(label, url, hide) {
   return med(p50s)
 }
 
-const OLD = 'http://127.0.0.1:8081/'
-const NEW = 'http://127.0.0.1:8082/'
-console.log(`hero-to-about scroll, ${THROTTLE}x CPU throttle, ${REPS} reps, warmed\n`)
-const o = await run('OLD marquee', OLD, null)
-const n = await run('NEW marquee', NEW, null)
-await run('NEW, marquee hidden', NEW, 'div.overflow-hidden.py-10')
-await run('NEW, canvas hidden', NEW, 'canvas')
-await run('NEW, both hidden', NEW, 'div.overflow-hidden.py-10, canvas')
-console.log(`\nmarquee change: ${(((o - n) / o) * 100).toFixed(0)}% faster median frame`)
+const URL = process.env.URL || 'https://mkamel7.github.io/'
+console.log(`hero-to-about scroll, ${THROTTLE}x CPU throttle, ${REPS} reps, warmed\n${URL}\n`)
+await run('everything on', URL, null)
+await run('marquee hidden', URL, 'div.overflow-hidden.py-10')
+await run('background canvas hidden', URL, 'canvas')
+await run('both hidden', URL, 'div.overflow-hidden.py-10, canvas')
 await b.close()
