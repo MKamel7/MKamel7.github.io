@@ -246,7 +246,7 @@ const de: Content = {
       // Not a generic soft-skill list. Every chip maps to something documented
       // elsewhere on this page: the explosion root cause, the hose standard, the
       // 101.5/100 competition report, 216 organizers at IOI, the certifications.
-      { label: 'Methods & collaboration', items: ['Root cause analysis', 'Standards authoring', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural teams', 'Agile & Scrum', 'Jira'] },
+      { label: 'Methodik & Zusammenarbeit', items: ['Ursachenanalyse', 'Normenerstellung', 'Technische Dokumentation', 'Lieferantenqualifizierung', 'Teamführung', 'Interkulturelle Teams', 'Agile & Scrum', 'Jira'] },
     ],
   },
   experience: {
