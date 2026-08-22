@@ -70,7 +70,7 @@ const en: Content = {
       // card on this same page backs it. Sub-components of something already
       // listed (tf2, RViz, colcon under ROS 2) are padding, not extra skills.
       { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP'] },
+      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
       // AUTOSAR E2E and PROFIsafe are deliberately NOT chips here. A chip reads
       // as toolchain familiarity, and what exists is an implementation of their
       // protection semantics, not Classic/Adaptive Platform or a certified
@@ -81,15 +81,15 @@ const en: Content = {
       // standards Mo actually worked to (ISO 3691-4, ISO 21448 SOTIF) are named
       // in the project cards, inside a sentence that says what was built.
       { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
-      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
-      { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'NumPy'] },
-      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks'] },
+      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
+      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
-      // The old "Methods & collaboration" row is gone. Root cause analysis,
-      // standards authoring, technical documentation, supplier qualification,
-      // team leadership: all real, all already proven by the experience entries
-      // (the explosion, the hose standard, 101.5/100, 216 organizers). Restating
-      // them as chips made them look like claims instead of results.
+      // Kept by Mo's explicit call (2026-08-22) after a trim proposed removing it.
+      // Every chip maps to something documented elsewhere on this page: the
+      // explosion root cause, the hose standard, the 101.5/100 competition
+      // report, 216 organizers at IOI.
+      { label: 'Methods & collaboration', items: ['Root cause analysis', 'Standards authoring', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural teams', 'Agile & Scrum', 'Jira'] },
     ],
   },
   experience: {
@@ -247,15 +247,14 @@ const de: Content = {
       // Siehe die englische Fassung: ein Chip bleibt nur, wenn ihn eine
       // Projektkarte auf dieser Seite belegt.
       { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP'] },
+      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
       // Siehe die englische Fassung: Normnummern sind bewusst keine Chips.
       { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
-      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
-      { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'NumPy'] },
-      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks'] },
+      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
+      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
-      // Zeile "Methodik & Zusammenarbeit" entfernt: alles darin ist bereits
-      // durch die Werdegang-Eintraege belegt.
+      { label: 'Methodik & Zusammenarbeit', items: ['Ursachenanalyse', 'Normenerstellung', 'Technische Dokumentation', 'Lieferantenqualifizierung', 'Teamführung', 'Interkulturelle Teams', 'Agile & Scrum', 'Jira'] },
     ],
   },
   experience: {
