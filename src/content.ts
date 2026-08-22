@@ -73,7 +73,11 @@ const en: Content = {
       // protection semantics, not Classic/Adaptive Platform or a certified
       // PROFIsafe stack. Both are named on the fault-injection card instead,
       // where the sentence says exactly what was built and links the repository.
-      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fault injection', 'Requirements traceability', 'Test automation'] },
+      // Standard numbers are deliberately NOT chips here, same reasoning as the
+      // AUTOSAR E2E note above: a chip claims familiarity with a document. The
+      // standards Mo actually worked to (ISO 3691-4, ISO 21448 SOTIF) are named
+      // in the project cards, inside a sentence that says what was built.
+      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
       { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'Java', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
@@ -238,7 +242,8 @@ const de: Content = {
     groups: [
       { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'ROS 1', 'Nav2', 'MoveIt 2', 'OMPL', 'ros2_control', 'URDF & xacro', 'tf2', 'RViz', 'colcon', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'ISA-TR88.00.02', 'Modbus TCP', 'OPC UA', 'MQTT', 'VDA 5050', 'RTDE', 'OEE'] },
-      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'ISO 3691-4', 'ISO 21448 SOTIF', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
+      // Siehe die englische Fassung: Normnummern sind bewusst keine Chips.
+      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
       { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'Java', 'pytest', 'Hypothesis', 'ruff & mypy', 'Git & GitHub Actions', 'CMake', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
