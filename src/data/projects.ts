@@ -190,6 +190,7 @@ export const projects: Project[] = [
     category: 'featured',
     media: '/media/dms.mp4',
     poster: '/media/dms-poster.jpg',
+    repo: 'https://github.com/MKamel7/driver-monitoring-system',
     metrics: [
       { value: '97.8%', label: { en: 'mAP@0.5 phone detection', de: 'mAP@0.5 Telefonerkennung' } },
       { value: '18-20 FPS', label: { en: 'drowsiness on Jetson Nano', de: 'Müdigkeitserkennung auf Jetson Nano' } },
@@ -224,6 +225,7 @@ export const projects: Project[] = [
     category: 'featured',
     media: '/media/digital-twin.mp4',
     poster: '/media/digital-twin-poster.jpg',
+    repo: 'https://github.com/MKamel7/Digital-twin-Predictive-maintenance',
     metrics: [
       { value: '94.4%', label: { en: 'hierarchical fault-diagnosis accuracy', de: 'Genauigkeit hierarchische Fehlerdiagnose' } },
     ],
@@ -239,6 +241,7 @@ export const projects: Project[] = [
     category: 'featured',
     media: '/media/warehouse.mp4',
     poster: '/media/warehouse-poster.jpg',
+    repo: 'https://github.com/MKamel7/warehouse-fleet',
     metrics: [
       { value: '3', label: { en: 'robot fleet, coordinated', de: 'Roboter-Flotte, koordiniert' } },
       { value: 'ROS 2', label: { en: 'Humble with Nav2', de: 'Humble mit Nav2' } },
