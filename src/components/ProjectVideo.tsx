@@ -24,6 +24,21 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
   const [shown, setShown] = useState(media ? -1 : 0)
   const [open, setOpen] = useState(false)
   const id = useId()
+  const labels = lang === 'de'
+    ? {
+        open: media ? `${title}-Demo abspielen` : `Screenshots zu ${title} ansehen`,
+        hint: media ? 'Abspielen · vergrößern' : `${shots.length} ${shots.length === 1 ? 'Screenshot' : 'Screenshots'} · vergrößern`,
+        dialog: media ? `${title}-Demo` : `Screenshots zu ${title}`,
+        demo: 'Demo',
+        close: 'Schließen',
+      }
+    : {
+        open: media ? `Play ${title} demo` : `View ${title} screenshots`,
+        hint: media ? 'click to play · enlarge' : `${shots.length} ${shots.length === 1 ? 'screenshot' : 'screenshots'} · click to enlarge`,
+        dialog: media ? `${title} demo` : `${title} screenshots`,
+        demo: 'Demo',
+        close: 'Close',
+      }
 
   // close this player if another one opens
   useEffect(() => {
@@ -58,7 +73,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
       <button
         type="button"
         onClick={openPlayer}
-        aria-label={media ? `Play ${title} demo` : `View ${title} screenshots`}
+        aria-label={labels.open}
         className="group relative block h-full w-full cursor-pointer overflow-hidden bg-surface"
       >
         {poster ? (
@@ -81,7 +96,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
           </span>
         </span>
         <span className="pointer-events-none absolute bottom-3 left-4 font-mono text-[11px] tracking-wide text-ink/85">
-          {media ? 'click to play · enlarge' : `${shots.length} screenshots · click to enlarge`}
+          {labels.hint}
         </span>
       </button>
 
@@ -91,7 +106,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
-          aria-label={`${title} demo`}
+          aria-label={labels.dialog}
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -131,7 +146,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
                     shown === -1 ? 'border-accent text-accent' : 'border-line text-muted hover:text-ink'
                   }`}
                 >
-                  demo
+                  {labels.demo}
                 </button>
                 )}
                 {shots.map((shot, i) => (
@@ -153,7 +168,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
           <button
             type="button"
             onClick={() => setOpen(false)}
-            aria-label="Close"
+            aria-label={labels.close}
             className="fixed right-4 top-4 z-[121] grid h-11 w-11 place-items-center rounded-full border border-line bg-surface/90 text-xl text-ink transition-colors hover:text-accent"
           >
             &times;

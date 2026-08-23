@@ -3,11 +3,17 @@ export interface Localized {
   de: string
 }
 
+export interface SkillGroup {
+  label: string
+  tier: 'core' | 'additional'
+  items: string[]
+}
+
 export interface Project {
   id: string
   title: string
   category: 'featured' | 'pipeline'
-  metrics: { value: string; label: Localized }[]
+  metrics: { value: Localized; label: Localized }[]
   desc: Localized
   tags: string[]
   media?: string

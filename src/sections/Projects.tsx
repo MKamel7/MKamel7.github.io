@@ -9,6 +9,7 @@ import { ProjectVideo } from '../components/ProjectVideo'
 import { projects } from '../data/projects'
 import { useLang } from '../i18n'
 import { content } from '../content'
+import { displayMetricValue } from '../portfolioContent'
 import type { Project } from '../types'
 import type { Lang } from '../i18n'
 
@@ -87,8 +88,13 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
         <p className="mt-5 max-w-[60ch] leading-relaxed text-muted">{project.desc[lang]}</p>
         <div className="mt-7 flex flex-wrap gap-x-10 gap-y-4">
           {project.metrics.map((metric) => (
-            <div key={metric.label[lang]} className="border-l-2 border-accent pl-3">
-              <div className="font-mono text-xl text-ink md:text-2xl">{metric.value}</div>
+            <div
+              key={metric.label[lang]}
+              className="rounded-lg border border-line bg-bg/40 px-4 py-3"
+            >
+              <div className="font-mono text-xl text-accent md:text-2xl">
+                {displayMetricValue(metric.value, lang)}
+              </div>
               <div className="mt-1 text-xs text-muted">{metric.label[lang]}</div>
             </div>
           ))}

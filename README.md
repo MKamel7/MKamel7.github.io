@@ -2,7 +2,7 @@
 
 Source for my portfolio at [mkamel7.github.io](https://mkamel7.github.io).
 
-I am a robotics engineer and M.Eng. student in Mechatronic & Cyber-Physical Systems at TH Deggendorf, based in Regensburg. The site covers my projects (embedded driver monitoring, underwater ROVs, multi-robot simulation), skills, and experience, in English and German.
+I am a Mechatronics Engineer and M.Eng. student in Mechatronic & Cyber-Physical Systems at TH Deggendorf, based in Regensburg. The site presents my work across robotics, industrial automation, embedded systems, functional safety, and engineering software in English and German.
 
 ## Stack
 

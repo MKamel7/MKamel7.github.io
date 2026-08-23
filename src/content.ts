@@ -1,4 +1,5 @@
 import type { Lang } from './i18n';
+import type { SkillGroup } from './types';
 
 export interface Content {
   nav: { about: string; projects: string; experience: string; education: string; contact: string };
@@ -22,7 +23,9 @@ export interface Content {
   };
   skills: {
     heading: string;
-    groups: { label: string; items: string[] }[];
+    coreHeading: string;
+    additionalHeading: string;
+    groups: SkillGroup[];
   };
   experience: {
     heading: string;
@@ -46,14 +49,14 @@ const en: Content = {
   nav: { about: 'About', projects: 'Projects', experience: 'Experience', education: 'Education', contact: 'Contact' },
   hero: {
     chip: 'Open to Werkstudent roles and internships · Regensburg',
-    headline: 'MO KAMEL',
+    headline: 'Mo Kamel',
     subline: 'Mechatronics engineer. I make machines think, move, and fail safely.',
     cta: 'View projects',
   },
   about: {
     heading: 'About',
     paragraph:
-      'I build machines that share a room with people, then spend most of my time trying to break them. The results I like best are the ones that went wrong: a detector blind past 30 metres, a safety claim I had to retract, three of eleven requirements my own tests refused to pass. They are on this site, next to the ones that worked. Before this I was handed a pipeline explosion and two weeks to find the cause, and somewhere in there I ran an olympiad for a thousand people. Same job, really. Find what nobody checked.',
+      'I am a mechatronics engineer focused on robotics, industrial automation, embedded systems, and functional safety. I turn requirements into testable systems, from ROS 2 navigation and PLC-controlled production cells to safety-focused fault injection and computer vision. My engineering approach is grounded in measurement, traceability, and continuous improvement. Beyond technical work, I have led international operations for more than 1,000 participants and coordinated 216 organizers, strengthening my ability to take ownership, communicate clearly, and deliver with diverse teams.',
     languagesLabel: 'Languages',
     languages: 'English (C1), German (B1, improving), French (B1), Arabic (native)',
   },
@@ -65,31 +68,20 @@ const en: Content = {
   },
   skills: {
     heading: 'Skills',
+    coreHeading: 'Core Engineering',
+    additionalHeading: 'Additional Expertise',
     groups: [
-      // Admission test for this grid: a chip earns its place only if a project
-      // card on this same page backs it. Sub-components of something already
-      // listed (tf2, RViz, colcon under ROS 2) are padding, not extra skills.
-      { label: 'Robotics', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrial automation', items: ['IEC 61131-3 Structured Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
-      // AUTOSAR E2E and PROFIsafe are deliberately NOT chips here. A chip reads
-      // as toolchain familiarity, and what exists is an implementation of their
-      // protection semantics, not Classic/Adaptive Platform or a certified
-      // PROFIsafe stack. Both are named on the fault-injection card instead,
-      // where the sentence says exactly what was built and links the repository.
-      // Standard numbers are deliberately NOT chips here, same reasoning as the
-      // AUTOSAR E2E note above: a chip claims familiarity with a document. The
-      // standards Mo actually worked to (ISO 3691-4, ISO 21448 SOTIF) are named
-      // in the project cards, inside a sentence that says what was built.
-      { label: 'Safety & verification', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
-      { label: 'Programming', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
-      { label: 'Perception & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
-      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
-      { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
-      // Kept by Mo's explicit call (2026-08-22) after a trim proposed removing it.
-      // Every chip maps to something documented elsewhere on this page: the
-      // explosion root cause, the hose standard, the 101.5/100 competition
-      // report, 216 organizers at IOI.
-      { label: 'Methods & collaboration', items: ['Root cause analysis', 'Standards authoring', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural teams', 'Agile & Scrum', 'Jira'] },
+      // This is the verified public skills inventory. Project cards provide
+      // direct evidence for many entries; career records support the remainder.
+      // ISO references stay in project context rather than appearing as chips.
+      { label: 'Robotics', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrial Automation', tier: 'core', items: ['Structured Text (ST), IEC 61131-3', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
+      { label: 'Safety & Verification', tier: 'core', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
+      { label: 'Software & Testing', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Computer Vision & ML', tier: 'additional', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
+      { label: 'Simulation & CAD', tier: 'additional', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
+      { label: 'Embedded & Electronics', tier: 'additional', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      { label: 'Engineering Methods', tier: 'additional', items: ['Root cause analysis', 'Technical specifications & company standards', 'Technical documentation', 'Supplier qualification', 'Team leadership', 'Cross-cultural collaboration', 'Agile development (Scrum)', 'Jira'] },
     ],
   },
   experience: {
@@ -224,16 +216,16 @@ const de: Content = {
   nav: { about: 'Über mich', projects: 'Projekte', experience: 'Werdegang', education: 'Ausbildung', contact: 'Kontakt' },
   hero: {
     chip: 'Offen für Werkstudentenstellen und Praktika · Regensburg',
-    headline: 'MO KAMEL',
+    headline: 'Mo Kamel',
     subline: 'Mechatronikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
     cta: 'Projekte ansehen',
   },
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich baue Maschinen, die sich einen Raum mit Menschen teilen, und verbringe die meiste Zeit damit, sie kaputtzumachen. Am liebsten sind mir die Ergebnisse, die schiefgegangen sind: ein Detektor, der ab 30 Metern blind ist, eine Sicherheitsaussage, die ich zurückziehen musste, drei von elf Anforderungen, die meine eigenen Tests nicht durchgelassen haben. Die stehen hier, direkt neben denen, die funktioniert haben. Davor bekam ich eine Rohrleitungsexplosion und zwei Wochen, um die Ursache zu finden, und irgendwo dazwischen habe ich eine Olympiade für tausend Menschen organisiert. Im Grunde derselbe Job. Finden, was niemand geprüft hat.',
+      'Ich bin Mechatronikingenieur mit Schwerpunkt Robotik, industrielle Automatisierung, Embedded-Systeme und funktionale Sicherheit. Ich überführe Anforderungen in überprüfbare Systeme – von ROS-2-Navigation und SPS-gesteuerten Produktionszellen bis zu sicherheitsorientierter Fehlerinjektion und Computer Vision. Meine Arbeitsweise basiert auf Messbarkeit, Rückverfolgbarkeit und kontinuierlicher Verbesserung. Neben meiner technischen Arbeit habe ich internationale Abläufe für mehr als 1.000 Teilnehmende geleitet und 216 Organisatoren koordiniert. Dadurch kann ich Verantwortung übernehmen, klar kommunizieren und in vielfältigen Teams zuverlässig Ergebnisse erzielen.',
     languagesLabel: 'Sprachen',
-    languages: 'Englisch (C1), Deutsch (B1, in Entwicklung), Französisch (B1), Arabisch (Muttersprache)',
+    languages: 'Englisch (C1), Deutsch (B1, im Ausbau), Französisch (B1), Arabisch (Muttersprache)',
   },
   projects: {
     heading: 'Projekte',
@@ -243,18 +235,20 @@ const de: Content = {
   },
   skills: {
     heading: 'Kompetenzen',
+    coreHeading: 'Kernkompetenzen',
+    additionalHeading: 'Weitere Kompetenzen',
     groups: [
-      // Siehe die englische Fassung: ein Chip bleibt nur, wenn ihn eine
-      // Projektkarte auf dieser Seite belegt.
-      { label: 'Robotik', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
-      { label: 'Industrielle Automatisierung', items: ['IEC 61131-3 Strukturierter Text', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
-      // Siehe die englische Fassung: Normnummern sind bewusst keine Chips.
-      { label: 'Sicherheit & Verifikation', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'Fehlerinjektion', 'Anforderungsverfolgung', 'Testautomatisierung'] },
-      { label: 'Programmierung', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
-      { label: 'Wahrnehmung & ML', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
-      { label: 'Simulation & CAD', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
-      { label: 'Hardware', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
-      { label: 'Methodik & Zusammenarbeit', items: ['Ursachenanalyse', 'Normenerstellung', 'Technische Dokumentation', 'Lieferantenqualifizierung', 'Teamführung', 'Interkulturelle Teams', 'Agile & Scrum', 'Jira'] },
+      // Dies ist das verifizierte öffentliche Kompetenzprofil. Projektkarten
+      // belegen viele Einträge direkt; die übrigen stützen sich auf berufliche
+      // Nachweise. ISO-Verweise bleiben im jeweiligen Projektkontext.
+      { label: 'Robotik', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
+      { label: 'Industrielle Automatisierung', tier: 'core', items: ['Structured Text (ST) nach IEC 61131-3', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
+      { label: 'Funktionale Sicherheit & Verifikation', tier: 'core', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'Fehlerinjektion', 'Rückverfolgbarkeit von Anforderungen', 'Testautomatisierung'] },
+      { label: 'Softwareentwicklung & Test', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Computer Vision & Machine Learning', tier: 'additional', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
+      { label: 'Simulation & CAD', tier: 'additional', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
+      { label: 'Embedded-Systeme & Elektronik', tier: 'additional', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
+      { label: 'Technische Methoden', tier: 'additional', items: ['Ursachenanalyse', 'Technische Spezifikationen & Werksnormen', 'Technische Dokumentation', 'Lieferantenqualifizierung', 'Teamführung', 'Interkulturelle Zusammenarbeit', 'Agile Entwicklung (Scrum)', 'Jira'] },
     ],
   },
   experience: {

@@ -27,7 +27,6 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 .display-gradient {
-  background: linear-gradient(180deg, #6B7482 0%, #D4DDE6 100%);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  color: #C3CBD5;
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

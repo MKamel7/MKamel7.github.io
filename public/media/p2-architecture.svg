@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Functional-safety fault-injection architecture</title>
+  <desc id="desc">Five-stage engineering flow from hazard analysis to a requirements traceability gate.</desc>
+  <rect width="1280" height="720" fill="#0b0e12"/>
+  <g stroke="#202731" stroke-width="1" opacity="0.7">
+    <path d="M0 120H1280M0 240H1280M0 360H1280M0 480H1280M0 600H1280"/>
+    <path d="M160 0V720M320 0V720M480 0V720M640 0V720M800 0V720M960 0V720M1120 0V720"/>
+  </g>
+  <text x="72" y="92" fill="#f2f4f7" font-family="Arial, sans-serif" font-size="34" font-weight="700">Functional-Safety Fault-Injection Harness</text>
+  <text x="72" y="128" fill="#96a0ad" font-family="monospace" font-size="17">hazard-derived tests · FTTI timing · bidirectional traceability</text>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(72 208)">
+      <rect width="194" height="188" rx="16" fill="#11161d" stroke="#343e4a" stroke-width="2"/>
+      <circle cx="32" cy="34" r="8" fill="#f4602a"/>
+      <text x="28" y="88" fill="#f2f4f7" font-size="22" font-weight="700">Hazard</text>
+      <text x="28" y="116" fill="#f2f4f7" font-size="22" font-weight="700">Analysis</text>
+      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">27 derived faults</text>
+    </g>
+    <path d="M278 302H318" stroke="#f4602a" stroke-width="3"/><path d="m310 294 10 8-10 8" fill="none" stroke="#f4602a" stroke-width="3"/>
+    <g transform="translate(330 208)">
+      <rect width="194" height="188" rx="16" fill="#11161d" stroke="#343e4a" stroke-width="2"/>
+      <circle cx="32" cy="34" r="8" fill="#f4602a"/>
+      <text x="28" y="88" fill="#f2f4f7" font-size="22" font-weight="700">Fault</text>
+      <text x="28" y="116" fill="#f2f4f7" font-size="22" font-weight="700">Catalogue</text>
+      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">versioned evidence</text>
+    </g>
+    <path d="M536 302H576" stroke="#f4602a" stroke-width="3"/><path d="m568 294 10 8-10 8" fill="none" stroke="#f4602a" stroke-width="3"/>
+    <g transform="translate(588 208)">
+      <rect width="194" height="188" rx="16" fill="#11161d" stroke="#f4602a" stroke-width="2"/>
+      <circle cx="32" cy="34" r="8" fill="#f4602a"/>
+      <text x="28" y="88" fill="#f2f4f7" font-size="22" font-weight="700">Injection</text>
+      <text x="28" y="116" fill="#f2f4f7" font-size="22" font-weight="700">Engine</text>
+      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">deterministic runs</text>
+    </g>
+    <path d="M794 302H834" stroke="#f4602a" stroke-width="3"/><path d="m826 294 10 8-10 8" fill="none" stroke="#f4602a" stroke-width="3"/>
+    <g transform="translate(846 208)">
+      <rect width="194" height="188" rx="16" fill="#11161d" stroke="#343e4a" stroke-width="2"/>
+      <circle cx="32" cy="34" r="8" fill="#f4602a"/>
+      <text x="28" y="88" fill="#f2f4f7" font-size="22" font-weight="700">FTTI</text>
+      <text x="28" y="116" fill="#f2f4f7" font-size="22" font-weight="700">Evaluation</text>
+      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">timed detection</text>
+    </g>
+    <path d="M1052 302H1092" stroke="#f4602a" stroke-width="3"/><path d="m1084 294 10 8-10 8" fill="none" stroke="#f4602a" stroke-width="3"/>
+    <g transform="translate(1104 208)">
+      <rect width="104" height="188" rx="16" fill="#11161d" stroke="#343e4a" stroke-width="2"/>
+      <circle cx="28" cy="34" r="8" fill="#f4602a"/>
+      <text x="22" y="88" fill="#f2f4f7" font-size="18" font-weight="700">CI</text>
+      <text x="22" y="114" fill="#f2f4f7" font-size="18" font-weight="700">Gate</text>
+      <text x="22" y="151" fill="#96a0ad" font-family="monospace" font-size="12">traceable</text>
+      <text x="22" y="169" fill="#96a0ad" font-family="monospace" font-size="12">by design</text>
+    </g>
+  </g>
+  <g transform="translate(72 500)" font-family="monospace">
+    <rect width="1136" height="118" rx="16" fill="#11161d" stroke="#343e4a"/>
+    <text x="32" y="42" fill="#96a0ad" font-size="14">VERIFICATION SUMMARY</text>
+    <text x="32" y="82" fill="#f4602a" font-size="28" font-weight="700">204 tests</text>
+    <text x="274" y="82" fill="#f2f4f7" font-size="28" font-weight="700">100% branch coverage</text>
+    <text x="727" y="82" fill="#f2f4f7" font-size="28" font-weight="700">7 review findings closed</text>
+  </g>
+</svg>
