@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Fire-Fighting Robot - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --surface-2:#1B1E24; --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.16);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45; --ok:#46d18a; --warn:#E5544B; --fire:#ff7a1a;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  .stage{position:relative;width:1280px;height:960px;color:var(--ink);font-family:var(--font);overflow:hidden;
+    background:radial-gradient(100% 80% at 45% 20%,#12151b 0%,#0b0c0e 60%),#0b0c0e;
+    display:grid;grid-template-columns:1fr 384px;grid-template-rows:auto 1fr;gap:16px;padding:26px 28px}
+  header{grid-column:1 / -1;display:flex;align-items:center;gap:16px}
+  header h1{font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  header p{margin-top:7px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .pill{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;font-weight:700;
+    letter-spacing:.06em;padding:10px 16px;border-radius:9px;border:1px solid var(--line-2);color:var(--muted)}
+  .pill .d{width:9px;height:9px;border-radius:50%;background:currentColor}
+  .pill.search{color:var(--muted)} .pill.detect{color:var(--warn);border-color:rgba(229,84,75,.5);background:rgba(229,84,75,.12)}
+  .pill.approach{color:var(--accent);border-color:rgba(244,96,42,.45);background:rgba(244,96,42,.1)}
+  .pill.done{color:var(--ok);border-color:rgba(70,209,138,.4);background:rgba(70,209,138,.08)}
+
+  .arena{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:radial-gradient(120% 100% at 50% 40%,#101319 0%,#0a0d12 75%)}
+  .arena svg{position:absolute;inset:0;width:100%;height:100%}
+  .arena .grid{position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:40px 40px;-webkit-mask-image:radial-gradient(90% 90% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(90% 90% at 50% 50%,#000 60%,transparent 100%)}
+  .lbl{position:absolute;font-family:var(--mono);font-size:11px;color:var(--muted);z-index:4}
+
+  .side{display:flex;flex-direction:column;gap:14px;min-height:0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px}
+  .card h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .srow{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);padding:7px 0}
+  .srow + .srow{border-top:1px solid var(--line)}
+  .srow .k{font-size:12px;color:var(--muted)} .srow .v{font-size:17px;font-weight:800} .srow .u{font-size:10px;color:var(--muted);margin-left:3px}
+  .tank{height:14px;border-radius:7px;background:var(--surface-2);overflow:hidden;margin-top:4px}
+  .tank .f{height:100%;background:linear-gradient(90deg,#2f7cff,#5aa9ff);border-radius:7px;width:100%}
+  .fea{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;color:var(--ok)}
+  .fea .chip{border:1px solid rgba(70,209,138,.4);background:rgba(70,209,138,.08);border-radius:6px;padding:5px 9px}
+  .log{flex:1;min-height:0;background:#0d0f13;border:1px solid var(--line);border-radius:13px;padding:13px 15px;
+    font-family:var(--mono);font-size:11.5px;line-height:1.75;overflow:hidden}
+  .log .ln{opacity:0}.log .t{color:#5b6572}.log .g{color:var(--ok)}.log .o{color:var(--accent-soft)}.log .r{color:var(--warn);font-weight:700}
+  .freeze *{transition:none!important;animation:none!important}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <header>
+    <div>
+      <h1>Autonomous Fire-Fighting Robot</h1>
+      <p>smoke &middot; flame &middot; proximity sensing &middot; obstacle avoidance &middot; water suppression &middot; AASTMT 2022</p>
+    </div>
+    <div class="pill search" id="pill"><span class="d"></span><span id="pillText">SEARCHING</span></div>
+  </header>
+
+  <div class="arena" id="arena">
+    <div class="grid"></div>
+    <svg id="scene" viewBox="0 0 760 640" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h2>Sensor array</h2>
+      <div class="srow"><span class="k">Flame IR</span><span><span class="v" id="sFlame" style="color:var(--muted)">0.02</span></span></div>
+      <div class="srow"><span class="k">Smoke</span><span><span class="v" id="sSmoke">40</span><span class="u">ppm</span></span></div>
+      <div class="srow"><span class="k">Proximity</span><span><span class="v" id="sProx">—</span><span class="u">cm</span></span></div>
+    </div>
+    <div class="card">
+      <h2>Water tank</h2>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted)"><span>capacity</span><span id="tankPct" style="color:var(--ink);font-weight:700">100%</span></div>
+      <div class="tank"><div class="f" id="tankFill"></div></div>
+    </div>
+    <div class="card">
+      <h2>Structure</h2>
+      <div class="fea"><span class="chip">FEA verified</span><span>chassis stress within limits</span></div>
+    </div>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<script>
+const scene=document.getElementById('scene');
+const NS='http://www.w3.org/2000/svg';
+const E=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+// obstacles
+const OBST=[[330,300,90,84],[175,205,52,56],[560,455,64,46]];
+OBST.forEach(o=>scene.appendChild(E('rect',{x:o[0],y:o[1],width:o[2],height:o[3],rx:6,fill:'#20262f',stroke:'var(--line-2)','stroke-width':1.5})));
+OBST.forEach(o=>scene.appendChild(E('rect',{x:o[0]+5,y:o[1]+5,width:o[2]-10,height:o[3]-10,rx:4,fill:'none',stroke:'rgba(255,255,255,.05)','stroke-width':1})));
+
+// fire location
+const FIRE={x:585,y:165};
+const START={x:110,y:500};
+const DEC={x:300,y:388};                      // decision point (near the obstacle on the direct line)
+const AV=[[425,435],[490,375],[505,255]];     // detour waypoints around the obstacle
+// robot trajectory: straight to DEC, pause to re-plan, then follow the detour
+const RPATH=[[0,110,500],[1900,300,388],[2600,300,388],[3500,425,435],[4400,490,375],[5400,505,255]];
+const HOLD_FROM=5600, SUPPRESS_END=8200;
+
+// planned route (dashed) + traveled trail (solid)
+const plannedLine=E('path',{fill:'none',stroke:'rgba(111,211,230,.55)','stroke-width':1.8,'stroke-dasharray':'6 6'});
+scene.appendChild(plannedLine);
+const traveledTrail=E('path',{fill:'none',stroke:'rgba(244,96,42,.6)','stroke-width':2.4,'stroke-linecap':'round'});
+scene.appendChild(traveledTrail);
+// sensor cone
+const cone=E('path',{fill:'rgba(111,211,230,.10)',stroke:'rgba(111,211,230,.35)','stroke-width':1});
+scene.appendChild(cone);
+// water group
+const water=E('g',{}); scene.appendChild(water);
+const drops=[]; for(let i=0;i<9;i++){const d=E('circle',{r:3,fill:i%2?'#5aa9ff':'#8fd0ff'});water.appendChild(d);drops.push(d);}
+// smoke group
+const smoke=E('g',{}); scene.appendChild(smoke);
+const puffs=[]; for(let i=0;i<5;i++){const p=E('circle',{r:10,fill:'rgba(150,160,170,0.18)'});smoke.appendChild(p);puffs.push(p);}
+// fire group
+const fireG=E('g',{}); scene.appendChild(fireG);
+function flame(cx,cy,h,w,c){return E('path',{d:`M${cx} ${cy} C ${cx-w} ${cy-h*0.5} ${cx-w*0.5} ${cy-h} ${cx} ${cy-h} C ${cx+w*0.5} ${cy-h} ${cx+w} ${cy-h*0.5} ${cx} ${cy} Z`,fill:c});}
+const f1=flame(FIRE.x,FIRE.y,54,26,'#8a2b00'),f2=flame(FIRE.x,FIRE.y,44,20,'var(--fire)'),f3=flame(FIRE.x,FIRE.y,28,12,'#ffd24a');
+fireG.append(f1,f2,f3);
+// robot group
+const robot=E('g',{});
+const rTrackL=E('rect',{x:-22,y:-16,width:8,height:32,rx:3,fill:'#2a3038'});
+const rTrackR=E('rect',{x:14,y:-16,width:8,height:32,rx:3,fill:'#2a3038'});
+const rBody=E('rect',{x:-16,y:-18,width:32,height:36,rx:5,fill:'#3a4550',stroke:'var(--line-2)','stroke-width':1.5});
+const rTank=E('rect',{x:-9,y:-12,width:18,height:16,rx:3,fill:'#2f7cff'});
+const rNozzle=E('rect',{x:-2.5,y:-26,width:5,height:12,rx:2,fill:'var(--accent)'});
+const rSensor=E('circle',{cx:0,cy:2,r:4,fill:'var(--accent-soft)'});
+robot.append(rTrackL,rTrackR,rBody,rTank,rNozzle,rSensor);
+scene.appendChild(robot);
+// labels
+const arena=document.getElementById('arena');
+function addLbl(txt,x,y,cls){const d=document.createElement('div');d.className='lbl';d.textContent=txt;d.style.left=(x/760*100)+'%';d.style.top=(y/640*100)+'%';d.id=cls;arena.appendChild(d);return d;}
+const fireLbl=addLbl('FIRE',(FIRE.x-16),(FIRE.y-70));fireLbl.style.color='var(--fire)';fireLbl.style.fontWeight='700';
+
+// telemetry
+const pill=document.getElementById('pill'),pillText=document.getElementById('pillText');
+const sFlame=document.getElementById('sFlame'),sSmoke=document.getElementById('sSmoke'),sProx=document.getElementById('sProx');
+const tankFill=document.getElementById('tankFill'),tankPct=document.getElementById('tankPct');
+const logEl=document.getElementById('log');
+const logs=[
+  [0,'g','[t0] mission start · direct route planned'],
+  [1900,'r','[t2] flame IR spike · FIRE DETECTED'],
+  [2000,'o','[t2] obstacle on path · re-planning route'],
+  [2700,'g','[t2] detour locked · avoiding obstacle'],
+  [5700,'o','[t5] safe distance · pump ON · suppression'],
+  [8300,'g','[t8] flame IR 0.03 · FIRE EXTINGUISHED'],
+];
+logs.forEach(l=>{const d=document.createElement('div');d.className='ln';d.innerHTML=`<span class="${l[1]}">${l[2]}</span>`;logEl.appendChild(d);});
+const lnEls=[...logEl.children];
+
+const LOOP=11000;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+function robotAt(t){
+  const tt=Math.min(t,HOLD_FROM);
+  for(let i=0;i<RPATH.length-1;i++){
+    if(tt>=RPATH[i][0]&&tt<=RPATH[i+1][0]){
+      const seg=RPATH[i+1][0]-RPATH[i][0]; const p=seg?(tt-RPATH[i][0])/seg:0;
+      return {x:lerp(RPATH[i][1],RPATH[i+1][1],p),y:lerp(RPATH[i][2],RPATH[i+1][2],p),
+        px:RPATH[i][1],py:RPATH[i][2],nx:RPATH[i+1][1],ny:RPATH[i+1][2]};
+    }
+  }
+  const L=RPATH[RPATH.length-1]; return {x:L[1],y:L[2],px:L[1],py:L[2],nx:FIRE.x,ny:FIRE.y};
+}
+// sample a polyline into N evenly spaced points (for morphing the planned route)
+function samplePoly(pts,N){
+  const segs=[]; let total=0;
+  for(let i=0;i<pts.length-1;i++){const d=Math.hypot(pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]);segs.push(d);total+=d;}
+  const out=[];
+  for(let k=0;k<N;k++){ let dd=total*k/(N-1),i=0; while(i<segs.length-1&&dd>segs[i]){dd-=segs[i];i++;}
+    const p=segs[i]?dd/segs[i]:0; out.push([lerp(pts[i][0],pts[i+1][0],p),lerp(pts[i][1],pts[i+1][1],p)]); }
+  return out;
+}
+const NPTS=26;
+const straightPts=samplePoly([[DEC.x,DEC.y],[FIRE.x,FIRE.y]],NPTS);          // original direct route past the decision point
+const detourPts=samplePoly([[DEC.x,DEC.y],AV[0],AV[1],AV[2],[FIRE.x,FIRE.y]],NPTS); // re-planned route around the obstacle
+
+function reset(){lnEls.forEach(l=>l.style.opacity=0);}
+function at(t){
+  lnEls.forEach((l,i)=>l.style.opacity=t>logs[i][0]+120?1:0);
+  const r=robotAt(t);
+  const suppressing = t>=HOLD_FROM && t<SUPPRESS_END;
+  const done = t>=SUPPRESS_END;
+  const replanning = t>=1900 && t<2600;
+
+  // PLANNED route: original direct line, then morph to the detour in real time
+  const pf=clamp((t-1900)/700,0,1);
+  let pd=`M${START.x} ${START.y} L${DEC.x} ${DEC.y}`;
+  for(let k=0;k<NPTS;k++){ const x=lerp(straightPts[k][0],detourPts[k][0],pf), y=lerp(straightPts[k][1],detourPts[k][1],pf); pd+=` L${x.toFixed(1)} ${y.toFixed(1)}`; }
+  plannedLine.setAttribute('d',pd);
+  plannedLine.setAttribute('stroke', pf>0.98?'rgba(244,96,42,.4)':'rgba(111,211,230,.55)');
+  plannedLine.style.opacity = done?0 : clamp(1-(t-6800)/900,0.22,1);
+
+  // TRAVELED trail: the robot's actual route so far
+  const tt=Math.min(t,HOLD_FROM); let td=`M${RPATH[0][1]} ${RPATH[0][2]}`;
+  for(let i=1;i<RPATH.length;i++){ if(RPATH[i][0]<=tt) td+=` L${RPATH[i][1]} ${RPATH[i][2]}`; }
+  td+=` L${r.x.toFixed(1)} ${r.y.toFixed(1)}`;
+  traveledTrail.setAttribute('d',td);
+
+  // heading
+  let ang = Math.atan2(r.ny-r.py, r.nx-r.px);
+  if(replanning || t>4900){ ang=Math.atan2(FIRE.y-r.y, FIRE.x-r.x); }
+  robot.setAttribute('transform',`translate(${r.x.toFixed(1)} ${r.y.toFixed(1)}) rotate(${(ang*180/Math.PI+90).toFixed(1)})`);
+  // sensor cone
+  const cl=150, spread=0.5, a1=ang-spread, a2=ang+spread, detected=t>1900;
+  cone.setAttribute('d',`M${r.x} ${r.y} L${r.x+cl*Math.cos(a1)} ${r.y+cl*Math.sin(a1)} L${r.x+cl*Math.cos(a2)} ${r.y+cl*Math.sin(a2)} Z`);
+  cone.setAttribute('fill', detected?'rgba(244,96,42,.14)':'rgba(111,211,230,.10)');
+  cone.setAttribute('stroke', detected?'rgba(244,96,42,.45)':'rgba(111,211,230,.3)');
+  // fire flicker + shrink
+  const fscale = done?0 : suppressing? lerp(1,0.05,clamp((t-HOLD_FROM)/(SUPPRESS_END-HOLD_FROM),0,1)) : 1;
+  const flick=0.9+0.12*Math.sin(t/70);
+  fireG.setAttribute('transform',`translate(${FIRE.x} ${FIRE.y}) scale(${(fscale*flick).toFixed(3)}) translate(${-FIRE.x} ${-FIRE.y})`);
+  fireG.style.opacity=done?0:1; fireLbl.textContent=done?'EXTINGUISHED':'FIRE'; fireLbl.style.color=done?'var(--ok)':'var(--fire)';
+  // smoke
+  puffs.forEach((p,i)=>{const ph=((t/900+i*0.6)%1);p.setAttribute('cx',FIRE.x+Math.sin((t/500)+i)*10);p.setAttribute('cy',FIRE.y-40-ph*90);p.setAttribute('r',10+ph*16);p.style.opacity=(done?0:(1-ph)*0.5*fscale);});
+  // water
+  drops.forEach((d,i)=>{ if(!suppressing){d.style.opacity=0;return;} const ph=((t/260)+i/drops.length)%1;
+    d.setAttribute('cx',lerp(r.x,FIRE.x,ph)+Math.sin(i)*4); d.setAttribute('cy',lerp(r.y-14,FIRE.y,ph)-Math.sin(ph*Math.PI)*22); d.style.opacity=(1-ph)*0.9;});
+  // telemetry
+  const prox=dist(r,FIRE);
+  const flameIR = done?0.03 : detected? lerp(0.05,0.92,clamp((t-1900)/1500,0,1)) : 0.02;
+  sFlame.textContent=flameIR.toFixed(2); sFlame.style.color=(!done&&flameIR>0.4)?'var(--warn)':(done?'var(--ok)':'var(--muted)');
+  sSmoke.textContent=String(Math.round(done?45:detected?40+(suppressing?lerp(320,120,clamp((t-HOLD_FROM)/2400,0,1)):lerp(40,320,clamp((t-1900)/3200,0,1))):40));
+  sProx.textContent = t>2600 ? String(Math.round(prox)) : '—';
+  const tank = suppressing? lerp(100,42,clamp((t-HOLD_FROM)/(SUPPRESS_END-HOLD_FROM),0,1)) : (done?42:100);
+  tankFill.style.width=tank+'%'; tankPct.textContent=Math.round(tank)+'%';
+  // state
+  const stTxt = done?'FIRE EXTINGUISHED' : suppressing?'SUPPRESSING' : replanning?'RE-PLANNING ROUTE' : t>2600?'NAVIGATING · AVOIDING' : 'SEARCHING';
+  pill.className='pill '+(done?'done':suppressing?'approach':t>1900?'detect':'search');
+  pillText.textContent=stTxt;
+}
+
+const params=new URLSearchParams(location.search);
+if(params.has('t')){
+  document.documentElement.classList.add('freeze');
+  reset(); at(clamp(parseInt(params.get('t'),10)||0,0,LOOP-1));
+  window.LOOP=LOOP; window.setFrame=(tt)=>{reset();at(clamp(tt|0,0,LOOP-1));};
+  document.body.dataset.ready='1';
+}else{
+  function frame(now){const t=now%LOOP;if(t<40)reset();at(t);requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>

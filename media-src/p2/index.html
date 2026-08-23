@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Fault-Injection Harness - capture source</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{
+    --bg:#0B0C0E; --surface:#14161A; --line:rgba(255,255,255,0.08);
+    --ink:#E8ECF1; --muted:#98A2B0; --accent:#F4602A; --accent-soft:#FF7A45;
+    --ok:#46d18a; --blue:#5aa9ff; --bad:#ff5f56; --warn:#f2c14e;
+    --font:"Archivo","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000;overflow:hidden}
+  .stage{position:relative;width:1280px;height:960px;color:var(--ink);font-family:var(--font);overflow:hidden;
+    background:radial-gradient(100% 80% at 45% 20%,#12151b 0%,#0b0c0e 60%),#0b0c0e;
+    display:grid;grid-template-columns:1fr 372px;grid-template-rows:auto 1fr;gap:16px;padding:26px 28px}
+  header{grid-column:1 / -1;display:flex;align-items:center;gap:16px}
+  header h1{font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1}
+  header p{margin-top:7px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .pill{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;font-weight:700;
+    letter-spacing:.05em;padding:10px 16px;border-radius:9px;border:1px solid rgba(244,96,42,.45);color:var(--accent);background:rgba(244,96,42,.1)}
+  .pill .d{width:9px;height:9px;border-radius:50%;background:currentColor}
+  .plot{position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:radial-gradient(120% 100% at 50% 45%,#101319 0%,#0a0d12 80%);padding:18px 20px 14px}
+  .plot h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .plot .sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px}
+  .plot svg{position:absolute;left:20px;right:20px;top:74px;bottom:44px;width:calc(100% - 40px);height:calc(100% - 118px)}
+  .legend{position:absolute;left:20px;bottom:14px;display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .side{display:flex;flex-direction:column;gap:13px;min-height:0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px}
+  .card h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12.5px;padding:6px 0;color:var(--muted)}
+  .row + .row{border-top:1px solid var(--line)}
+  .row b{color:var(--ink);font-weight:700;font-size:14px}
+  .row b.ok{color:var(--ok)} .row b.bad{color:var(--bad)} .row b.acc{color:var(--accent)}
+  .designs .d{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;padding:7px 0;opacity:.25;transition:none}
+  .designs .d + .d{border-top:1px solid var(--line)}
+  .designs .d .sw{width:12px;height:12px;border-radius:3px;flex:none}
+  .designs .d .nm{flex:1;color:var(--muted)}
+  .designs .d .rs{font-weight:700}
+  .log{flex:1;min-height:0;background:#0d0f13;border:1px solid var(--line);border-radius:13px;padding:13px 15px;
+    font-family:var(--mono);font-size:11.5px;line-height:1.75;overflow:hidden}
+  .log .ln{opacity:0}.log .t{color:#5b6572}.log .g{color:var(--ok)}.log .o{color:var(--accent-soft)}
+  .log .b{color:var(--blue)}.log .r{color:var(--bad)}
+  .kicker{position:absolute;left:20px;right:20px;top:calc(50% - 26px);text-align:center;pointer-events:none;opacity:0}
+  .kicker .k{display:inline-block;font-family:var(--font);font-size:30px;font-weight:900;letter-spacing:-0.02em;
+    padding:14px 26px;border-radius:12px;background:rgba(11,12,14,.86);border:1px solid rgba(244,96,42,.5);color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <header>
+    <div>
+      <h1>Functional-Safety Fault-Injection Harness</h1>
+      <p>27 hazard-derived faults &middot; FTTI budgets &middot; bidirectional traceability gated in CI</p>
+    </div>
+    <div class="pill"><span class="d"></span><span id="pillText">CAMPAIGN RUNNING</span></div>
+  </header>
+
+  <div class="plot">
+    <h2>FLT-S01 &mdash; winding sensor stuck at a safe value, rotor stalled</h2>
+    <div class="sub" id="sub">The same fault against four successive designs. Limit 140 &deg;C.</div>
+    <svg id="svg" viewBox="0 0 860 470" preserveAspectRatio="none"></svg>
+    <div class="legend">
+      <span><i style="background:#ff5f56"></i>one sensor</span>
+      <span><i style="background:#f2c14e"></i>two sensors</span>
+      <span><i style="background:#5aa9ff"></i>two, frame channel dead</span>
+      <span><i style="background:#46d18a"></i>+ overload channel</span>
+    </div>
+    <div class="kicker" id="kicker"><span class="k" id="kickerText"></span></div>
+  </div>
+
+  <div class="side">
+    <div class="card designs" id="designs">
+      <h2>Designs under test</h2>
+      <div class="d" id="d0"><span class="sw" style="background:#ff5f56"></span><span class="nm">one temperature sensor</span><span class="rs" style="color:#ff5f56" id="r0">never trips</span></div>
+      <div class="d" id="d1"><span class="sw" style="background:#f2c14e"></span><span class="nm">two, with a cross check</span><span class="rs" style="color:#f2c14e" id="r1">late</span></div>
+      <div class="d" id="d2"><span class="sw" style="background:#5aa9ff"></span><span class="nm">two, frame latently dead</span><span class="rs" style="color:#5aa9ff" id="r2">never trips</span></div>
+      <div class="d" id="d3"><span class="sw" style="background:#46d18a"></span><span class="nm">+ accumulated overload</span><span class="rs" style="color:#46d18a" id="r3">step 2 &middot; 51.6 &deg;C</span></div>
+    </div>
+    <div class="card">
+      <h2>Campaign result</h2>
+      <div class="row"><span>faults injected</span><b class="acc" id="mFaults">0</b></div>
+      <div class="row"><span>detected in time</span><b class="ok" id="mDet">0</b></div>
+      <div class="row"><span>detected late</span><b class="ok" id="mLate">0</b></div>
+      <div class="row"><span>residual, documented</span><b id="mRes">0</b></div>
+      <div class="row"><span>requirements unmet</span><b class="bad" id="mUnmet">0 of 11</b></div>
+    </div>
+    <div class="log" id="log">
+      <div class="ln"><span class="t">[00:01]</span> <span class="b">campaign</span> loading catalog/faults.yaml</div>
+      <div class="ln"><span class="t">[00:02]</span> 27 faults, 11 requirements, DUT pinned v3.1</div>
+      <div class="ln"><span class="t">[00:04]</span> <span class="o">FLT-S01</span> winding sensor stuck, stalled</div>
+      <div class="ln"><span class="t">[00:06]</span> <span class="r">one sensor: no trip, runaway</span></div>
+      <div class="ln"><span class="t">[00:08]</span> <span class="o">two sensors: trip late, past limit</span></div>
+      <div class="ln"><span class="t">[00:10]</span> <span class="r">frame dead: no trip, runaway</span></div>
+      <div class="ln"><span class="t">[00:12]</span> <span class="g">overload channel: trip @ step 2</span></div>
+      <div class="ln"><span class="t">[00:14]</span> traceability gate: both directions <span class="g">OK</span></div>
+      <div class="ln"><span class="t">[00:15]</span> <span class="r">SR-06 SR-09 SR-11 reported UNMET</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Curves are shaped from the campaign's own findings, not invented: the limit is
+// 140 C, the diverse channel trips at step 2 and 51.6 C, the redundant pair
+// trips late and past the limit, and the two failing designs run away. Exact
+// figures come from report/coverage.md and docs/SAFETY_ARGUMENT.md.
+const LIMIT = 140, AMBIENT = 40, TMAX = 900, STEPS = 24;
+const W = 860, H = 470, PADL = 52, PADR = 14, PADT = 12, PADB = 30;
+const x = s => PADL + (s / STEPS) * (W - PADL - PADR);
+const y = t => H - PADB - (Math.min(t, TMAX) / TMAX) * (H - PADT - PADB);
+
+const designs = [
+  { c:'#ff5f56', trip:null, at:s => AMBIENT + 46 * s },                       // runaway
+  { c:'#f2c14e', trip:12,  at:s => AMBIENT + 14 * Math.min(s, 12) },          // late, 207 C
+  { c:'#5aa9ff', trip:null, at:s => AMBIENT + 40 * s },                       // runaway
+  { c:'#46d18a', trip:2,   at:s => AMBIENT + 5.8 * Math.min(s, 2) },          // 51.6 C
+];
+
+const svg = document.getElementById('svg');
+function el(n, a){ const e = document.createElementNS('http://www.w3.org/2000/svg', n);
+  for (const k in a) e.setAttribute(k, a[k]); return e; }
+
+function grid(){
+  svg.innerHTML = '';
+  for (const t of [0, 140, 300, 500, 700, 900]) {
+    svg.appendChild(el('line', {x1:PADL, x2:W-PADR, y1:y(t), y2:y(t),
+      stroke: t === LIMIT ? 'rgba(255,95,86,.55)' : 'rgba(255,255,255,.07)',
+      'stroke-width': t === LIMIT ? 1.5 : 1,
+      'stroke-dasharray': t === LIMIT ? '6 5' : ''}));
+    const lb = el('text', {x:PADL-9, y:y(t)+4, 'text-anchor':'end',
+      fill: t === LIMIT ? '#ff5f56' : '#5b6572', 'font-size':11, 'font-family':'JetBrains Mono, monospace'});
+    lb.textContent = String(t);
+    svg.appendChild(lb);
+    if (t === LIMIT) {
+      // On the line's right end rather than beside the axis, where "140 limit"
+      // is wider than the gutter and gets clipped.
+      const tag = el('text', {x:W-PADR-4, y:y(t)-8, 'text-anchor':'end', fill:'#ff5f56',
+        'font-size':11.5, 'font-family':'JetBrains Mono, monospace'});
+      tag.textContent = 'insulation limit 140 °C';
+      svg.appendChild(tag);
+    }
+  }
+  for (let s = 0; s <= STEPS; s += 4) {
+    const lb = el('text', {x:x(s), y:H-8, 'text-anchor':'middle', fill:'#5b6572',
+      'font-size':11, 'font-family':'JetBrains Mono, monospace'});
+    lb.textContent = s === 0 ? 'step 0' : s;
+    svg.appendChild(lb);
+  }
+}
+
+function draw(progress, active){
+  grid();
+  designs.forEach((d, i) => {
+    if (i > active) return;
+    const upto = i === active ? progress * STEPS : STEPS;
+    let path = '', last = 0;
+    for (let s = 0; s <= upto; s += 0.25) {
+      const stop = d.trip !== null && s >= d.trip;
+      const v = stop ? d.at(d.trip) : d.at(s);
+      path += (path ? 'L' : 'M') + x(s).toFixed(1) + ' ' + y(v).toFixed(1);
+      last = s;
+    }
+    svg.appendChild(el('path', {d:path, fill:'none', stroke:d.c,
+      'stroke-width': i === 3 ? 3.2 : 2.2, 'stroke-linecap':'round',
+      opacity: i === active ? 1 : 0.5}));
+    if (d.trip !== null && last >= d.trip) {
+      const v = d.at(d.trip);
+      svg.appendChild(el('circle', {cx:x(d.trip), cy:y(v), r:5.5, fill:d.c}));
+      svg.appendChild(el('circle', {cx:x(d.trip), cy:y(v), r:11, fill:'none',
+        stroke:d.c, 'stroke-width':1.4, opacity:.45}));
+    }
+  });
+}
+
+const SUBS = [
+  'One temperature sensor. The lie is never contradicted, so nothing trips.',
+  'A second sensor with a cross check. It trips, late, past the limit.',
+  'The frame channel already dead. Nothing left to contradict the lie.',
+  'A channel of a different KIND: current above rated, integrated. Step 2.',
+];
+const logs = [...document.querySelectorAll('#log .ln')];
+const kicker = document.getElementById('kicker'), kickerText = document.getElementById('kickerText');
+
+window.setFrame = function(ms){
+  const t = ms / 1000;
+  // four phases of 1.9 s, then a 1.4 s kicker
+  const phase = Math.min(3, Math.floor(t / 1.9));
+  const within = Math.min(1, (t - phase * 1.9) / 1.55);
+  draw(within, phase);
+  document.getElementById('sub').textContent = SUBS[phase];
+
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('d' + i).style.opacity = i < phase ? '.5' : (i === phase ? '1' : '.25');
+  }
+  document.getElementById('pillText').textContent =
+    t > 7.6 ? 'CAMPAIGN COMPLETE' : 'CAMPAIGN RUNNING';
+
+  // counters fill during the final phase
+  const f = Math.max(0, Math.min(1, (t - 5.7) / 1.8));
+  document.getElementById('mFaults').textContent = Math.round(27 * f);
+  document.getElementById('mDet').textContent = Math.round(23 * f);
+  document.getElementById('mLate').textContent = '0';
+  document.getElementById('mRes').textContent = Math.round(4 * f);
+  document.getElementById('mUnmet').textContent = (f > .96 ? '3' : '0') + ' of 11';
+
+  logs.forEach((ln, i) => { ln.style.opacity = t > 0.7 + i * 0.78 ? '1' : '0'; });
+
+  const kt = (t - 7.7) / 0.35;
+  kicker.style.opacity = String(Math.max(0, Math.min(1, kt)));
+  kickerText.textContent = 'Detection is not protection.';
+};
+window.setFrame(0);
+</script>
+</body>
+</html>
