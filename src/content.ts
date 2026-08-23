@@ -133,7 +133,7 @@ const en: Content = {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Oct 2023 - Sep 2024',
-        note: 'Root-caused a pipeline explosion in two weeks, then wrote the company standard that closed it: a two-part hose specification covering procurement through replacement, still in force. Supervised 6-8 inspectors per round.',
+        note: 'Investigated a pipeline explosion, identified the root cause within two weeks, and wrote the company standard that closed the gap: a two-part hose specification covering procurement through replacement, still in force. Supervised 6-8 inspectors per round.',
       },
       {
         title: 'Real Estate Agent',
@@ -300,7 +300,7 @@ const de: Content = {
         title: 'Inspection Engineer',
         org: 'AMOC, Alexandria',
         period: 'Okt 2023 - Sep 2024',
-        note: 'Ursachenanalyse einer Rohrleitungsexplosion in zwei Wochen, anschließend Erstellung der Werksnorm, die die Lücke geschlossen hat: eine zweiteilige Schlauchspezifikation von der Beschaffung bis zum Austausch, weiterhin gültig. 6-8 Inspektoren pro Runde angeleitet.',
+        note: 'Untersuchte eine Rohrleitungsexplosion, identifizierte die Ursache innerhalb von zwei Wochen und erstellte anschließend die Werksnorm, die die Lücke geschlossen hat: eine zweiteilige Schlauchspezifikation von der Beschaffung bis zum Austausch, weiterhin gültig. 6-8 Inspektoren pro Runde angeleitet.',
       },
       {
         title: 'Real Estate Agent',

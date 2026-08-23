@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import { displayMetricValue, partitionSkillGroups } from '../src/portfolioContent.ts'
 import { content } from '../src/content.ts'
@@ -88,4 +89,10 @@ test('keeps ISO references out of both skills grids', () => {
     const items = content[lang].skills.groups.flatMap((group) => group.items)
     assert.ok(items.every((item) => !/^ISO\b/.test(item)))
   }
+})
+
+test('gives the fault-harness architecture a large intrinsic modal size', () => {
+  const svg = readFileSync(new URL('../public/media/p2-architecture.svg', import.meta.url), 'utf8')
+
+  assert.match(svg, /<svg[^>]*\bwidth="1280"[^>]*\bheight="720"/)
 })

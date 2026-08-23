@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
   <title id="title">Functional-safety fault-injection architecture</title>
   <desc id="desc">Five-stage engineering flow from hazard analysis to a requirements traceability gate.</desc>
   <rect width="1280" height="720" fill="#0b0e12"/>
