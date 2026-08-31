@@ -1,0 +1,43 @@
+name: CI
+
+# The deploy workflow runs on push to main only, so until now a pull request
+# got no checks at all and `npm run lint` was configured but only ever run by
+# hand. A linter nobody runs is a linter that does not exist.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # oxlint is already a dev dependency and already configured. This is the
+      # step that makes it a gate rather than a suggestion.
+      - name: Lint (oxlint)
+        run: npm run lint
+
+      # `npm run build` runs `tsc -b` first, so a type error fails here rather
+      # than surfacing during a deploy.
+      - name: Type check and build
+        run: npm run build
+
+      # Includes the integrity test, which asserts every media path a project
+      # references resolves to a file that exists. That is what makes an image
+      # rename safe: a broken tile on the live site is otherwise invisible
+      # until somebody looks at the page.
+      - name: Tests
+        run: npm test

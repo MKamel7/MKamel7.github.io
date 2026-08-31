@@ -19,13 +19,13 @@ export const projects: Project[] = [
     poster: '/media/p5-poster.jpg',
     repo: 'https://github.com/MKamel7/intralogistics-amr',
     shots: [
-      { src: '/media/p5-shot-survey.png', caption: {
+      { src: '/media/p5-shot-survey.webp', caption: {
         en: 'The vehicle driving its own frontier goals to build the map it later navigates on. Nothing about the building is given to it in advance.',
         de: 'Das Fahrzeug fährt eigene Frontier-Ziele an und baut die Karte, auf der es später navigiert. Nichts über das Gebäude ist ihm vorher bekannt.' } },
-      { src: '/media/p5-shot-planning.png', caption: {
+      { src: '/media/p5-shot-planning.webp', caption: {
         en: 'The robot’s own view: the global costmap and the Nav2 plan across the finished map, resampled onto the same clock as the camera so the two agree on when.',
         de: 'Die Sicht des Roboters: globale Costmap und Nav2-Plan auf der fertigen Karte, auf dieselbe Uhr wie die Kamera resampelt, damit beide über den Zeitpunkt einig sind.' } },
-      { src: '/media/p5-shot-person.png', caption: {
+      { src: '/media/p5-shot-person.webp', caption: {
         en: 'Passing a worker at 0.64 m without stopping, documented as part of the 248,000-sample safety evaluation.',
         de: 'Vorbeifahrt an einem Mitarbeiter mit 0,64 m Abstand ohne Halt, dokumentiert im Rahmen der Sicherheitsauswertung mit 248.000 Messpunkten.' } },
     ],
@@ -70,16 +70,16 @@ export const projects: Project[] = [
     poster: '/media/p4-poster.jpg',
     repo: 'https://github.com/MKamel7/virtual-production-cell',
     shots: [
-      { src: '/media/p4-shot-execute.png', caption: {
+      { src: '/media/p4-shot-execute.webp', caption: {
         en: 'The control program running on a CODESYS SoftPLC. PackML state 6, Execute, with the plant driven live over Modbus TCP.',
         de: 'Das Steuerungsprogramm läuft auf einer CODESYS-SoftPLC. PackML-Zustand 6, Execute, die Anlage wird live über Modbus TCP angesteuert.' } },
-      { src: '/media/p4-shot-watchdog.png', caption: {
+      { src: '/media/p4-shot-watchdog.webp', caption: {
         en: 'The same cell moments after the plant process was killed. The heartbeat stopped, the link watchdog fired, and PackML went to state 9, Aborted, with every actuator dropped.',
         de: 'Dieselbe Zelle kurz nach dem Abschalten des Anlagenprozesses. Der Heartbeat blieb stehen, der Link-Watchdog löste aus, PackML ging in Zustand 9, Aborted, und alle Aktoren fielen ab.' } },
-      { src: '/media/p4-shot-channels.png', caption: {
+      { src: '/media/p4-shot-channels.webp', caption: {
         en: 'The Modbus client configuration: read discrete inputs, read input registers, write multiple coils, each cyclic at 20 ms against the plant’s 50 ms scan.',
         de: 'Die Modbus-Client-Konfiguration: Diskrete Eingänge lesen, Eingangsregister lesen, mehrere Spulen schreiben, jeweils zyklisch mit 20 ms gegen den 50-ms-Zyklus der Anlage.' } },
-      { src: '/media/p4-shot-mapping.png', caption: {
+      { src: '/media/p4-shot-mapping.webp', caption: {
         en: 'The process image mapped bit by bit onto the PLC’s variables. The address map is generated from one enum, so the two halves cannot disagree.',
         de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus einem einzigen Enum erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
     ],
@@ -101,13 +101,13 @@ export const projects: Project[] = [
     media: '/media/pick-place.mp4',
     poster: '/media/pick-place-poster.jpg',
     shots: [
-      { src: '/media/pick-place-shot-detect.png', caption: {
+      { src: '/media/pick-place-shot-detect.webp', caption: {
         en: 'The overhead RGB-D camera segmenting the three coloured parts. The operator-selected colour is boxed thicker and becomes the pick target.',
         de: 'Die RGB-D-Kamera über der Zelle segmentiert die drei farbigen Teile. Die vom Bediener gewählte Farbe wird dicker umrandet und zum Greifziel.' } },
-      { src: '/media/pick-place-shot-segment.png', caption: {
+      { src: '/media/pick-place-shot-segment.webp', caption: {
         en: 'Largest-blob HSV segmentation on the depth-aligned frame, the step that turns a pixel into a 3D pose in the robot base frame.',
         de: 'HSV-Segmentierung des größten Blobs im tiefenausgerichteten Bild, der Schritt, der aus einem Pixel eine 3D-Pose im Roboterbasis-System macht.' } },
-      { src: '/media/pick-place-shot-gazebo.png', caption: {
+      { src: '/media/pick-place-shot-gazebo.webp', caption: {
         en: 'The UR5e with a Robotiq 2F-85 gripper in Gazebo, driven by the same URDF that feeds ros2_control and MoveIt.',
         de: 'Der UR5e mit Robotiq-2F-85-Greifer in Gazebo, angetrieben von derselben URDF, die auch ros2_control und MoveIt speist.' } },
     ],
@@ -131,13 +131,13 @@ export const projects: Project[] = [
     poster: '/media/p3-poster.jpg',
     repo: 'https://github.com/MKamel7/adas-perception-eval',
     shots: [
-      { src: '/media/p3-shot-distance.png', caption: {
+      { src: '/media/p3-shot-distance.webp', caption: {
         en: 'Pedestrians beyond 30 metres. Green was found, red was annotated and nothing matched it, blue is a detection. The measured AP in this band is 0.009.',
         de: 'Fußgänger jenseits von 30 Metern. Grün wurde gefunden, Rot ist annotiert und wurde von nichts getroffen, Blau ist eine Detektion. Die gemessene AP in diesem Band beträgt 0,009.' } },
-      { src: '/media/p3-shot-occlusion.png', caption: {
+      { src: '/media/p3-shot-occlusion.webp', caption: {
         en: 'Partial occlusion, the archetypal urban case. Pedestrian AP falls from 0.650 fully visible to 0.178 partly occluded, before an annotator would call the object mostly hidden.',
         de: 'Teilverdeckung, der typische Stadtfall. Die Fußgänger-AP fällt von 0,650 bei voller Sichtbarkeit auf 0,178 bei Teilverdeckung, noch bevor ein Annotator das Objekt als überwiegend verdeckt einstufen würde.' } },
-      { src: '/media/p3-shot-cars.png', caption: {
+      { src: '/media/p3-shot-cars.webp', caption: {
         en: 'Cars beyond 50 metres, each red box labelled with the overlap it achieved where 0.50 was needed. 73% of car misses are boxes that landed badly rather than objects never seen.',
         de: 'Fahrzeuge jenseits von 50 Metern, jede rote Box beschriftet mit der erreichten Überlappung, wobei 0,50 nötig gewesen wäre. 73% der verpassten Fahrzeuge sind schlecht platzierte Boxen und keine nie erkannten Objekte.' } },
     ],
