@@ -24,7 +24,7 @@ React, TypeScript, Vite, Tailwind CSS v4, Motion. No i18n library; both language
 | `totalKb` | 16999.5 | 19000 | bandwidth and clone weight, not a user-facing number |
 | `largestAssetKb` | 2150.6 | 2500 | one unoptimised export, which a total-size budget absorbs without complaining |
 
-Every limit is set from a real measurement with 11 to 18 percent headroom, and `budget.json` records the measured value beside each one so the headroom is auditable rather than a number somebody picked.
+Every limit is set from a real measurement, and `budget.json` records the measured value beside each limit so the headroom is auditable rather than a number somebody picked. The headroom itself is not quoted here on purpose: it changes with every legitimate commit, and a figure in prose that nothing checks is exactly the kind that goes quietly wrong. `npm run budget` prints the current one.
 
 **The gate was verified by breaking it**, three ways: a stray 3 MB video export trips `totalKb` and `largestAssetKb`, a JS bundle doubling trips `codeTransferKb` and `firstLoadKb`, and a 900 KB PNG trips `imageKb`. Exit 1 on a breach, 2 on a missing build, 0 clean.
 
