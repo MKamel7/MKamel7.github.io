@@ -41,3 +41,10 @@ jobs:
       # until somebody looks at the page.
       - name: Tests
         run: npm test
+
+      # A site does not get slow in one commit, it gets slow over a year of
+      # commits that each looked fine. This runs after the build because it
+      # measures dist/, and it fails the job rather than printing a number,
+      # because a number nobody reads cannot stop the drift.
+      - name: Performance budget
+        run: npm run budget
