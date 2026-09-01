@@ -19,24 +19,24 @@ export const projects: Project[] = [
     poster: '/media/p5-poster.jpg',
     repo: 'https://github.com/MKamel7/intralogistics-amr',
     shots: [
-      { src: '/media/p5-shot-survey.png', caption: {
+      { src: '/media/p5-shot-survey.webp', caption: {
         en: 'The vehicle driving its own frontier goals to build the map it later navigates on. Nothing about the building is given to it in advance.',
         de: 'Das Fahrzeug fährt eigene Frontier-Ziele an und baut die Karte, auf der es später navigiert. Nichts über das Gebäude ist ihm vorher bekannt.' } },
-      { src: '/media/p5-shot-planning.png', caption: {
+      { src: '/media/p5-shot-planning.webp', caption: {
         en: 'The robot’s own view: the global costmap and the Nav2 plan across the finished map, resampled onto the same clock as the camera so the two agree on when.',
         de: 'Die Sicht des Roboters: globale Costmap und Nav2-Plan auf der fertigen Karte, auf dieselbe Uhr wie die Kamera resampelt, damit beide über den Zeitpunkt einig sind.' } },
-      { src: '/media/p5-shot-person.png', caption: {
-        en: 'Passing a worker at 0.64 m without stopping, documented as part of the 248,000-sample safety evaluation.',
-        de: 'Vorbeifahrt an einem Mitarbeiter mit 0,64 m Abstand ohne Halt, dokumentiert im Rahmen der Sicherheitsauswertung mit 248.000 Messpunkten.' } },
+      { src: '/media/p5-shot-person.webp', caption: {
+        en: 'Passing a worker at 0.64 m without stopping, recorded in the safety evaluation.',
+        de: 'Vorbeifahrt an einem Mitarbeiter mit 0,64 m Abstand ohne Halt, aufgezeichnet in der Sicherheitsauswertung.' } },
     ],
     metrics: [
-      { value: { en: '12 of 12', de: '12 von 12' }, label: { en: 'transport cycles across five runs', de: 'Transportzyklen über fünf Läufe' } },
-      { value: { en: '0', de: '0' }, label: { en: 'contacts in 248,000 samples with people in the aisle', de: 'Kontakte in 248.000 Messpunkten mit Personen im Gang' } },
-      { value: { en: '248,000', de: '248.000' }, label: { en: 'recorded samples in the safety evaluation', de: 'aufgezeichnete Messpunkte in der Sicherheitsauswertung' } },
+      { value: { en: '12 of 12', de: '12 von 12' }, label: { en: 'transport cycles with zero pedestrian contact', de: 'Transportzyklen ohne jeden Personenkontakt' } },
+      { value: { en: '7%', de: '7 %' }, label: { en: 'of cycle time given up to protective stops, the measured cost of the safety layer', de: 'der Zykluszeit für Schutzhalte, die gemessenen Kosten der Sicherheitsschicht' } },
+      { value: { en: '124 ms', de: '124 ms' }, label: { en: 'p95 sensor-to-command latency', de: 'p95-Latenz von Sensor bis Kommando' } },
     ],
     desc: {
-      en: 'Autonomous mobile robot for transporting load carriers through a warehouse shared with pedestrians. I integrated ROS 2 Jazzy, Nav2 and C++ perception with ISO 3691-4 protective fields generated from vehicle data and an independent safety layer that can override navigation. The system completed all 12 transport cycles across five recorded runs without contact.',
-      de: 'Autonomer mobiler Roboter für den Transport von Ladungsträgern in einem gemeinsam mit Personen genutzten Lager. Ich integrierte ROS 2 Jazzy, Nav2 und C++-Wahrnehmung mit aus Fahrzeugdaten abgeleiteten Schutzfeldern nach ISO 3691-4 sowie einer unabhängigen Sicherheitsschicht, die die Navigation übersteuern kann. Das System absolvierte alle 12 Transportzyklen in fünf aufgezeichneten Läufen kontaktfrei.',
+      en: 'Autonomous mobile robot for transporting load carriers through a warehouse shared with pedestrians. I integrated ROS 2 Jazzy, Nav2 and C++ perception with ISO 3691-4 protective fields generated from vehicle data and an independent safety layer that can override navigation. The system completed all 12 transport cycles across five recorded runs with zero pedestrian contact, at a measured cost of 103 protective stops per cycle, or 7% of cycle time. Safety is not free and I would rather measure what it costs than assume it.',
+      de: 'Autonomer mobiler Roboter für den Transport von Ladungsträgern in einem gemeinsam mit Personen genutzten Lager. Ich integrierte ROS 2 Jazzy, Nav2 und C++-Wahrnehmung mit aus Fahrzeugdaten abgeleiteten Schutzfeldern nach ISO 3691-4 sowie einer unabhängigen Sicherheitsschicht, die die Navigation übersteuern kann. Das System absolvierte alle 12 Transportzyklen in fünf aufgezeichneten Läufen ohne jeden Personenkontakt, zu gemessenen Kosten von 103 Schutzhalten pro Zyklus, also 7 % der Zykluszeit. Sicherheit ist nicht umsonst, und ich messe ihre Kosten lieber, als sie zu vermuten.',
     },
     tags: ['ROS 2 Jazzy', 'Nav2', 'Gazebo Harmonic', 'C++', 'ISO 3691-4', 'VDA 5050'],
   },
@@ -52,13 +52,13 @@ export const projects: Project[] = [
         de: 'Architektur des Verifikationsablaufs von Gefährdungsanalyse und Fehlerkatalog über die zeitliche Detektionsauswertung bis zum Gate für die Rückverfolgbarkeit von Anforderungen.' } },
     ],
     metrics: [
-      { value: { en: '27', de: '27' }, label: { en: 'hazard-derived faults, 23 detected in time', de: 'aus Gefährdungsanalyse abgeleitete Fehler, 23 rechtzeitig erkannt' } },
-      { value: { en: '204', de: '204' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
+      { value: { en: '29', de: '29' }, label: { en: 'hazard-derived faults, 24 detected in time', de: 'aus Gefährdungsanalyse abgeleitete Fehler, 24 rechtzeitig erkannt' } },
+      { value: { en: '323', de: '323' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
       { value: { en: '7', de: '7' }, label: { en: 'independent-review findings closed', de: 'Befunde aus unabhängigem Review geschlossen' } },
     ],
     desc: {
-      en: 'Functional-safety fault-injection framework for an embedded motor controller. I derived 27 faults from the hazard analysis, assigned FTTI budgets and implemented bidirectional requirements-to-test traceability. CRC, counters and timeout monitoring are mapped to AUTOSAR E2E and PROFIsafe communication profiles, with 204 tests and 100% branch coverage.',
-      de: 'Framework zur Fehlerinjektion für funktionale Sicherheit an einer eingebetteten Motorsteuerung. Ich leitete 27 Fehler aus der Gefährdungsanalyse ab, definierte FTTI-Budgets und implementierte eine bidirektionale Rückverfolgbarkeit von Anforderungen zu Tests. CRC, Zähler und Timeout-Überwachung sind auf AUTOSAR-E2E- und PROFIsafe-Kommunikationsprofile abgebildet; 204 Tests erreichen 100 % Branch Coverage.',
+      en: 'Functional-safety fault-injection framework for an embedded motor controller. I derived 29 faults from the hazard analysis, assigned FTTI budgets and implemented bidirectional requirements-to-test traceability. CRC, counters and timeout monitoring are mapped to AUTOSAR E2E and PROFIsafe communication profiles, with 323 tests and 100% branch coverage. I added an educational FMEDA over a synthetic bill of materials, which computes the ISO 26262-5 metrics while keeping injected-fault detection coverage strictly separate from assumed diagnostic coverage, and a fault tree whose minimal cut sets found a common-cause single point of failure the traceability chain could not see.',
+      de: 'Framework zur Fehlerinjektion für funktionale Sicherheit an einer eingebetteten Motorsteuerung. Ich leitete 29 Fehler aus der Gefährdungsanalyse ab, definierte FTTI-Budgets und implementierte eine bidirektionale Rückverfolgbarkeit von Anforderungen zu Tests. CRC, Zähler und Timeout-Überwachung sind auf AUTOSAR-E2E- und PROFIsafe-Kommunikationsprofile abgebildet; 323 Tests erreichen 100 % Branch Coverage. Ergänzt habe ich eine bewusst didaktische FMEDA über eine synthetische Stückliste, die die Kennzahlen nach ISO 26262-5 berechnet und dabei die gemessene Erkennungsrate injizierter Fehler streng von der angenommenen Diagnosedeckung trennt, sowie einen Fehlerbaum, dessen minimale Schnittmengen einen Single Point of Failure durch gemeinsame Ursache aufdeckten, den die Rückverfolgbarkeitskette nicht zeigen kann.',
     },
     tags: ['Python', 'Functional safety', 'ISO 26262-inspired', 'Fault injection', 'Requirements traceability'],
   },
@@ -70,27 +70,27 @@ export const projects: Project[] = [
     poster: '/media/p4-poster.jpg',
     repo: 'https://github.com/MKamel7/virtual-production-cell',
     shots: [
-      { src: '/media/p4-shot-execute.png', caption: {
+      { src: '/media/p4-shot-execute.webp', caption: {
         en: 'The control program running on a CODESYS SoftPLC. PackML state 6, Execute, with the plant driven live over Modbus TCP.',
         de: 'Das Steuerungsprogramm läuft auf einer CODESYS-SoftPLC. PackML-Zustand 6, Execute, die Anlage wird live über Modbus TCP angesteuert.' } },
-      { src: '/media/p4-shot-watchdog.png', caption: {
+      { src: '/media/p4-shot-watchdog.webp', caption: {
         en: 'The same cell moments after the plant process was killed. The heartbeat stopped, the link watchdog fired, and PackML went to state 9, Aborted, with every actuator dropped.',
         de: 'Dieselbe Zelle kurz nach dem Abschalten des Anlagenprozesses. Der Heartbeat blieb stehen, der Link-Watchdog löste aus, PackML ging in Zustand 9, Aborted, und alle Aktoren fielen ab.' } },
-      { src: '/media/p4-shot-channels.png', caption: {
+      { src: '/media/p4-shot-channels.webp', caption: {
         en: 'The Modbus client configuration: read discrete inputs, read input registers, write multiple coils, each cyclic at 20 ms against the plant’s 50 ms scan.',
         de: 'Die Modbus-Client-Konfiguration: Diskrete Eingänge lesen, Eingangsregister lesen, mehrere Spulen schreiben, jeweils zyklisch mit 20 ms gegen den 50-ms-Zyklus der Anlage.' } },
-      { src: '/media/p4-shot-mapping.png', caption: {
+      { src: '/media/p4-shot-mapping.webp', caption: {
         en: 'The process image mapped bit by bit onto the PLC’s variables. The address map is generated from one enum, so the two halves cannot disagree.',
         de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus einem einzigen Enum erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
     ],
     metrics: [
-      { value: { en: '223', de: '223' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
+      { value: { en: '299', de: '299' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
       { value: { en: '14', de: '14' }, label: { en: 'safety requirements traced to tests', de: 'Sicherheitsanforderungen bis zu Tests rückverfolgt' } },
       { value: { en: '62.5%', de: '62,5 %' }, label: { en: 'baseline OEE across three scenarios', de: 'Basis-OEE über drei Szenarien' } },
     ],
     desc: {
-      en: 'Virtual commissioning of a packaging cell with IEC 61131-3 Structured Text on a CODESYS SoftPLC controlling a simulated plant over Modbus TCP. I implemented PackML and ISA-TR88.00.02 PackTags, watchdog-based safe shutdown, encrypted OPC UA supervision and bidirectional traceability for 14 safety requirements. The control software is covered by 223 tests with 100% branch coverage.',
-      de: 'Virtuelle Inbetriebnahme einer Verpackungszelle mit IEC-61131-3-Structured-Text auf einer CODESYS-SoftPLC, die eine simulierte Anlage über Modbus TCP steuert. Ich implementierte PackML und PackTags nach ISA-TR88.00.02, eine watchdog-basierte sichere Abschaltung, verschlüsselte OPC-UA-Kommunikation sowie bidirektionale Rückverfolgbarkeit für 14 Sicherheitsanforderungen. 223 Tests decken 100 % der Verzweigungen der Steuerungssoftware ab.',
+      en: 'Virtual commissioning of a packaging cell with IEC 61131-3 Structured Text on a CODESYS SoftPLC controlling a simulated plant over Modbus TCP. I implemented PackML and ISA-TR88.00.02 PackTags, watchdog-based safe shutdown, encrypted OPC UA supervision and bidirectional traceability for 14 safety requirements. On top of the tag layer I built an IEC 62264 (ISA-95) equipment hierarchy exposed over OPC UA, so a work unit is addressed by where it sits rather than by a flat tag list, carrying ISO 22400 KPIs, a measured cycle time and derived alarms. The control software is covered by 299 tests with 100% branch coverage.',
+      de: 'Virtuelle Inbetriebnahme einer Verpackungszelle mit IEC-61131-3-Structured-Text auf einer CODESYS-SoftPLC, die eine simulierte Anlage über Modbus TCP steuert. Ich implementierte PackML und PackTags nach ISA-TR88.00.02, eine watchdog-basierte sichere Abschaltung, verschlüsselte OPC-UA-Kommunikation sowie bidirektionale Rückverfolgbarkeit für 14 Sicherheitsanforderungen. Auf der Tag-Ebene aufbauend entwickelte ich eine Anlagenhierarchie nach IEC 62264 (ISA-95), die über OPC UA bereitgestellt wird: Eine Arbeitseinheit wird über ihre Position in der Hierarchie adressiert statt über eine flache Tag-Liste und liefert Kennzahlen nach ISO 22400, eine gemessene Taktzeit und abgeleitete Alarme. 299 Tests decken 100 % der Verzweigungen der Steuerungssoftware ab.',
     },
     tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'Functional safety'],
   },
@@ -101,13 +101,13 @@ export const projects: Project[] = [
     media: '/media/pick-place.mp4',
     poster: '/media/pick-place-poster.jpg',
     shots: [
-      { src: '/media/pick-place-shot-detect.png', caption: {
+      { src: '/media/pick-place-shot-detect.webp', caption: {
         en: 'The overhead RGB-D camera segmenting the three coloured parts. The operator-selected colour is boxed thicker and becomes the pick target.',
         de: 'Die RGB-D-Kamera über der Zelle segmentiert die drei farbigen Teile. Die vom Bediener gewählte Farbe wird dicker umrandet und zum Greifziel.' } },
-      { src: '/media/pick-place-shot-segment.png', caption: {
+      { src: '/media/pick-place-shot-segment.webp', caption: {
         en: 'Largest-blob HSV segmentation on the depth-aligned frame, the step that turns a pixel into a 3D pose in the robot base frame.',
         de: 'HSV-Segmentierung des größten Blobs im tiefenausgerichteten Bild, der Schritt, der aus einem Pixel eine 3D-Pose im Roboterbasis-System macht.' } },
-      { src: '/media/pick-place-shot-gazebo.png', caption: {
+      { src: '/media/pick-place-shot-gazebo.webp', caption: {
         en: 'The UR5e with a Robotiq 2F-85 gripper in Gazebo, driven by the same URDF that feeds ros2_control and MoveIt.',
         de: 'Der UR5e mit Robotiq-2F-85-Greifer in Gazebo, angetrieben von derselben URDF, die auch ros2_control und MoveIt speist.' } },
     ],
@@ -131,13 +131,13 @@ export const projects: Project[] = [
     poster: '/media/p3-poster.jpg',
     repo: 'https://github.com/MKamel7/adas-perception-eval',
     shots: [
-      { src: '/media/p3-shot-distance.png', caption: {
+      { src: '/media/p3-shot-distance.webp', caption: {
         en: 'Pedestrians beyond 30 metres. Green was found, red was annotated and nothing matched it, blue is a detection. The measured AP in this band is 0.009.',
         de: 'Fußgänger jenseits von 30 Metern. Grün wurde gefunden, Rot ist annotiert und wurde von nichts getroffen, Blau ist eine Detektion. Die gemessene AP in diesem Band beträgt 0,009.' } },
-      { src: '/media/p3-shot-occlusion.png', caption: {
+      { src: '/media/p3-shot-occlusion.webp', caption: {
         en: 'Partial occlusion, the archetypal urban case. Pedestrian AP falls from 0.650 fully visible to 0.178 partly occluded, before an annotator would call the object mostly hidden.',
         de: 'Teilverdeckung, der typische Stadtfall. Die Fußgänger-AP fällt von 0,650 bei voller Sichtbarkeit auf 0,178 bei Teilverdeckung, noch bevor ein Annotator das Objekt als überwiegend verdeckt einstufen würde.' } },
-      { src: '/media/p3-shot-cars.png', caption: {
+      { src: '/media/p3-shot-cars.webp', caption: {
         en: 'Cars beyond 50 metres, each red box labelled with the overlap it achieved where 0.50 was needed. 73% of car misses are boxes that landed badly rather than objects never seen.',
         de: 'Fahrzeuge jenseits von 50 Metern, jede rote Box beschriftet mit der erreichten Überlappung, wobei 0,50 nötig gewesen wäre. 73% der verpassten Fahrzeuge sind schlecht platzierte Boxen und keine nie erkannten Objekte.' } },
     ],
@@ -147,8 +147,8 @@ export const projects: Project[] = [
       { value: { en: '40,570', de: '40.570' }, label: { en: 'annotated objects across the full KITTI split', de: 'annotierte Objekte im vollständigen KITTI-Split' } },
     ],
     desc: {
-      en: 'Evidence-based evaluation of an ONNX pedestrian detector on the complete KITTI split. I implemented COCO-compatible metrics, distance and occlusion slices, bootstrap confidence intervals and pycocotools cross-validation across 40,570 annotated objects. The analysis evaluates nine ISO 21448 SOTIF triggering conditions and quantifies performance degradation beyond 30 metres and under partial occlusion.',
-      de: 'Evidenzbasierte Bewertung eines ONNX-Fußgängerdetektors auf dem vollständigen KITTI-Split. Ich implementierte COCO-kompatible Metriken, Distanz- und Verdeckungsslices, Bootstrap-Konfidenzintervalle sowie eine Kreuzvalidierung mit pycocotools für 40.570 annotierte Objekte. Die Analyse bewertet neun auslösende Bedingungen nach ISO 21448 SOTIF und quantifiziert die Leistungsabnahme ab 30 Metern sowie bei Teilverdeckung.',
+      en: 'Evidence-based evaluation of an ONNX pedestrian detector on the complete KITTI split. I implemented COCO-compatible metrics, distance and occlusion slices, bootstrap confidence intervals and pycocotools cross-validation across 40,570 annotated objects. The analysis evaluates nine ISO 21448 SOTIF triggering conditions and quantifies performance degradation beyond 30 metres and under partial occlusion. I then added calibration and out-of-distribution scoring: reliability diagrams per slice with an overconfidence measure, because expected calibration error is symmetric and cannot separate a timid detector from a confidently wrong one, and a Mahalanobis novelty score over image statistics that is validated against whether high-scoring frames actually did worse.',
+      de: 'Evidenzbasierte Bewertung eines ONNX-Fußgängerdetektors auf dem vollständigen KITTI-Split. Ich implementierte COCO-kompatible Metriken, Distanz- und Verdeckungsslices, Bootstrap-Konfidenzintervalle sowie eine Kreuzvalidierung mit pycocotools für 40.570 annotierte Objekte. Die Analyse bewertet neun auslösende Bedingungen nach ISO 21448 SOTIF und quantifiziert die Leistungsabnahme ab 30 Metern sowie bei Teilverdeckung. Ergänzt habe ich Kalibrierung und Novelty-Erkennung: Reliability-Diagramme je Slice mit einem Maß für Überkonfidenz, da der Expected Calibration Error symmetrisch ist und einen zurückhaltenden Detektor nicht von einem selbstsicher falschen unterscheiden kann, sowie einen Mahalanobis-Score über Bildstatistiken, der daran geprüft wird, ob hoch bewertete Bilder tatsächlich schlechter abschnitten.',
     },
     tags: ['ONNX Runtime', 'KITTI', 'ISO 21448 SOTIF', 'Evaluation engineering', 'pycocotools', 'Python'],
   },
@@ -179,12 +179,12 @@ export const projects: Project[] = [
     repo: 'https://github.com/MKamel7/robot-arm-ik',
     metrics: [
       { value: { en: '≤0.1 mm', de: '≤0,1 mm' }, label: { en: 'maximum numerical IK position residual', de: 'maximales numerisches IK-Positionsresiduum' } },
-      { value: { en: '6-DOF', de: '6-DOF' }, label: { en: 'UR5/UR5e kinematics and IK from scratch', de: 'UR5/UR5e-Kinematik und IK von Grund auf' } },
-      { value: { en: '24', de: '24' }, label: { en: 'automated tests in CI', de: 'automatisierte Tests in CI' } },
+      { value: { en: '6 and 7-DOF', de: '6 und 7-DOF' }, label: { en: 'UR5e and Franka Panda kinematics from scratch', de: 'UR5e- und Franka-Panda-Kinematik von Grund auf' } },
+      { value: { en: '95', de: '95' }, label: { en: 'automated tests in CI', de: 'automatisierte Tests in CI' } },
     ],
     desc: {
-      en: 'Industrial palletizing cell for a UR5e with Robotiq gripper in MuJoCo. I developed the complete 6-DOF kinematics library in NumPy, including forward kinematics, Jacobian, damped least-squares and closed-form inverse kinematics, and cross-validated it against the MuJoCo model. Collision-aware planning stacks multilayer pallets, reroutes around fixtures and achieves a maximum numerical IK position residual of 0.1 mm.',
-      de: 'Industrielle Palettierzelle für einen UR5e mit Robotiq-Greifer in MuJoCo. Ich entwickelte die vollständige 6-DOF-Kinematikbibliothek in NumPy mit Vorwärtskinematik, Jacobi-Matrix, Damped Least Squares und analytischer Inverskinematik und validierte sie gegen das MuJoCo-Modell. Die kollisionsgeprüfte Bahnplanung stapelt mehrlagige Paletten, umfährt Vorrichtungen und erreicht ein maximales numerisches IK-Positionsresiduum von 0,1 mm.',
+      en: 'Industrial palletizing cell for a UR5e with Robotiq gripper in MuJoCo. I developed the complete 6-DOF kinematics library in NumPy, including forward kinematics, Jacobian, damped least-squares and closed-form inverse kinematics, and cross-validated it against the MuJoCo model. Collision-aware planning stacks multilayer pallets, reroutes around fixtures and achieves a maximum numerical IK position residual of 0.1 mm. I extended the library to the redundant 7-DOF Franka Panda, where null-space control spends the spare joint on joint-limit avoidance or manipulability without disturbing the tool pose. A gain sweep shows both objectives are worse than doing nothing past their optimum, which is the result worth having.',
+      de: 'Industrielle Palettierzelle für einen UR5e mit Robotiq-Greifer in MuJoCo. Ich entwickelte die vollständige 6-DOF-Kinematikbibliothek in NumPy mit Vorwärtskinematik, Jacobi-Matrix, Damped Least Squares und analytischer Inverskinematik und validierte sie gegen das MuJoCo-Modell. Die kollisionsgeprüfte Bahnplanung stapelt mehrlagige Paletten, umfährt Vorrichtungen und erreicht ein maximales numerisches IK-Positionsresiduum von 0,1 mm. Die Bibliothek erweiterte ich auf den redundanten 7-DOF-Franka-Panda: Eine Nullraumregelung nutzt das überzählige Gelenk für Gelenkgrenzen-Vermeidung oder Manipulierbarkeit, ohne die Werkzeugpose zu stören. Ein Verstärkungs-Sweep zeigt, dass beide Ziele jenseits ihres Optimums schlechter sind als gar keine Regelung, und genau das ist das Ergebnis, auf das es ankommt.',
     },
     tags: ['MuJoCo', 'NumPy', 'Inverse kinematics', 'Collision avoidance', 'Python'],
   },

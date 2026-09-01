@@ -28,3 +28,9 @@ dist-ssr
 docs/
 graphify-out/
 PRODUCT.md
+
+# Rendered animation frames. capture-frames.mjs regenerates these from the
+# HTML sources beside them (media-src/<slug>/index.html), and ffmpeg turns them
+# into public/media/<slug>.mp4. They were 112.9 MB of intermediate build output
+# tracked in git; the sources and the scripts that rebuild them are kept.
+media-src/*/frames/

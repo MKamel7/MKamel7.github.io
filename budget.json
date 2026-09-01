@@ -1,0 +1,52 @@
+{
+  "_comment": [
+    "Performance budget, enforced by scripts/check-budget.mjs in CI.",
+    "",
+    "Every limit is set from a real measurement of dist/ with roughly 15 to 20",
+    "percent headroom, so ordinary work does not trip it and a genuine",
+    "regression does. The measured values on the day it was written are in",
+    "'measured', which is what makes the headroom auditable rather than a",
+    "number someone picked.",
+    "",
+    "There is deliberately no --update flag. A budget you can raise by running",
+    "a command is a report, not a gate: the one time it matters is the time",
+    "somebody is in a hurry, and that is exactly when it would be raised.",
+    "Changing a limit is a commit, with a reason."
+  ],
+
+  "codeTransferKb": {
+    "limit": 175,
+    "measured": 142.7,
+    "why": "JS, CSS and HTML, gzipped, which is what the browser actually pulls over the wire. The number a heavy new dependency moves first."
+  },
+  "fontsKb": {
+    "limit": 300,
+    "measured": 263.9,
+    "why": "Every font subset shipped. Woff2 is already compressed so raw size is transfer size. This over-counts what one visitor fetches, since a browser takes only the subsets its text needs, which makes it a safe ceiling rather than an estimate."
+  },
+  "firstLoadKb": {
+    "limit": 480,
+    "measured": 406.6,
+    "why": "Code plus every font: the worst case a first visit can cost before any media loads. The number a person actually waits for, because MediaSlot lazy-loads video and images."
+  },
+  "videoKb": {
+    "limit": 12500,
+    "measured": 10968.8,
+    "why": "All shipped video. Lazy-loaded, so it does not delay first paint, but it is two thirds of the repository's weight and the thing most likely to grow without anyone noticing."
+  },
+  "imageKb": {
+    "limit": 6000,
+    "measured": 5331.3,
+    "why": "All shipped stills. Screenshots are WebP, encoded at the lowest quality clearing 40 dB PSNR, so a regression here usually means a PNG got committed by accident."
+  },
+  "totalKb": {
+    "limit": 19000,
+    "measured": 16999.5,
+    "why": "Everything in dist/. A bandwidth and repository-weight metric, not a user-facing one; firstLoadKb is the user-facing one."
+  },
+  "largestAssetKb": {
+    "limit": 2500,
+    "measured": 2150.6,
+    "why": "The biggest single file, currently media/p3.mp4. Catches one unoptimised export dropped in, which a total-size budget can absorb without complaining."
+  }
+}
