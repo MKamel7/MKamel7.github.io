@@ -12,23 +12,23 @@
     "budget": "node scripts/check-budget.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/archivo": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
-    "@tailwindcss/vite": "^4.3.2",
-    "lucide-react": "^1.23.0",
-    "motion": "^12.42.2",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "lucide-react": "^1.35.0",
+    "motion": "^13.1.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@types/node": "^24.13.2",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.3",
-    "oxlint": "^1.71.0",
-    "playwright-core": "^1.61.1",
-    "typescript": "~6.0.2",
-    "vite": "^8.1.1"
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.80.0",
+    "playwright-core": "^1.62.1",
+    "typescript": "~7.0.2",
+    "vite": "^8.2.2"
   }
 }
