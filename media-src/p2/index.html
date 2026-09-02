@@ -104,6 +104,21 @@
 </div>
 
 <script>
+// NOT ON THE SITE, and its render was deleted on 2026-09-02. The p2 card uses
+// the architecture SVG as its poster and carries no video, so p2.mp4 shipped in
+// every build referenced by nothing, still drawing 27 faults and 204 tests a
+// month after the card was corrected to 29 and 323. The source here is
+// corrected; the stale render is gone rather than left as a trap.
+//
+// Before wiring this in, one decision belongs to Mo rather than to whoever
+// renders it. The result panel and the closing log report "requirements unmet
+// 3 of 11" and name SR-06, SR-09 and SR-11. That was deliberately the site's
+// headline on 2026-08-01 and just as deliberately removed from public copy
+// later, and tests/portfolio-content.test.ts now refuses that phrasing in card
+// text. So this scene argues for a framing the site has since dropped. Do not
+// soften the numbers to fit: either Mo wants the honest headline back, or this
+// stays off the site. Re-capture with capture-frames.mjs if he wants it.
+//
 // Curves are shaped from the campaign's own findings, not invented: the limit is
 // 140 C, the diverse channel trips at step 2 and 51.6 C, the redundant pair
 // trips late and past the limit, and the two failing designs run away. Exact
