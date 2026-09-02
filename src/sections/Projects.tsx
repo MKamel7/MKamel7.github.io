@@ -116,11 +116,19 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
             </div>
           ))}
         </div>
+        {/* Same hover as the skills chips: accent border, brighter text and a
+            warm shadow, plus the small lift. Deliberately identical values
+            rather than similar ones, so the two sections read as one system. */}
         <div className="mt-7 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-muted">
+            <motion.span
+              key={tag}
+              whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+              className="cursor-default rounded-full border border-line px-3 py-1 text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-ink hover:shadow-[0_6px_18px_-6px_rgba(244,96,42,0.45)]"
+            >
               {tag}
-            </span>
+            </motion.span>
           ))}
         </div>
         {project.repo && (

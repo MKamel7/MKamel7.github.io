@@ -69,7 +69,23 @@ export function Experience() {
 
         {/* Timeline: most recent at the top. The accent line fills as the section scrolls past,
             and each milestone dot ignites in turn. */}
-        <div ref={railRef} className="relative mt-14 pl-8 md:pl-12">
+        <div ref={railRef} className="relative mt-20 pl-8 md:pl-12">
+          {/* The rail carries on above the newest entry and ends in an arrowhead.
+              Two reasons: the top role is still running, and this list is a
+              selection of five rather than a complete record, so a rail that
+              simply stopped would read as "and then nothing". */}
+          <span
+            aria-hidden
+            className="absolute left-[6px] -top-8 h-8 w-px bg-gradient-to-t from-accent to-transparent"
+          />
+          <svg
+            aria-hidden
+            viewBox="0 0 12 9"
+            className="absolute -top-[38px] left-[1px] h-[9px] w-3 fill-accent"
+          >
+            <path d="M6 0 12 9 0 9Z" />
+          </svg>
+          <span className="sr-only">Timeline continues to the present.</span>
           <span aria-hidden className="absolute left-[6px] top-3 bottom-3 w-px bg-line" />
           <motion.span
             aria-hidden

@@ -4,12 +4,14 @@ import type { Project } from '../types';
 // .mp4 renders as autoplaying muted video, image formats as lazy <img>,
 // missing media renders a styled placeholder tile.
 
-// Order is the recruiter ranking, not chronology and not sentiment. The first
-// five are the differentiated ones: a measured AMR, functional-safety fault
-// injection, virtual commissioning on a real PLC runtime, a MoveIt cell, and an
-// ADAS evaluation. The B.Sc. Arduino projects are real and stay on the page,
-// but they go last because a reader who stops after three cards should have
-// seen the three that argue hardest.
+// Order is the recruiter ranking, not chronology and not sentiment, and it is
+// Mo's own (2026-09-03). The first seven are the engineering repositories: the
+// MoveIt cell, the measured AMR, virtual commissioning on a real PLC runtime,
+// functional-safety fault injection, an ADAS evaluation, the kinematics library
+// and the embedded test framework. The thesis, the ROV, the coursework studies
+// and the B.Sc. Arduino projects are all real and stay on the page, but they go
+// after, because a reader who stops after three cards should have seen the three
+// that argue hardest.
 
 // COPY RULES, from how this page is actually read (2026-09-02):
 //   1. `desc` is two sentences at most. It says what the thing is and what
@@ -22,6 +24,43 @@ import type { Project } from '../types';
 //      seven-joint arm, not 7-DOF). Tool names stay abbreviated in `tags`,
 //      because that is where a keyword search looks.
 export const projects: Project[] = [
+  {
+    id: 'pick-place',
+    title: 'Vision-Guided Pick & Place',
+    category: 'featured',
+    media: '/media/pick-place.mp4',
+    poster: '/media/pick-place-poster.jpg',
+    shots: [
+      { src: '/media/pick-place-shot-detect.webp', caption: {
+        en: 'The overhead RGB-D camera segmenting the three coloured parts. The operator-selected colour is boxed thicker and becomes the pick target.',
+        de: 'Die RGB-D-Kamera über der Zelle segmentiert die drei farbigen Teile. Die vom Bediener gewählte Farbe wird dicker umrandet und zum Greifziel.' } },
+      { src: '/media/pick-place-shot-segment.webp', caption: {
+        en: 'Largest-blob HSV segmentation on the depth-aligned frame, the step that turns a pixel into a 3D pose in the robot base frame.',
+        de: 'HSV-Segmentierung des größten Blobs im tiefenausgerichteten Bild, der Schritt, der aus einem Pixel eine 3D-Pose im Roboterbasis-System macht.' } },
+      { src: '/media/pick-place-shot-gazebo.webp', caption: {
+        en: 'The UR5e with a Robotiq 2F-85 gripper in Gazebo, driven by the same URDF that feeds ros2_control and MoveIt.',
+        de: 'Der UR5e mit Robotiq-2F-85-Greifer in Gazebo, angetrieben von derselben URDF, die auch ros2_control und MoveIt speist.' } },
+    ],
+    repo: 'https://github.com/MKamel7/moveit-ur5-pick-place',
+    metrics: [
+      { value: { en: '92 of 100', de: '92 von 100' }, label: { en: 'randomised placements picked and placed', de: 'zufällige Platzierungen gegriffen und abgelegt' } },
+      { value: { en: '4.0 mm', de: '4,0 mm' }, label: { en: 'typical error locating the part, 7.3 mm at the 95th percentile', de: 'typischer Fehler bei der Lokalisierung, 7,3 mm im 95. Perzentil' } },
+      { value: { en: 'URSim', de: 'URSim' }, label: { en: 'validated against the real Universal Robots software', de: 'gegen die echte Universal-Robots-Software validiert' } },
+    ],
+    desc: {
+      en: 'An industrial colour-sorting cell for a UR5e robot arm on ROS 2 Jazzy and MoveIt 2. An overhead depth camera locates the selected part, and the planner carries it to the matching outfeed lane without hitting anything on the way.',
+      de: 'Eine industrielle Farbsortierzelle für einen UR5e-Roboterarm auf Basis von ROS 2 Jazzy und MoveIt 2. Eine Tiefenkamera über der Zelle lokalisiert das gewählte Teil, und der Planer bringt es kollisionsfrei zur passenden Auslaufbahn.',
+    },
+    highlights: [
+      { en: 'The success rate is measured rather than asserted: 100 randomised placements, reproducible from a committed results file.',
+        de: 'Die Erfolgsquote ist gemessen statt behauptet: 100 zufällige Platzierungen, reproduzierbar aus einer versionierten Ergebnisdatei.' },
+      { en: 'Every stage reports why it stopped, so an unreachable target and a blocked path are told apart instead of both reading as one failure.',
+        de: 'Jede Stufe meldet, warum sie stehen blieb, sodass ein unerreichbares Ziel und ein blockierter Pfad unterschieden werden statt beide als ein Fehler zu erscheinen.' },
+      { en: 'A Gazebo digital shadow mirrors the running cell, and the cell exposes itself to a controller over OPC UA.',
+        de: 'Ein digitaler Schatten in Gazebo spiegelt die laufende Zelle, und die Zelle stellt sich einer Steuerung über OPC UA zur Verfügung.' },
+    ],
+    tags: ['ROS 2 Jazzy', 'MoveIt 2', 'MoveIt Task Constructor', 'OMPL', 'RGB-D perception', 'OPC UA'],
+  },
   {
     id: 'p5',
     title: 'Autonomous Mobile Robot for Intralogistics',
@@ -58,36 +97,6 @@ export const projects: Project[] = [
         de: 'Durchgängig an einem Fahrzeug validiert, mit 67 nummerierten Messungen, die neben den zugehörigen Aussagen veröffentlicht sind.' },
     ],
     tags: ['ROS 2 Jazzy', 'Nav2', 'Gazebo Harmonic', 'C++', 'ISO 3691-4', 'VDA 5050'],
-  },
-  {
-    id: 'p2',
-    title: 'Fault-Injection Harness',
-    category: 'featured',
-    poster: '/media/p2-architecture.svg',
-    repo: 'https://github.com/MKamel7/fault-injection-harness',
-    shots: [
-      { src: '/media/p2-architecture.svg', caption: {
-        en: 'Architecture of the verification flow from hazard analysis and fault cataloguing through timed detection evaluation and the requirements-traceability gate.',
-        de: 'Architektur des Verifikationsablaufs von Gefährdungsanalyse und Fehlerkatalog über die zeitliche Detektionsauswertung bis zum Gate für die Rückverfolgbarkeit von Anforderungen.' } },
-    ],
-    metrics: [
-      { value: { en: '29', de: '29' }, label: { en: 'faults from hazard analysis, 24 caught in time', de: 'Fehler aus der Gefährdungsanalyse, 24 rechtzeitig erkannt' } },
-      { value: { en: '323', de: '323' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
-      { value: { en: '7', de: '7' }, label: { en: 'independent-review findings closed', de: 'Befunde aus unabhängigem Review geschlossen' } },
-    ],
-    desc: {
-      en: 'A functional-safety verification framework for an embedded motor controller, built the way a safety case is built. Faults come from the hazard analysis rather than from imagination, each one carries a detection deadline, and every requirement is traced in both directions to the tests that cover it.',
-      de: 'Ein Verifikationsframework für funktionale Sicherheit an einer eingebetteten Motorsteuerung, aufgebaut wie ein Sicherheitsnachweis. Die Fehler stammen aus der Gefährdungsanalyse statt aus der Vorstellung, jeder trägt eine Erkennungsfrist, und jede Anforderung ist beidseitig zu den Tests rückverfolgbar, die sie abdecken.',
-    },
-    highlights: [
-      { en: 'Failure modes and diagnostic coverage analysed to ISO 26262-5, keeping measured detection separate from assumed.',
-        de: 'Fehlerarten und Diagnosedeckung nach ISO 26262-5 analysiert, wobei gemessene Erkennung und angenommene Deckung getrennt bleiben.' },
-      { en: 'A fault tree exposed a common-cause single point of failure that the traceability chain alone could not reveal.',
-        de: 'Ein Fehlerbaum deckte einen Single Point of Failure durch gemeinsame Ursache auf, den die Rückverfolgbarkeitskette allein nicht zeigen konnte.' },
-      { en: 'Data integrity built on checksums, sequence counters and timeout monitoring, the mechanisms industrial safety buses rely on.',
-        de: 'Datenintegrität über Prüfsummen, Sequenzzähler und Timeout-Überwachung, also die Mechanismen, auf die industrielle Sicherheitsbusse setzen.' },
-    ],
-    tags: ['Python', 'Functional safety', 'ISO 26262-inspired', 'Fault injection', 'Requirements traceability'],
   },
   {
     id: 'p4',
@@ -130,41 +139,34 @@ export const projects: Project[] = [
     tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'ISA-95'],
   },
   {
-    id: 'pick-place',
-    title: 'Vision-Guided Pick & Place',
+    id: 'p2',
+    title: 'Fault-Injection Harness',
     category: 'featured',
-    media: '/media/pick-place.mp4',
-    poster: '/media/pick-place-poster.jpg',
+    poster: '/media/p2-architecture.svg',
+    repo: 'https://github.com/MKamel7/fault-injection-harness',
     shots: [
-      { src: '/media/pick-place-shot-detect.webp', caption: {
-        en: 'The overhead RGB-D camera segmenting the three coloured parts. The operator-selected colour is boxed thicker and becomes the pick target.',
-        de: 'Die RGB-D-Kamera über der Zelle segmentiert die drei farbigen Teile. Die vom Bediener gewählte Farbe wird dicker umrandet und zum Greifziel.' } },
-      { src: '/media/pick-place-shot-segment.webp', caption: {
-        en: 'Largest-blob HSV segmentation on the depth-aligned frame, the step that turns a pixel into a 3D pose in the robot base frame.',
-        de: 'HSV-Segmentierung des größten Blobs im tiefenausgerichteten Bild, der Schritt, der aus einem Pixel eine 3D-Pose im Roboterbasis-System macht.' } },
-      { src: '/media/pick-place-shot-gazebo.webp', caption: {
-        en: 'The UR5e with a Robotiq 2F-85 gripper in Gazebo, driven by the same URDF that feeds ros2_control and MoveIt.',
-        de: 'Der UR5e mit Robotiq-2F-85-Greifer in Gazebo, angetrieben von derselben URDF, die auch ros2_control und MoveIt speist.' } },
+      { src: '/media/p2-architecture.svg', caption: {
+        en: 'Architecture of the verification flow from hazard analysis and fault cataloguing through timed detection evaluation and the requirements-traceability gate.',
+        de: 'Architektur des Verifikationsablaufs von Gefährdungsanalyse und Fehlerkatalog über die zeitliche Detektionsauswertung bis zum Gate für die Rückverfolgbarkeit von Anforderungen.' } },
     ],
-    repo: 'https://github.com/MKamel7/moveit-ur5-pick-place',
     metrics: [
-      { value: { en: '92 of 100', de: '92 von 100' }, label: { en: 'randomised placements picked and placed', de: 'zufällige Platzierungen gegriffen und abgelegt' } },
-      { value: { en: '4.0 mm', de: '4,0 mm' }, label: { en: 'typical error locating the part, 7.3 mm at the 95th percentile', de: 'typischer Fehler bei der Lokalisierung, 7,3 mm im 95. Perzentil' } },
-      { value: { en: 'URSim', de: 'URSim' }, label: { en: 'validated against the real Universal Robots software', de: 'gegen die echte Universal-Robots-Software validiert' } },
+      { value: { en: '29', de: '29' }, label: { en: 'faults from hazard analysis, 24 caught in time', de: 'Fehler aus der Gefährdungsanalyse, 24 rechtzeitig erkannt' } },
+      { value: { en: '323', de: '323' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '7', de: '7' }, label: { en: 'independent-review findings closed', de: 'Befunde aus unabhängigem Review geschlossen' } },
     ],
     desc: {
-      en: 'An industrial colour-sorting cell for a UR5e robot arm on ROS 2 Jazzy and MoveIt 2. An overhead depth camera locates the selected part, and the planner carries it to the matching outfeed lane without hitting anything on the way.',
-      de: 'Eine industrielle Farbsortierzelle für einen UR5e-Roboterarm auf Basis von ROS 2 Jazzy und MoveIt 2. Eine Tiefenkamera über der Zelle lokalisiert das gewählte Teil, und der Planer bringt es kollisionsfrei zur passenden Auslaufbahn.',
+      en: 'A functional-safety verification framework for an embedded motor controller, built the way a safety case is built. Faults come from the hazard analysis rather than from imagination, each one carries a detection deadline, and every requirement is traced in both directions to the tests that cover it.',
+      de: 'Ein Verifikationsframework für funktionale Sicherheit an einer eingebetteten Motorsteuerung, aufgebaut wie ein Sicherheitsnachweis. Die Fehler stammen aus der Gefährdungsanalyse statt aus der Vorstellung, jeder trägt eine Erkennungsfrist, und jede Anforderung ist beidseitig zu den Tests rückverfolgbar, die sie abdecken.',
     },
     highlights: [
-      { en: 'The success rate is measured rather than asserted: 100 randomised placements, reproducible from a committed results file.',
-        de: 'Die Erfolgsquote ist gemessen statt behauptet: 100 zufällige Platzierungen, reproduzierbar aus einer versionierten Ergebnisdatei.' },
-      { en: 'Every stage reports why it stopped, so an unreachable target and a blocked path are told apart instead of both reading as one failure.',
-        de: 'Jede Stufe meldet, warum sie stehen blieb, sodass ein unerreichbares Ziel und ein blockierter Pfad unterschieden werden statt beide als ein Fehler zu erscheinen.' },
-      { en: 'A Gazebo digital shadow mirrors the running cell, and the cell exposes itself to a controller over OPC UA.',
-        de: 'Ein digitaler Schatten in Gazebo spiegelt die laufende Zelle, und die Zelle stellt sich einer Steuerung über OPC UA zur Verfügung.' },
+      { en: 'Failure modes and diagnostic coverage analysed to ISO 26262-5, keeping measured detection separate from assumed.',
+        de: 'Fehlerarten und Diagnosedeckung nach ISO 26262-5 analysiert, wobei gemessene Erkennung und angenommene Deckung getrennt bleiben.' },
+      { en: 'A fault tree exposed a common-cause single point of failure that the traceability chain alone could not reveal.',
+        de: 'Ein Fehlerbaum deckte einen Single Point of Failure durch gemeinsame Ursache auf, den die Rückverfolgbarkeitskette allein nicht zeigen konnte.' },
+      { en: 'Data integrity built on checksums, sequence counters and timeout monitoring, the mechanisms industrial safety buses rely on.',
+        de: 'Datenintegrität über Prüfsummen, Sequenzzähler und Timeout-Überwachung, also die Mechanismen, auf die industrielle Sicherheitsbusse setzen.' },
     ],
-    tags: ['ROS 2 Jazzy', 'MoveIt 2', 'MoveIt Task Constructor', 'OMPL', 'RGB-D perception', 'OPC UA'],
+    tags: ['Python', 'Functional safety', 'ISO 26262-inspired', 'Fault injection', 'Requirements traceability'],
   },
   {
     id: 'p3',
@@ -204,32 +206,6 @@ export const projects: Project[] = [
     tags: ['ONNX Runtime', 'KITTI', 'ISO 21448 SOTIF', 'Evaluation engineering', 'pycocotools', 'Python'],
   },
   {
-    id: 'p1',
-    title: 'Embedded Test & Measurement Framework',
-    category: 'featured',
-    media: '/media/p1.mp4',
-    poster: '/media/p1-poster.jpg',
-    repo: 'https://github.com/MKamel7/embedded-test-automation',
-    metrics: [
-      { value: { en: '129', de: '129' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
-      { value: { en: '5 of 5', de: '5 von 5' }, label: { en: 'seeded broken controllers rejected by the suite', de: 'eingebaute fehlerhafte Steuerungen zurückgewiesen' } },
-      { value: { en: '6,000 rpm', de: '6.000 min⁻¹' }, label: { en: 'envelope from a Siemens servomotor data sheet', de: 'Grenzen aus einem Siemens-Servomotor-Datenblatt' } },
-    ],
-    desc: {
-      en: 'A hardware-in-the-loop test framework for an embedded motor controller. The same tests run against a deterministic simulator today and against a physical board later, because they talk to a transport interface rather than to a device.',
-      de: 'Ein Hardware-in-the-Loop-fähiges Testframework für eine eingebettete Motorsteuerung. Dieselben Tests laufen heute gegen einen deterministischen Simulator und später gegen eine reale Platine, weil sie mit einer Transportschnittstelle sprechen und nicht mit einem Gerät.',
-    },
-    highlights: [
-      { en: 'Five deliberately broken controllers keep the suite honest: all five have to be rejected, so the tests are shown to fail and not only to pass.',
-        de: 'Fünf absichtlich fehlerhafte Steuerungen halten die Testsuite ehrlich: Alle fünf müssen zurückgewiesen werden, sodass die Tests nachweislich auch fehlschlagen können.' },
-      { en: 'The serial path runs over a real character device, so the transport is shown to talk to a device rather than to an echo of itself.',
-        de: 'Der serielle Pfad läuft über ein echtes Zeichengerät, sodass der Transport nachweislich mit einem Gerät spricht und nicht mit einem Echo seiner selbst.' },
-      { en: 'Property-based fuzzing with Hypothesis searches for the inputs a hand-written test would never think to try.',
-        de: 'Property-based Fuzzing mit Hypothesis sucht nach Eingaben, auf die ein handgeschriebener Test nie käme.' },
-    ],
-    tags: ['Python', 'pytest', 'Hypothesis', 'HIL-ready', 'CI'],
-  },
-  {
     id: 'palletizing',
     title: 'UR5e Palletizing Cell',
     category: 'featured',
@@ -254,6 +230,32 @@ export const projects: Project[] = [
         de: 'Erweitert auf einen Arm mit sieben Gelenken, bei dem das überzählige Gelenk genutzt wird, um Gelenkgrenzen zu meiden, ohne das Werkzeug zu bewegen.' },
     ],
     tags: ['MuJoCo', 'NumPy', 'Inverse kinematics', 'Motion planning', 'Collision avoidance', 'Python'],
+  },
+  {
+    id: 'p1',
+    title: 'Embedded Test & Measurement Framework',
+    category: 'featured',
+    media: '/media/p1.mp4',
+    poster: '/media/p1-poster.jpg',
+    repo: 'https://github.com/MKamel7/embedded-test-automation',
+    metrics: [
+      { value: { en: '129', de: '129' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '5 of 5', de: '5 von 5' }, label: { en: 'seeded broken controllers rejected by the suite', de: 'eingebaute fehlerhafte Steuerungen zurückgewiesen' } },
+      { value: { en: '6,000 rpm', de: '6.000 min⁻¹' }, label: { en: 'envelope from a Siemens servomotor data sheet', de: 'Grenzen aus einem Siemens-Servomotor-Datenblatt' } },
+    ],
+    desc: {
+      en: 'A hardware-in-the-loop test framework for an embedded motor controller. The same tests run against a deterministic simulator today and against a physical board later, because they talk to a transport interface rather than to a device.',
+      de: 'Ein Hardware-in-the-Loop-fähiges Testframework für eine eingebettete Motorsteuerung. Dieselben Tests laufen heute gegen einen deterministischen Simulator und später gegen eine reale Platine, weil sie mit einer Transportschnittstelle sprechen und nicht mit einem Gerät.',
+    },
+    highlights: [
+      { en: 'Five deliberately broken controllers keep the suite honest: all five have to be rejected, so the tests are shown to fail and not only to pass.',
+        de: 'Fünf absichtlich fehlerhafte Steuerungen halten die Testsuite ehrlich: Alle fünf müssen zurückgewiesen werden, sodass die Tests nachweislich auch fehlschlagen können.' },
+      { en: 'The serial path runs over a real character device, so the transport is shown to talk to a device rather than to an echo of itself.',
+        de: 'Der serielle Pfad läuft über ein echtes Zeichengerät, sodass der Transport nachweislich mit einem Gerät spricht und nicht mit einem Echo seiner selbst.' },
+      { en: 'Property-based fuzzing with Hypothesis searches for the inputs a hand-written test would never think to try.',
+        de: 'Property-based Fuzzing mit Hypothesis sucht nach Eingaben, auf die ein handgeschriebener Test nie käme.' },
+    ],
+    tags: ['Python', 'pytest', 'Hypothesis', 'HIL-ready', 'CI'],
   },
   {
     id: 'dms',
