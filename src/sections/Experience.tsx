@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
+import { ChevronDown } from 'lucide-react'
 import { FadeIn } from '../components/motion/FadeIn'
 import { useLang } from '../i18n'
 import { content } from '../content'
@@ -58,6 +59,17 @@ export function Experience() {
     offset: ['start 0.8', 'end 0.55'],
   })
 
+  // Collapsed, the timeline shows the five roles Mo picked out. Those five are
+  // already in newest-to-oldest order, so this is a chronological SUBSET rather
+  // than a re-ranking: expanding slots the other nine into place between them
+  // instead of shuffling anything the reader has already looked at.
+  const [expanded, setExpanded] = useState(false)
+  const all = t.experience.entries
+  const featured = all.filter((entry) => entry.featured)
+  const shown = expanded || featured.length === 0 ? all : featured
+  const hiddenCount = all.length - featured.length
+  const canExpand = hiddenCount > 0 && featured.length > 0
+
   return (
     <section id="experience" className="px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-[1400px]">
@@ -69,11 +81,12 @@ export function Experience() {
 
         {/* Timeline: most recent at the top. The accent line fills as the section scrolls past,
             and each milestone dot ignites in turn. */}
-        <div ref={railRef} className="relative mt-20 pl-8 md:pl-12">
-          {/* The rail carries on above the newest entry and ends in an arrowhead.
-              Two reasons: the top role is still running, and this list is a
-              selection of five rather than a complete record, so a rail that
-              simply stopped would read as "and then nothing". */}
+        <div ref={railRef} id="experience-timeline" className="relative mt-20 pl-8 md:pl-12">
+          {/* The rail carries on above the newest entry and ends in an arrowhead,
+              because the top role is still running and a rail that simply stopped
+              there would read as "and then nothing". The expander at the other end
+              is the same idea pointing backwards: the collapsed list is five roles,
+              not the whole record. */}
           <span
             aria-hidden
             className="absolute left-[6px] -top-8 h-8 w-px bg-gradient-to-t from-accent to-transparent"
@@ -92,16 +105,49 @@ export function Experience() {
             className="absolute left-[6px] top-3 bottom-3 w-px origin-top bg-gradient-to-b from-accent to-accent-soft"
             style={reduced ? { scaleY: 1 } : { scaleY: scrollYProgress }}
           />
-          {t.experience.entries.map((entry, i) => (
+          {shown.map((entry, i) => (
             <TimelineEntry
               key={`${entry.title}-${entry.org}`}
               entry={entry}
               index={i}
-              total={t.experience.entries.length}
+              total={shown.length}
               progress={scrollYProgress}
               reduced={reduced}
             />
           ))}
+
+          {/* The expander sits on the rail itself, in the position the next dot
+              would occupy, so it reads as "the timeline carries on" rather than
+              as a control bolted underneath it. Hover matches the skills chips. */}
+          {canExpand && (
+            <div className="relative h-[26px]">
+              <motion.button
+                type="button"
+                onClick={() => setExpanded((v) => !v)}
+                aria-expanded={expanded}
+                aria-controls="experience-timeline"
+                title={expanded ? t.experience.showLess : t.experience.showMore}
+                whileHover={reduced ? undefined : { y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                // Centred on the rail, derived from the dots rather than guessed:
+                // a dot is 13px wide at -left-8 (-left-12 at md), so its centre is
+                // 6.5px in, and a 26px circle has to start a further 6.5px left.
+                className="absolute -left-[39px] top-0 flex h-[26px] w-[26px] cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors duration-300 hover:border-accent hover:text-accent hover:shadow-[0_6px_18px_-6px_rgba(244,96,42,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:-left-[55px]"
+              >
+                <motion.span
+                  aria-hidden
+                  className="flex"
+                  animate={reduced ? { rotate: expanded ? 180 : 0 } : { rotate: expanded ? 180 : 0 }}
+                  transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 24 }}
+                >
+                  <ChevronDown size={15} strokeWidth={2.5} />
+                </motion.span>
+                <span className="sr-only">
+                  {expanded ? t.experience.showLess : `${t.experience.showMore} (${hiddenCount})`}
+                </span>
+              </motion.button>
+            </div>
+          )}
         </div>
 
         <div className="mt-20">

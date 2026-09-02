@@ -29,7 +29,9 @@ export interface Content {
   };
   experience: {
     heading: string;
-    entries: { title: string; org: string; period: string; note: string }[];
+    entries: { title: string; org: string; period: string; note: string; featured?: boolean }[];
+    showMore: string;
+    showLess: string;
     awardsHeading: string;
     awards: { title: string; detail: string }[];
   };
@@ -89,35 +91,96 @@ const en: Content = {
     entries: [
       {
         title: 'Club Advisor',
+        featured: true,
         org: 'Rotaract Alexandria New Era (remote)',
         period: 'Jul 2026 - Present',
         note: 'Advising the board of the club I co-founded in 2019, remotely from Regensburg.',
       },
       {
+        title: 'Lagerhelfer',
+        org: 'DHL',
+        period: 'Apr 2026 - Present',
+        note: 'Warehouse and parcel handling alongside full-time studies.',
+      },
+      {
+        title: 'Guide',
+        org: 'European Girls’ Olympiad in Informatics',
+        period: 'Jul 2025, May 2026',
+        note: 'Guided international delegations and managed the contest hall at the Deutsche Telekom Campus in Bonn.',
+      },
+      {
+        title: 'Career break & travelling',
+        org: '',
+        period: 'Aug 2025 - Mar 2026',
+        note: 'A planned break to travel, recharge, and plan the next step.',
+      },
+      {
         title: 'Student Research Assistant',
+        featured: true,
         org: 'PPMI (Verian Group)',
         period: 'May - Jul 2025',
         note: 'EU study on the safety of minors on social media platforms.',
       },
       {
+        title: 'Chef',
+        org: 'Burger King',
+        period: 'Dec 2024 - Mar 2025',
+        note: 'Preparing meals in the kitchen alongside studies.',
+      },
+      {
         title: 'Chief of Organizers',
+        featured: true,
         org: 'IOI 2024, International Olympiad in Informatics',
         period: 'Jul - Sep 2024',
         note: 'Directed operations for 1,000+ international participants: arrivals and departures, competition hall, accommodation, food logistics, sponsor coordination and live crisis management. Selected 216 organizers from 860+ candidates.',
       },
       {
         title: 'Inspection Engineer',
+        featured: true,
         org: 'AMOC, Alexandria',
         period: 'Oct 2023 - Sep 2024',
         note: 'Investigated a pipeline explosion, identified the root cause within two weeks, and wrote the company standard that closed the gap: a two-part hose specification covering procurement through replacement, still in force. Supervised 6-8 inspectors per round.',
       },
       {
+        title: 'Real Estate Agent',
+        org: 'REI Lead Pros (US, remote)',
+        period: 'Apr - Oct 2022',
+        note: 'Remote US real estate sales. Ranked 7th company-wide.',
+      },
+      {
+        title: 'President',
+        org: 'Rotaract Alexandria New Era',
+        period: 'Jul 2021 - Jun 2022',
+        note: 'Co-founded the club in 2019 and led it through the 2021-22 term, running leadership workshops and the Matbakh Alexandria charity kitchen.',
+      },
+      {
         title: 'Mechatronics Engineer',
+        featured: true,
         org: 'Invictus UMVs',
         period: 'Jan 2021 - Mar 2022',
         note: 'Frame design, 8-thruster propulsion, control architecture, and the autonomous vision pipeline for the Brotta II ROV.',
       },
+      {
+        title: 'Mechatronics Engineering Intern',
+        org: 'Invictus UMVs',
+        period: 'Jul - Dec 2020',
+        note: 'Hands-on prototyping and testing that led into the Brotta II engineering role.',
+      },
+      {
+        title: 'Chief of Organizers',
+        org: 'Egyptian Olympiad in Informatics',
+        period: 'Aug - Oct 2019',
+        note: 'Led the organising team for the national informatics olympiad.',
+      },
+      {
+        title: 'Mechanical Engineering Intern',
+        org: 'AMOC, Alexandria',
+        period: 'Jul 2019',
+        note: 'Equipment maintenance, safety audits, and ISO compliance observation.',
+      },
     ],
+    showMore: 'Show earlier roles',
+    showLess: 'Show fewer roles',
     awardsHeading: 'Awards',
     awards: [
       { title: 'GPAct Talent Expo', detail: '1st place nationally among 15 teams for the driver monitoring thesis.' },
@@ -202,35 +265,96 @@ const de: Content = {
     entries: [
       {
         title: 'Club Advisor',
+        featured: true,
         org: 'Rotaract Alexandria New Era (remote)',
         period: 'Jul 2026 - heute',
         note: 'Beratung des Vorstands des Clubs, den ich 2019 mitgegründet habe, remote aus Regensburg.',
       },
       {
+        title: 'Lagerhelfer',
+        org: 'DHL',
+        period: 'Apr 2026 - heute',
+        note: 'Lager- und Paketabwicklung neben dem Vollzeitstudium.',
+      },
+      {
+        title: 'Guide',
+        org: 'European Girls’ Olympiad in Informatics',
+        period: 'Jul 2025, Mai 2026',
+        note: 'Betreuung internationaler Delegationen und Leitung der Wettbewerbshalle auf dem Deutsche-Telekom-Campus in Bonn.',
+      },
+      {
+        title: 'Berufliche Auszeit & Reisen',
+        org: '',
+        period: 'Aug 2025 - Mär 2026',
+        note: 'Eine geplante Auszeit zum Reisen, Auftanken und Planen des nächsten Schritts.',
+      },
+      {
         title: 'Student Research Assistant',
+        featured: true,
         org: 'PPMI (Verian Group)',
         period: 'Mai - Jul 2025',
         note: 'EU-Studie zur Sicherheit Minderjähriger auf Social-Media-Plattformen.',
       },
       {
+        title: 'Koch',
+        org: 'Burger King',
+        period: 'Dez 2024 - Mär 2025',
+        note: 'Essenszubereitung in der Küche neben dem Studium.',
+      },
+      {
         title: 'Chef-Organisator',
+        featured: true,
         org: 'IOI 2024, Internationale Informatik-Olympiade',
         period: 'Jul - Sep 2024',
         note: 'Gesamtverantwortung für den Ablauf mit über 1.000 internationalen Teilnehmenden: An- und Abreise, Wettbewerbshalle, Unterbringung, Verpflegung, Sponsorenbetreuung und Krisenmanagement im laufenden Betrieb. 216 Organisatoren aus über 860 Bewerbern ausgewählt.',
       },
       {
         title: 'Inspection Engineer',
+        featured: true,
         org: 'AMOC, Alexandria',
         period: 'Okt 2023 - Sep 2024',
         note: 'Untersuchte eine Rohrleitungsexplosion, identifizierte die Ursache innerhalb von zwei Wochen und erstellte anschließend die Werksnorm, die die Lücke geschlossen hat: eine zweiteilige Schlauchspezifikation von der Beschaffung bis zum Austausch, weiterhin gültig. 6-8 Inspektoren pro Runde angeleitet.',
       },
       {
+        title: 'Real Estate Agent',
+        org: 'REI Lead Pros (USA, remote)',
+        period: 'Apr - Okt 2022',
+        note: 'Immobilienvertrieb (USA, remote). Unternehmensweit auf Platz 7.',
+      },
+      {
+        title: 'Präsident',
+        org: 'Rotaract Alexandria New Era',
+        period: 'Jul 2021 - Jun 2022',
+        note: 'Mitgründer des Clubs 2019 und Präsident im Amtsjahr 2021/22, mit Führungsworkshops und der Wohltätigkeitsküche Matbakh Alexandria.',
+      },
+      {
         title: 'Mechatronics Engineer',
+        featured: true,
         org: 'Invictus UMVs',
         period: 'Jan 2021 - Mär 2022',
         note: 'Rahmenkonstruktion, Antrieb mit 8 Thrustern, Regelungsarchitektur und autonome Vision-Pipeline für das ROV Brotta II.',
       },
+      {
+        title: 'Mechatronics Engineering Intern',
+        org: 'Invictus UMVs',
+        period: 'Jul - Dez 2020',
+        note: 'Prototyping und Tests, die in die Brotta-II-Ingenieursrolle mündeten.',
+      },
+      {
+        title: 'Chef-Organisator',
+        org: 'Egyptian Olympiad in Informatics',
+        period: 'Aug - Okt 2019',
+        note: 'Leitung des Organisationsteams der nationalen Informatik-Olympiade.',
+      },
+      {
+        title: 'Mechanical Engineering Intern',
+        org: 'AMOC, Alexandria',
+        period: 'Jul 2019',
+        note: 'Anlagenwartung, Sicherheitsaudits und Beobachtung der ISO-Konformität.',
+      },
     ],
+    showMore: 'Frühere Stationen anzeigen',
+    showLess: 'Weniger anzeigen',
     awardsHeading: 'Auszeichnungen',
     awards: [
       { title: 'GPAct Talent Expo', detail: '1. Platz national unter 15 Teams für die Abschlussarbeit zur Fahrerüberwachung.' },
