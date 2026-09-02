@@ -179,7 +179,7 @@ const en: Content = {
         note: 'Equipment maintenance, safety audits, and ISO compliance observation.',
       },
     ],
-    showMore: 'Show earlier roles',
+    showMore: 'Show {n} earlier roles',
     showLess: 'Show fewer roles',
     awardsHeading: 'Awards',
     awards: [
@@ -353,7 +353,7 @@ const de: Content = {
         note: 'Anlagenwartung, Sicherheitsaudits und Beobachtung der ISO-Konformität.',
       },
     ],
-    showMore: 'Frühere Stationen anzeigen',
+    showMore: '{n} frühere Stationen anzeigen',
     showLess: 'Weniger anzeigen',
     awardsHeading: 'Auszeichnungen',
     awards: [
