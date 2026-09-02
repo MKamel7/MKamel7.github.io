@@ -56,7 +56,7 @@ const en: Content = {
   about: {
     heading: 'About',
     paragraph:
-      'I am a mechatronics engineer focused on robotics, industrial automation, embedded systems, and functional safety. I turn requirements into testable systems, from ROS 2 navigation and PLC-controlled production cells to safety-focused fault injection and computer vision. My engineering approach is grounded in measurement, traceability, and continuous improvement. Beyond technical work, I have led international operations for more than 1,000 participants and coordinated 216 organizers, strengthening my ability to take ownership, communicate clearly, and deliver with diverse teams.',
+      'I am a mechatronics engineer working in robotics, industrial automation and functional safety. What I build gets measured: protective fields derived from vehicle data, control software traced to the requirements it satisfies, a success rate counted over a hundred trials rather than estimated. Before engineering full time I ran operations for an international olympiad of more than 1,000 participants and selected its 216 organizers.',
     languagesLabel: 'Languages',
     languages: 'English (C1), German (B1, improving), French (B1), Arabic (native)',
   },
@@ -74,10 +74,10 @@ const en: Content = {
       // This is the verified public skills inventory. Project cards provide
       // direct evidence for many entries; career records support the remainder.
       // ISO references stay in project context rather than appearing as chips.
-      { label: 'Robotics', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
+      { label: 'Robotics', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'MoveIt Task Constructor', 'OMPL', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrial Automation', tier: 'core', items: ['Structured Text (ST), IEC 61131-3', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
-      { label: 'Safety & Verification', tier: 'core', items: ['Functional safety', 'Hazard analysis', 'FTTI budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
-      { label: 'Software & Testing', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Safety & Verification', tier: 'core', items: ['Functional safety', 'Hazard analysis', 'Fault-tolerant time interval budgeting', 'Fault injection', 'Requirements traceability', 'Test automation'] },
+      { label: 'Software & Testing', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'Mutation testing', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Computer Vision & ML', tier: 'additional', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', tier: 'additional', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Embedded & Electronics', tier: 'additional', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },
@@ -223,7 +223,7 @@ const de: Content = {
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich bin Mechatronikingenieur mit Schwerpunkt Robotik, industrielle Automatisierung, Embedded-Systeme und funktionale Sicherheit. Ich überführe Anforderungen in überprüfbare Systeme – von ROS-2-Navigation und SPS-gesteuerten Produktionszellen bis zu sicherheitsorientierter Fehlerinjektion und Computer Vision. Meine Arbeitsweise basiert auf Messbarkeit, Rückverfolgbarkeit und kontinuierlicher Verbesserung. Neben meiner technischen Arbeit habe ich internationale Abläufe für mehr als 1.000 Teilnehmende geleitet und 216 Organisatoren koordiniert. Dadurch kann ich Verantwortung übernehmen, klar kommunizieren und in vielfältigen Teams zuverlässig Ergebnisse erzielen.',
+      'Ich bin Mechatronikingenieur in den Bereichen Robotik, industrielle Automatisierung und funktionale Sicherheit. Was ich baue, wird gemessen: Schutzfelder aus Fahrzeugdaten abgeleitet, Steuerungssoftware bis zu den Anforderungen rückverfolgt, die sie erfüllt, eine Erfolgsquote über hundert Versuche gezählt statt geschätzt. Vor der Technik habe ich den Ablauf einer internationalen Olympiade mit über 1.000 Teilnehmenden geleitet und ihre 216 Organisatoren ausgewählt.',
     languagesLabel: 'Sprachen',
     languages: 'Englisch (C1), Deutsch (B1, im Ausbau), Französisch (B1), Arabisch (Muttersprache)',
   },
@@ -241,10 +241,10 @@ const de: Content = {
       // Dies ist das verifizierte öffentliche Kompetenzprofil. Projektkarten
       // belegen viele Einträge direkt; die übrigen stützen sich auf berufliche
       // Nachweise. ISO-Verweise bleiben im jeweiligen Projektkontext.
-      { label: 'Robotik', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'OMPL', 'Gazebo', 'MuJoCo'] },
+      { label: 'Robotik', tier: 'core', items: ['ROS 2 (Jazzy, Humble)', 'Nav2', 'MoveIt 2', 'MoveIt Task Constructor', 'OMPL', 'Gazebo', 'MuJoCo'] },
       { label: 'Industrielle Automatisierung', tier: 'core', items: ['Structured Text (ST) nach IEC 61131-3', 'CODESYS', 'PackML', 'OPC UA', 'Modbus TCP', 'MQTT', 'RTDE'] },
-      { label: 'Funktionale Sicherheit & Verifikation', tier: 'core', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'FTTI-Budgetierung', 'Fehlerinjektion', 'Rückverfolgbarkeit von Anforderungen', 'Testautomatisierung'] },
-      { label: 'Softwareentwicklung & Test', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
+      { label: 'Funktionale Sicherheit & Verifikation', tier: 'core', items: ['Funktionale Sicherheit', 'Gefährdungsanalyse', 'Budgetierung von Fehlertoleranzzeiten', 'Fehlerinjektion', 'Rückverfolgbarkeit von Anforderungen', 'Testautomatisierung'] },
+      { label: 'Softwareentwicklung & Test', tier: 'core', items: ['Python', 'C++', 'Embedded C', 'pytest', 'Hypothesis', 'Mutation testing', 'CMake', 'Git & GitHub Actions', 'Docker', 'Linux (Ubuntu)'] },
       { label: 'Computer Vision & Machine Learning', tier: 'additional', items: ['OpenCV', 'YOLOv8', 'MediaPipe', 'ONNX Runtime', 'PyTorch', 'TensorFlow', 'NumPy', 'Pandas'] },
       { label: 'Simulation & CAD', tier: 'additional', items: ['MATLAB', 'Simulink', 'Simscape', 'SolidWorks', 'Fusion 360', 'AutoCAD'] },
       { label: 'Embedded-Systeme & Elektronik', tier: 'additional', items: ['Jetson Nano', 'Raspberry Pi', 'Arduino', 'Altium'] },

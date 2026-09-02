@@ -86,7 +86,24 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
           {project.title}
         </h3>
         <p className="mt-5 max-w-[60ch] leading-relaxed text-muted">{project.desc[lang]}</p>
-        <div className="mt-7 flex flex-wrap gap-x-10 gap-y-4">
+        {/* The scannable half of the card. A single long paragraph is read by
+            nobody in a hurry, so the specifics live here as short lines with a
+            marker in the accent colour to give the eye somewhere to land. */}
+        {project.highlights && project.highlights.length > 0 && (
+          <ul className="mt-5 max-w-[60ch] space-y-2.5">
+            {project.highlights.map((highlight) => (
+              <li key={highlight.en} className="flex gap-3 leading-relaxed text-ink">
+                <span aria-hidden className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span className="text-[0.95rem]">{highlight[lang]}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* A grid rather than a wrapping flex row. Each chip used to size to
+            its own label, so three chips of unequal width either sat in a
+            ragged row or, once the labels grew, stacked one per line down half
+            the card. Equal columns keep them reading as one strip. */}
+        <div className="mt-7 grid max-w-[60ch] gap-3 sm:grid-cols-3">
           {project.metrics.map((metric) => (
             <div
               key={metric.label[lang]}

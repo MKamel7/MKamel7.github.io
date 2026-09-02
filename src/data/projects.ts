@@ -10,10 +10,21 @@ import type { Project } from '../types';
 // ADAS evaluation. The B.Sc. Arduino projects are real and stay on the page,
 // but they go last because a reader who stops after three cards should have
 // seen the three that argue hardest.
+
+// COPY RULES, from how this page is actually read (2026-09-02):
+//   1. `desc` is two sentences at most. It says what the thing is and what
+//      makes it worth reading. Everything else goes in `highlights`.
+//   2. `highlights` are single lines, two or three per project, each a result
+//      or a decision a reviewer can go and check. They exist because a
+//      recruiter skims, and a six-sentence paragraph is skipped whole.
+//   3. Abbreviations a non-specialist cannot expand are written out in the
+//      prose (95th percentile, not p95; mean average precision, not mAP;
+//      seven-joint arm, not 7-DOF). Tool names stay abbreviated in `tags`,
+//      because that is where a keyword search looks.
 export const projects: Project[] = [
   {
     id: 'p5',
-    title: 'Intralogistics AMR',
+    title: 'Autonomous Mobile Robot for Intralogistics',
     category: 'featured',
     media: '/media/p5.mp4',
     poster: '/media/p5-poster.jpg',
@@ -30,14 +41,22 @@ export const projects: Project[] = [
         de: 'Vorbeifahrt an einem Mitarbeiter mit 0,64 m Abstand ohne Halt, aufgezeichnet in der Sicherheitsauswertung.' } },
     ],
     metrics: [
-      { value: { en: '12 of 12', de: '12 von 12' }, label: { en: 'transport cycles with zero pedestrian contact', de: 'Transportzyklen ohne jeden Personenkontakt' } },
-      { value: { en: '7%', de: '7 %' }, label: { en: 'of cycle time given up to protective stops, the measured cost of the safety layer', de: 'der Zykluszeit für Schutzhalte, die gemessenen Kosten der Sicherheitsschicht' } },
-      { value: { en: '124 ms', de: '124 ms' }, label: { en: 'p95 sensor-to-command latency', de: 'p95-Latenz von Sensor bis Kommando' } },
+      { value: { en: '12 of 12', de: '12 von 12' }, label: { en: 'transport cycles with no pedestrian contact', de: 'Transportzyklen ohne Personenkontakt' } },
+      { value: { en: '7%', de: '7 %' }, label: { en: 'of cycle time spent on protective stops', de: 'der Zykluszeit für Schutzhalte' } },
+      { value: { en: '124 ms', de: '124 ms' }, label: { en: 'sensor to command latency, 95th percentile', de: 'Latenz von Sensor bis Kommando, 95. Perzentil' } },
     ],
     desc: {
-      en: 'Autonomous mobile robot for transporting load carriers through a warehouse shared with pedestrians. I integrated ROS 2 Jazzy, Nav2 and C++ perception with ISO 3691-4 protective fields generated from vehicle data and an independent safety layer that can override navigation. The system completed all 12 transport cycles across five recorded runs with zero pedestrian contact, at a measured cost of 103 protective stops per cycle, or 7% of cycle time. Safety is not free and I would rather measure what it costs than assume it.',
-      de: 'Autonomer mobiler Roboter für den Transport von Ladungsträgern in einem gemeinsam mit Personen genutzten Lager. Ich integrierte ROS 2 Jazzy, Nav2 und C++-Wahrnehmung mit aus Fahrzeugdaten abgeleiteten Schutzfeldern nach ISO 3691-4 sowie einer unabhängigen Sicherheitsschicht, die die Navigation übersteuern kann. Das System absolvierte alle 12 Transportzyklen in fünf aufgezeichneten Läufen ohne jeden Personenkontakt, zu gemessenen Kosten von 103 Schutzhalten pro Zyklus, also 7 % der Zykluszeit. Sicherheit ist nicht umsonst, und ich messe ihre Kosten lieber, als sie zu vermuten.',
+      en: 'A 250 kg class transport robot that moves load carriers through a warehouse shared with people on foot, built on ROS 2 Jazzy, Nav2 and C++ perception. Its protective fields come from the vehicle’s own braking data rather than from hand tuning, and an independent safety layer sits after the planner and can override it.',
+      de: 'Ein Transportroboter der 250-kg-Klasse, der Ladungsträger durch ein gemeinsam mit Personen genutztes Lager bewegt, auf Basis von ROS 2 Jazzy, Nav2 und C++-Wahrnehmung. Die Schutzfelder stammen aus den Bremsdaten des Fahrzeugs statt aus manueller Einstellung, und eine unabhängige Sicherheitsschicht sitzt hinter dem Planer und kann ihn übersteuern.',
     },
+    highlights: [
+      { en: 'Protective fields generated from the vehicle specification, following ISO 3691-4 for driverless industrial trucks.',
+        de: 'Schutzfelder aus der Fahrzeugspezifikation erzeugt, orientiert an ISO 3691-4 für fahrerlose Flurförderzeuge.' },
+      { en: 'Every physical constant traces to an archived data sheet, and the build fails when one loses its source.',
+        de: 'Jede physikalische Konstante lässt sich auf ein archiviertes Datenblatt zurückführen, und der Build schlägt fehl, sobald eine ihre Quelle verliert.' },
+      { en: 'Validated end to end on one vehicle, with 67 numbered measurements published beside the claims they support.',
+        de: 'Durchgängig an einem Fahrzeug validiert, mit 67 nummerierten Messungen, die neben den zugehörigen Aussagen veröffentlicht sind.' },
+    ],
     tags: ['ROS 2 Jazzy', 'Nav2', 'Gazebo Harmonic', 'C++', 'ISO 3691-4', 'VDA 5050'],
   },
   {
@@ -52,14 +71,22 @@ export const projects: Project[] = [
         de: 'Architektur des Verifikationsablaufs von Gefährdungsanalyse und Fehlerkatalog über die zeitliche Detektionsauswertung bis zum Gate für die Rückverfolgbarkeit von Anforderungen.' } },
     ],
     metrics: [
-      { value: { en: '29', de: '29' }, label: { en: 'hazard-derived faults, 24 detected in time', de: 'aus Gefährdungsanalyse abgeleitete Fehler, 24 rechtzeitig erkannt' } },
-      { value: { en: '323', de: '323' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
+      { value: { en: '29', de: '29' }, label: { en: 'faults from hazard analysis, 24 caught in time', de: 'Fehler aus der Gefährdungsanalyse, 24 rechtzeitig erkannt' } },
+      { value: { en: '323', de: '323' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
       { value: { en: '7', de: '7' }, label: { en: 'independent-review findings closed', de: 'Befunde aus unabhängigem Review geschlossen' } },
     ],
     desc: {
-      en: 'Functional-safety fault-injection framework for an embedded motor controller. I derived 29 faults from the hazard analysis, assigned FTTI budgets and implemented bidirectional requirements-to-test traceability. CRC, counters and timeout monitoring are mapped to AUTOSAR E2E and PROFIsafe communication profiles, with 323 tests and 100% branch coverage. I added an educational FMEDA over a synthetic bill of materials, which computes the ISO 26262-5 metrics while keeping injected-fault detection coverage strictly separate from assumed diagnostic coverage, and a fault tree whose minimal cut sets found a common-cause single point of failure the traceability chain could not see.',
-      de: 'Framework zur Fehlerinjektion für funktionale Sicherheit an einer eingebetteten Motorsteuerung. Ich leitete 29 Fehler aus der Gefährdungsanalyse ab, definierte FTTI-Budgets und implementierte eine bidirektionale Rückverfolgbarkeit von Anforderungen zu Tests. CRC, Zähler und Timeout-Überwachung sind auf AUTOSAR-E2E- und PROFIsafe-Kommunikationsprofile abgebildet; 323 Tests erreichen 100 % Branch Coverage. Ergänzt habe ich eine bewusst didaktische FMEDA über eine synthetische Stückliste, die die Kennzahlen nach ISO 26262-5 berechnet und dabei die gemessene Erkennungsrate injizierter Fehler streng von der angenommenen Diagnosedeckung trennt, sowie einen Fehlerbaum, dessen minimale Schnittmengen einen Single Point of Failure durch gemeinsame Ursache aufdeckten, den die Rückverfolgbarkeitskette nicht zeigen kann.',
+      en: 'A functional-safety verification framework for an embedded motor controller, built the way a safety case is built. Faults come from the hazard analysis rather than from imagination, each one carries a detection deadline, and every requirement is traced in both directions to the tests that cover it.',
+      de: 'Ein Verifikationsframework für funktionale Sicherheit an einer eingebetteten Motorsteuerung, aufgebaut wie ein Sicherheitsnachweis. Die Fehler stammen aus der Gefährdungsanalyse statt aus der Vorstellung, jeder trägt eine Erkennungsfrist, und jede Anforderung ist beidseitig zu den Tests rückverfolgbar, die sie abdecken.',
     },
+    highlights: [
+      { en: 'Failure modes and diagnostic coverage analysed to ISO 26262-5, keeping measured detection separate from assumed.',
+        de: 'Fehlerarten und Diagnosedeckung nach ISO 26262-5 analysiert, wobei gemessene Erkennung und angenommene Deckung getrennt bleiben.' },
+      { en: 'A fault tree exposed a common-cause single point of failure that the traceability chain alone could not reveal.',
+        de: 'Ein Fehlerbaum deckte einen Single Point of Failure durch gemeinsame Ursache auf, den die Rückverfolgbarkeitskette allein nicht zeigen konnte.' },
+      { en: 'Data integrity built on checksums, sequence counters and timeout monitoring, the mechanisms industrial safety buses rely on.',
+        de: 'Datenintegrität über Prüfsummen, Sequenzzähler und Timeout-Überwachung, also die Mechanismen, auf die industrielle Sicherheitsbusse setzen.' },
+    ],
     tags: ['Python', 'Functional safety', 'ISO 26262-inspired', 'Fault injection', 'Requirements traceability'],
   },
   {
@@ -84,15 +111,23 @@ export const projects: Project[] = [
         de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus einem einzigen Enum erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
     ],
     metrics: [
-      { value: { en: '299', de: '299' }, label: { en: 'tests with 100% branch coverage', de: 'Tests mit 100 % Branch Coverage' } },
-      { value: { en: '14', de: '14' }, label: { en: 'safety requirements traced to tests', de: 'Sicherheitsanforderungen bis zu Tests rückverfolgt' } },
-      { value: { en: '62.5%', de: '62,5 %' }, label: { en: 'baseline OEE across three scenarios', de: 'Basis-OEE über drei Szenarien' } },
+      { value: { en: '299', de: '299' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '14', de: '14' }, label: { en: 'safety requirements traced to their tests', de: 'Sicherheitsanforderungen zu ihren Tests rückverfolgt' } },
+      { value: { en: '62.5%', de: '62,5 %' }, label: { en: 'baseline overall equipment effectiveness', de: 'Basis-Gesamtanlageneffektivität' } },
     ],
     desc: {
-      en: 'Virtual commissioning of a packaging cell with IEC 61131-3 Structured Text on a CODESYS SoftPLC controlling a simulated plant over Modbus TCP. I implemented PackML and ISA-TR88.00.02 PackTags, watchdog-based safe shutdown, encrypted OPC UA supervision and bidirectional traceability for 14 safety requirements. On top of the tag layer I built an IEC 62264 (ISA-95) equipment hierarchy exposed over OPC UA, so a work unit is addressed by where it sits rather than by a flat tag list, carrying ISO 22400 KPIs, a measured cycle time and derived alarms. The control software is covered by 299 tests with 100% branch coverage.',
-      de: 'Virtuelle Inbetriebnahme einer Verpackungszelle mit IEC-61131-3-Structured-Text auf einer CODESYS-SoftPLC, die eine simulierte Anlage über Modbus TCP steuert. Ich implementierte PackML und PackTags nach ISA-TR88.00.02, eine watchdog-basierte sichere Abschaltung, verschlüsselte OPC-UA-Kommunikation sowie bidirektionale Rückverfolgbarkeit für 14 Sicherheitsanforderungen. Auf der Tag-Ebene aufbauend entwickelte ich eine Anlagenhierarchie nach IEC 62264 (ISA-95), die über OPC UA bereitgestellt wird: Eine Arbeitseinheit wird über ihre Position in der Hierarchie adressiert statt über eine flache Tag-Liste und liefert Kennzahlen nach ISO 22400, eine gemessene Taktzeit und abgeleitete Alarme. 299 Tests decken 100 % der Verzweigungen der Steuerungssoftware ab.',
+      en: 'Virtual commissioning of a packaging cell: real control software in IEC 61131-3 Structured Text, running on a CODESYS soft PLC, driving a simulated plant over Modbus TCP. The plant is a stand-in, the controller is not.',
+      de: 'Virtuelle Inbetriebnahme einer Verpackungszelle: echte Steuerungssoftware in IEC-61131-3-Structured-Text auf einer CODESYS-SoftPLC, die eine simulierte Anlage über Modbus TCP ansteuert. Die Anlage ist ein Platzhalter, die Steuerung nicht.',
     },
-    tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'Functional safety'],
+    highlights: [
+      { en: 'Built on PackML and the standard packaging tag set, so the cell speaks what a line integrator already expects.',
+        de: 'Aufgebaut auf PackML und dem standardisierten PackTags-Satz, sodass die Zelle spricht, was ein Linienintegrator ohnehin erwartet.' },
+      { en: 'A watchdog drops every actuator when the link to the plant stops, verified by killing the plant process mid cycle.',
+        de: 'Ein Watchdog lässt alle Aktoren abfallen, sobald die Verbindung zur Anlage abreißt, verifiziert durch Abschalten des Anlagenprozesses im laufenden Takt.' },
+      { en: 'Modelled as an ISA-95 equipment hierarchy over encrypted OPC UA, so a machine is addressed by where it sits rather than by a flat tag list.',
+        de: 'Als ISA-95-Anlagenhierarchie über verschlüsseltes OPC UA modelliert, sodass eine Maschine über ihre Position adressiert wird und nicht über eine flache Tag-Liste.' },
+    ],
+    tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'ISA-95'],
   },
   {
     id: 'pick-place',
@@ -113,15 +148,23 @@ export const projects: Project[] = [
     ],
     repo: 'https://github.com/MKamel7/moveit-ur5-pick-place',
     metrics: [
-      { value: { en: '3', de: '3' }, label: { en: 'colours segmented from RGB-D, operator picks one', de: 'Farben aus RGB-D segmentiert, Bediener wählt eine' } },
-      { value: { en: '40', de: '40' }, label: { en: 'unit tests on ROS-independent logic, CI', de: 'Unit-Tests der ROS-unabhängigen Logik, CI' } },
-      { value: { en: 'URSim', de: 'URSim' }, label: { en: 'validated against the real UR driver', de: 'gegen den realen UR-Treiber validiert' } },
+      { value: { en: '92 of 100', de: '92 von 100' }, label: { en: 'randomised placements picked and placed', de: 'zufällige Platzierungen gegriffen und abgelegt' } },
+      { value: { en: '4.0 mm', de: '4,0 mm' }, label: { en: 'typical error locating the part, 7.3 mm at the 95th percentile', de: 'typischer Fehler bei der Lokalisierung, 7,3 mm im 95. Perzentil' } },
+      { value: { en: 'URSim', de: 'URSim' }, label: { en: 'validated against the real Universal Robots software', de: 'gegen die echte Universal-Robots-Software validiert' } },
     ],
     desc: {
-      en: 'Vision-guided colour-sorting cell for a UR5e using ROS 2 Jazzy and MoveIt 2. I developed an RGB-D pipeline that segments the selected part, transforms its observation into a 3D target pose in the robot base frame and supplies OMPL with collision-aware grasp targets for a moving conveyor. The system was validated with the production UR driver on URSim and integrated with OPC UA and a live dashboard.',
-      de: 'Kamerageführte Farbsortierzelle für einen UR5e mit ROS 2 Jazzy und MoveIt 2. Ich entwickelte eine RGB-D-Pipeline, die das ausgewählte Teil segmentiert, die Beobachtung in eine 3D-Zielpose im Roboterbasis-Koordinatensystem transformiert und OMPL kollisionsgeprüfte Greifziele für ein laufendes Förderband bereitstellt. Das System wurde mit dem produktiven UR-Treiber auf URSim validiert und über OPC UA sowie ein Live-Dashboard integriert.',
+      en: 'An industrial colour-sorting cell for a UR5e robot arm on ROS 2 Jazzy and MoveIt 2. An overhead depth camera locates the selected part, and the planner carries it to the matching outfeed lane without hitting anything on the way.',
+      de: 'Eine industrielle Farbsortierzelle für einen UR5e-Roboterarm auf Basis von ROS 2 Jazzy und MoveIt 2. Eine Tiefenkamera über der Zelle lokalisiert das gewählte Teil, und der Planer bringt es kollisionsfrei zur passenden Auslaufbahn.',
     },
-    tags: ['ROS 2 Jazzy', 'MoveIt 2', 'OMPL', 'Gazebo', 'RGB-D perception', 'OPC UA'],
+    highlights: [
+      { en: 'The success rate is measured rather than asserted: 100 randomised placements, reproducible from a committed results file.',
+        de: 'Die Erfolgsquote ist gemessen statt behauptet: 100 zufällige Platzierungen, reproduzierbar aus einer versionierten Ergebnisdatei.' },
+      { en: 'Every stage reports why it stopped, so an unreachable target and a blocked path are told apart instead of both reading as one failure.',
+        de: 'Jede Stufe meldet, warum sie stehen blieb, sodass ein unerreichbares Ziel und ein blockierter Pfad unterschieden werden statt beide als ein Fehler zu erscheinen.' },
+      { en: 'A Gazebo digital shadow mirrors the running cell, and the cell exposes itself to a controller over OPC UA.',
+        de: 'Ein digitaler Schatten in Gazebo spiegelt die laufende Zelle, und die Zelle stellt sich einer Steuerung über OPC UA zur Verfügung.' },
+    ],
+    tags: ['ROS 2 Jazzy', 'MoveIt 2', 'MoveIt Task Constructor', 'OMPL', 'RGB-D perception', 'OPC UA'],
   },
   {
     id: 'p3',
@@ -132,24 +175,32 @@ export const projects: Project[] = [
     repo: 'https://github.com/MKamel7/adas-perception-eval',
     shots: [
       { src: '/media/p3-shot-distance.webp', caption: {
-        en: 'Pedestrians beyond 30 metres. Green was found, red was annotated and nothing matched it, blue is a detection. The measured AP in this band is 0.009.',
-        de: 'Fußgänger jenseits von 30 Metern. Grün wurde gefunden, Rot ist annotiert und wurde von nichts getroffen, Blau ist eine Detektion. Die gemessene AP in diesem Band beträgt 0,009.' } },
+        en: 'Pedestrians beyond 30 metres. Green was found, red was annotated and nothing matched it, blue is a detection. The measured average precision in this band is 0.009.',
+        de: 'Fußgänger jenseits von 30 Metern. Grün wurde gefunden, Rot ist annotiert und wurde von nichts getroffen, Blau ist eine Detektion. Die gemessene Average Precision in diesem Band beträgt 0,009.' } },
       { src: '/media/p3-shot-occlusion.webp', caption: {
-        en: 'Partial occlusion, the archetypal urban case. Pedestrian AP falls from 0.650 fully visible to 0.178 partly occluded, before an annotator would call the object mostly hidden.',
-        de: 'Teilverdeckung, der typische Stadtfall. Die Fußgänger-AP fällt von 0,650 bei voller Sichtbarkeit auf 0,178 bei Teilverdeckung, noch bevor ein Annotator das Objekt als überwiegend verdeckt einstufen würde.' } },
+        en: 'Partial occlusion, the archetypal urban case. Pedestrian average precision falls from 0.650 fully visible to 0.178 partly occluded, before an annotator would call the object mostly hidden.',
+        de: 'Teilverdeckung, der typische Stadtfall. Die Average Precision für Fußgänger fällt von 0,650 bei voller Sichtbarkeit auf 0,178 bei Teilverdeckung, noch bevor ein Annotator das Objekt als überwiegend verdeckt einstufen würde.' } },
       { src: '/media/p3-shot-cars.webp', caption: {
         en: 'Cars beyond 50 metres, each red box labelled with the overlap it achieved where 0.50 was needed. 73% of car misses are boxes that landed badly rather than objects never seen.',
         de: 'Fahrzeuge jenseits von 50 Metern, jede rote Box beschriftet mit der erreichten Überlappung, wobei 0,50 nötig gewesen wäre. 73% der verpassten Fahrzeuge sind schlecht platzierte Boxen und keine nie erkannten Objekte.' } },
     ],
     metrics: [
-      { value: { en: '68.7%', de: '68,7 %' }, label: { en: 'pedestrian recall ceiling at any threshold', de: 'maximaler Fußgänger-Recall über alle Schwellenwerte' } },
-      { value: { en: '0.000', de: '0,000' }, label: { en: 'AP agreement gap against pycocotools', de: 'AP-Abweichung gegenüber pycocotools' } },
+      { value: { en: '68.7%', de: '68,7 %' }, label: { en: 'highest pedestrian recall at any threshold', de: 'höchster Fußgänger-Recall bei jedem Schwellenwert' } },
       { value: { en: '40,570', de: '40.570' }, label: { en: 'annotated objects across the full KITTI split', de: 'annotierte Objekte im vollständigen KITTI-Split' } },
+      { value: { en: '0.000', de: '0,000' }, label: { en: 'average precision gap against the reference', de: 'Abweichung der Average Precision zur Referenz' } },
     ],
     desc: {
-      en: 'Evidence-based evaluation of an ONNX pedestrian detector on the complete KITTI split. I implemented COCO-compatible metrics, distance and occlusion slices, bootstrap confidence intervals and pycocotools cross-validation across 40,570 annotated objects. The analysis evaluates nine ISO 21448 SOTIF triggering conditions and quantifies performance degradation beyond 30 metres and under partial occlusion. I then added calibration and out-of-distribution scoring: reliability diagrams per slice with an overconfidence measure, because expected calibration error is symmetric and cannot separate a timid detector from a confidently wrong one, and a Mahalanobis novelty score over image statistics that is validated against whether high-scoring frames actually did worse.',
-      de: 'Evidenzbasierte Bewertung eines ONNX-Fußgängerdetektors auf dem vollständigen KITTI-Split. Ich implementierte COCO-kompatible Metriken, Distanz- und Verdeckungsslices, Bootstrap-Konfidenzintervalle sowie eine Kreuzvalidierung mit pycocotools für 40.570 annotierte Objekte. Die Analyse bewertet neun auslösende Bedingungen nach ISO 21448 SOTIF und quantifiziert die Leistungsabnahme ab 30 Metern sowie bei Teilverdeckung. Ergänzt habe ich Kalibrierung und Novelty-Erkennung: Reliability-Diagramme je Slice mit einem Maß für Überkonfidenz, da der Expected Calibration Error symmetrisch ist und einen zurückhaltenden Detektor nicht von einem selbstsicher falschen unterscheiden kann, sowie einen Mahalanobis-Score über Bildstatistiken, der daran geprüft wird, ob hoch bewertete Bilder tatsächlich schlechter abschnitten.',
+      en: 'An evidence-based evaluation of a pedestrian detector for driver assistance, run over the complete KITTI dataset. The question it answers is not how good the model looks on average, but where it stops working.',
+      de: 'Eine evidenzbasierte Bewertung eines Fußgängerdetektors für Fahrerassistenzsysteme über den vollständigen KITTI-Datensatz. Die Frage ist nicht, wie gut das Modell im Mittel aussieht, sondern wo es aufhört zu funktionieren.',
     },
+    highlights: [
+      { en: 'Performance sliced by distance and by occlusion, so the drop beyond 30 metres is quantified rather than suspected.',
+        de: 'Leistung nach Distanz und Verdeckung aufgeschlüsselt, sodass der Einbruch jenseits von 30 Metern quantifiziert und nicht vermutet ist.' },
+      { en: 'Nine triggering conditions assessed against ISO 21448, the standard for safety of the intended functionality.',
+        de: 'Neun auslösende Bedingungen nach ISO 21448 bewertet, dem Standard für die Sicherheit der Sollfunktion.' },
+      { en: 'Confidence scores checked for calibration, because a detector that is confidently wrong is the one that matters.',
+        de: 'Konfidenzwerte auf Kalibrierung geprüft, denn ein Detektor, der selbstsicher falsch liegt, ist der entscheidende Fall.' },
+    ],
     tags: ['ONNX Runtime', 'KITTI', 'ISO 21448 SOTIF', 'Evaluation engineering', 'pycocotools', 'Python'],
   },
   {
@@ -160,14 +211,22 @@ export const projects: Project[] = [
     poster: '/media/p1-poster.jpg',
     repo: 'https://github.com/MKamel7/embedded-test-automation',
     metrics: [
-      { value: { en: '80', de: '80' }, label: { en: 'automated tests with 100% branch coverage', de: 'automatisierte Tests mit 100 % Branch Coverage' } },
-      { value: { en: 'v3.1', de: 'v3.1' }, label: { en: 'release matured through defect-driven iteration', de: 'durch fehlergetriebene Iteration gereifter Release' } },
-      { value: { en: '3', de: '3' }, label: { en: 'seeded defects reliably rejected by the suite', de: 'eingebaute Fehler durch die Testsuite zuverlässig erkannt' } },
+      { value: { en: '129', de: '129' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '5 of 5', de: '5 von 5' }, label: { en: 'seeded broken controllers rejected by the suite', de: 'eingebaute fehlerhafte Steuerungen zurückgewiesen' } },
+      { value: { en: '6,000 rpm', de: '6.000 min⁻¹' }, label: { en: 'envelope from a Siemens servomotor data sheet', de: 'Grenzen aus einem Siemens-Servomotor-Datenblatt' } },
     ],
     desc: {
-      en: 'HIL-ready test-automation framework for an embedded motor controller. I built a deterministic device simulator, a transport-independent driver architecture and property-based fuzzing with Python, pytest and Hypothesis, allowing the same test logic to connect to physical hardware through a transport adapter. Eighty automated tests achieve 100% branch coverage and reliably detect three seeded controller defects.',
-      de: 'HIL-fähiges Testautomatisierungs-Framework für eine eingebettete Motorsteuerung. Ich entwickelte einen deterministischen Gerätesimulator, eine transportunabhängige Treiberarchitektur und Property-based Fuzzing mit Python, pytest und Hypothesis, sodass dieselbe Testlogik über einen Transportadapter an reale Hardware angebunden werden kann. 80 automatisierte Tests erreichen 100 % Branch Coverage und erkennen drei gezielt eingebaute Steuerungsfehler zuverlässig.',
+      en: 'A hardware-in-the-loop test framework for an embedded motor controller. The same tests run against a deterministic simulator today and against a physical board later, because they talk to a transport interface rather than to a device.',
+      de: 'Ein Hardware-in-the-Loop-fähiges Testframework für eine eingebettete Motorsteuerung. Dieselben Tests laufen heute gegen einen deterministischen Simulator und später gegen eine reale Platine, weil sie mit einer Transportschnittstelle sprechen und nicht mit einem Gerät.',
     },
+    highlights: [
+      { en: 'Five deliberately broken controllers keep the suite honest: all five have to be rejected, so the tests are shown to fail and not only to pass.',
+        de: 'Fünf absichtlich fehlerhafte Steuerungen halten die Testsuite ehrlich: Alle fünf müssen zurückgewiesen werden, sodass die Tests nachweislich auch fehlschlagen können.' },
+      { en: 'The serial path runs over a real character device, so the transport is shown to talk to a device rather than to an echo of itself.',
+        de: 'Der serielle Pfad läuft über ein echtes Zeichengerät, sodass der Transport nachweislich mit einem Gerät spricht und nicht mit einem Echo seiner selbst.' },
+      { en: 'Property-based fuzzing with Hypothesis searches for the inputs a hand-written test would never think to try.',
+        de: 'Property-based Fuzzing mit Hypothesis sucht nach Eingaben, auf die ein handgeschriebener Test nie käme.' },
+    ],
     tags: ['Python', 'pytest', 'Hypothesis', 'HIL-ready', 'CI'],
   },
   {
@@ -178,15 +237,23 @@ export const projects: Project[] = [
     poster: '/media/palletizing-poster.jpg',
     repo: 'https://github.com/MKamel7/robot-arm-ik',
     metrics: [
-      { value: { en: '≤0.1 mm', de: '≤0,1 mm' }, label: { en: 'maximum numerical IK position residual', de: 'maximales numerisches IK-Positionsresiduum' } },
-      { value: { en: '6 and 7-DOF', de: '6 und 7-DOF' }, label: { en: 'UR5e and Franka Panda kinematics from scratch', de: 'UR5e- und Franka-Panda-Kinematik von Grund auf' } },
-      { value: { en: '95', de: '95' }, label: { en: 'automated tests in CI', de: 'automatisierte Tests in CI' } },
+      { value: { en: '≤0.1 mm', de: '≤0,1 mm' }, label: { en: 'maximum numerical inverse-kinematics position residual', de: 'maximales numerisches Inverskinematik-Positionsresiduum' } },
+      { value: { en: '4', de: '4' }, label: { en: 'planner families compared on the same problems', de: 'Planerfamilien an denselben Aufgaben verglichen' } },
+      { value: { en: '111', de: '111' }, label: { en: 'automated tests, the count enforced by the build', de: 'automatisierte Tests, Anzahl vom Build erzwungen' } },
     ],
     desc: {
-      en: 'Industrial palletizing cell for a UR5e with Robotiq gripper in MuJoCo. I developed the complete 6-DOF kinematics library in NumPy, including forward kinematics, Jacobian, damped least-squares and closed-form inverse kinematics, and cross-validated it against the MuJoCo model. Collision-aware planning stacks multilayer pallets, reroutes around fixtures and achieves a maximum numerical IK position residual of 0.1 mm. I extended the library to the redundant 7-DOF Franka Panda, where null-space control spends the spare joint on joint-limit avoidance or manipulability without disturbing the tool pose. A gain sweep shows both objectives are worse than doing nothing past their optimum, which is the result worth having.',
-      de: 'Industrielle Palettierzelle für einen UR5e mit Robotiq-Greifer in MuJoCo. Ich entwickelte die vollständige 6-DOF-Kinematikbibliothek in NumPy mit Vorwärtskinematik, Jacobi-Matrix, Damped Least Squares und analytischer Inverskinematik und validierte sie gegen das MuJoCo-Modell. Die kollisionsgeprüfte Bahnplanung stapelt mehrlagige Paletten, umfährt Vorrichtungen und erreicht ein maximales numerisches IK-Positionsresiduum von 0,1 mm. Die Bibliothek erweiterte ich auf den redundanten 7-DOF-Franka-Panda: Eine Nullraumregelung nutzt das überzählige Gelenk für Gelenkgrenzen-Vermeidung oder Manipulierbarkeit, ohne die Werkzeugpose zu stören. Ein Verstärkungs-Sweep zeigt, dass beide Ziele jenseits ihres Optimums schlechter sind als gar keine Regelung, und genau das ist das Ergebnis, auf das es ankommt.',
+      en: 'A palletizing cell for a UR5e with the kinematics written from scratch in NumPy rather than taken from a library. Given a target pose the solver finds the joint angles, the planner routes around the fixture in the way, and parts stack into a multilayer pallet.',
+      de: 'Eine Palettierzelle für einen UR5e, deren Kinematik von Grund auf in NumPy geschrieben ist statt aus einer Bibliothek übernommen. Zu einer Zielpose findet der Löser die Gelenkwinkel, der Planer umfährt die im Weg stehende Vorrichtung, und die Teile stapeln sich zu einer mehrlagigen Palette.',
     },
-    tags: ['MuJoCo', 'NumPy', 'Inverse kinematics', 'Collision avoidance', 'Python'],
+    highlights: [
+      { en: 'The hand-written planners were benchmarked against the ones MoveIt ships, over twenty problems on the same arm.',
+        de: 'Die selbst geschriebenen Planer wurden gegen die von MoveIt ausgelieferten verglichen, über zwanzig Aufgaben am selben Arm.' },
+      { en: 'That comparison found paths passing through a thin obstacle between their own waypoints, which checking the waypoints alone can never reveal.',
+        de: 'Dieser Vergleich fand Pfade, die zwischen ihren eigenen Stützpunkten durch ein dünnes Hindernis laufen, was eine Prüfung allein an den Stützpunkten nie zeigen kann.' },
+      { en: 'Extended to a seven-joint arm, where the spare joint is spent on staying clear of joint limits without moving the tool.',
+        de: 'Erweitert auf einen Arm mit sieben Gelenken, bei dem das überzählige Gelenk genutzt wird, um Gelenkgrenzen zu meiden, ohne das Werkzeug zu bewegen.' },
+    ],
+    tags: ['MuJoCo', 'NumPy', 'Inverse kinematics', 'Motion planning', 'Collision avoidance', 'Python'],
   },
   {
     id: 'dms',
@@ -196,14 +263,22 @@ export const projects: Project[] = [
     poster: '/media/dms-poster.jpg',
     repo: 'https://github.com/MKamel7/driver-monitoring-system',
     metrics: [
-      { value: { en: '97.8%', de: '97,8 %' }, label: { en: 'mAP@0.5 for phone detection', de: 'mAP@0.5 bei der Handyerkennung' } },
-      { value: { en: '18–20 FPS', de: '18–20 FPS' }, label: { en: 'drowsiness detection on Jetson Nano', de: 'Müdigkeitserkennung auf Jetson Nano' } },
+      { value: { en: '97.8%', de: '97,8 %' }, label: { en: 'mean average precision for phone detection', de: 'mittlere Average Precision bei der Handyerkennung' } },
+      { value: { en: '18-20 FPS', de: '18-20 FPS' }, label: { en: 'drowsiness detection on a Jetson Nano', de: 'Müdigkeitserkennung auf einem Jetson Nano' } },
       { value: { en: 'A+', de: 'A+' }, label: { en: 'bachelor thesis grade', de: 'Note der Bachelorarbeit' } },
     ],
     desc: {
-      en: 'Embedded driver-monitoring prototype deployed across Jetson Nano and Raspberry Pi. I implemented MediaPipe-based drowsiness detection at 18–20 FPS and YOLOv8 phone detection at 10 FPS with 97.8% mAP@0.5. The bachelor thesis received an A+ and placed first nationally among 15 teams at the GPAct Talent Expo.',
-      de: 'Embedded-Prototyp zur Fahrerüberwachung, umgesetzt auf Jetson Nano und Raspberry Pi. Ich implementierte MediaPipe-basierte Müdigkeitserkennung mit 18–20 FPS sowie YOLOv8-Handyerkennung mit 10 FPS und 97,8 % mAP@0.5. Die Bachelorarbeit wurde mit A+ bewertet und erreichte bei der GPAct Talent Expo national Platz 1 unter 15 Teams.',
+      en: 'An embedded driver-monitoring prototype running on Jetson Nano and Raspberry Pi, developed as an industry-partnered bachelor thesis. It watches for drowsiness and for phone use at the wheel.',
+      de: 'Ein eingebetteter Prototyp zur Fahrerüberwachung auf Jetson Nano und Raspberry Pi, entwickelt als Bachelorarbeit in Industriekooperation. Er erkennt Müdigkeit und Handynutzung am Steuer.',
     },
+    highlights: [
+      { en: 'Drowsiness detection at 18 to 20 frames per second on a Jetson Nano, fast enough to warn while the warning still helps.',
+        de: 'Müdigkeitserkennung mit 18 bis 20 Bildern pro Sekunde auf einem Jetson Nano, schnell genug, damit die Warnung noch hilft.' },
+      { en: 'Phone detection trained with YOLOv8 on a purpose-built dataset, reaching 97.8% mean average precision.',
+        de: 'Handyerkennung mit YOLOv8 auf einem eigens erstellten Datensatz trainiert, mit 97,8 % mittlerer Average Precision.' },
+      { en: 'Graded A+ and placed first nationally among 15 teams at the GPAct Talent Expo.',
+        de: 'Mit A+ bewertet und national auf Platz 1 unter 15 Teams bei der GPAct Talent Expo.' },
+    ],
     tags: ['YOLOv8', 'MediaPipe', 'Jetson Nano', 'Raspberry Pi', 'OpenCV', 'Python'],
   },
   {
@@ -213,14 +288,20 @@ export const projects: Project[] = [
     media: '/media/rov.mp4',
     poster: '/media/rov-poster.jpg',
     metrics: [
-      { value: { en: '2nd', de: '2.' }, label: { en: 'worldwide at MATE ROV 2021', de: 'weltweit bei MATE ROV 2021' } },
-      { value: { en: '101.5/100', de: '101,5/100' }, label: { en: 'technical documentation score', de: 'Bewertung der technischen Dokumentation' } },
-      { value: { en: '8', de: '8' }, label: { en: 'thrusters in a custom propulsion layout', de: 'Thruster in eigener Antriebskonfiguration' } },
+      { value: { en: '2nd', de: '2.' }, label: { en: 'worldwide of 20 teams at MATE ROV 2021', de: 'weltweit von 20 Teams bei MATE ROV 2021' } },
+      { value: { en: '101.5/100', de: '101,5/100' }, label: { en: 'score for the technical documentation', de: 'Bewertung der technischen Dokumentation' } },
+      { value: { en: '8', de: '8' }, label: { en: 'thrusters in a propulsion layout of our own', de: 'Thruster in einer selbst entworfenen Konfiguration' } },
     ],
     desc: {
-      en: 'Competition ROV developed with team Invictus UMVs. I contributed to the frame design, eight-thruster propulsion layout and a CNN/OpenCV pipeline that detects Crown-of-Thorns starfish and bleached coral and maps observations onto a 9×3 grid using IMU data. The project ranked second worldwide among 20 teams at MATE ROV 2021 and first regionally.',
-      de: 'Wettbewerbs-ROV, entwickelt mit dem Team Invictus UMVs. Ich arbeitete an der Rahmenkonstruktion, der Antriebskonfiguration mit acht Thrustern und einer CNN-/OpenCV-Pipeline, die Dornenkronen-Seesterne sowie gebleichte Korallen erkennt und Beobachtungen mithilfe von IMU-Daten auf einem 9×3-Raster kartiert. Das Projekt erreichte bei MATE ROV 2021 weltweit Platz 2 unter 20 Teams und regional Platz 1.',
+      en: 'A competition remotely operated underwater vehicle built with team Invictus UMVs. I worked on the frame, the eight-thruster propulsion layout and the vision pipeline that surveys the seabed.',
+      de: 'Ein ferngesteuertes Unterwasserfahrzeug für den Wettbewerb, gebaut mit dem Team Invictus UMVs. Ich arbeitete am Rahmen, an der Antriebskonfiguration mit acht Thrustern und an der Vision-Pipeline für die Seebodenerkundung.',
     },
+    highlights: [
+      { en: 'A neural-network vision pipeline finds Crown-of-Thorns starfish and bleached coral and maps them onto a survey grid.',
+        de: 'Eine Vision-Pipeline mit neuronalem Netz erkennt Dornenkronen-Seesterne und gebleichte Korallen und kartiert sie auf einem Vermessungsraster.' },
+      { en: 'A seal failed an hour before the regional competition; I made the replacement on site, and it held through two days of operation.',
+        de: 'Eine Dichtung versagte eine Stunde vor dem Regionalwettbewerb; ich fertigte den Ersatz vor Ort, und er hielt zwei Betriebstage lang.' },
+    ],
     tags: ['SolidWorks', 'CNN', 'OpenCV', 'Embedded C', 'Control systems'],
   },
   {
@@ -231,29 +312,41 @@ export const projects: Project[] = [
     poster: '/media/digital-twin-poster.jpg',
     repo: 'https://github.com/MKamel7/Digital-twin-Predictive-maintenance',
     metrics: [
-      { value: { en: '94.4 ± 1.6%', de: '94,4 ± 1,6 %' }, label: { en: 'reported case-study fault-diagnosis accuracy', de: 'berichtete Genauigkeit der Fehlerdiagnose in der Fallstudie' } },
+      { value: { en: '94.4 ± 1.6%', de: '94,4 ± 1,6 %' }, label: { en: 'reported case-study fault-diagnosis accuracy', de: 'berichtete Genauigkeit der Fehlerdiagnose' } },
     ],
     desc: {
-      en: 'Simscape digital twin of a robotic arm for predictive-maintenance research. I modelled bearing, gear-wear and imbalance faults, extracted residual-torque features and developed a hierarchical classifier for fault type, affected joint and severity. The case study reported 94.4 ± 1.6% diagnostic accuracy and included sensitivity analysis for inertial mismatch between the twin and the plant.',
-      de: 'Simscape-Digital-Twin eines Roboterarms für Predictive-Maintenance-Untersuchungen. Ich modellierte Lager-, Zahnradverschleiß- und Unwuchtfehler, extrahierte Merkmale aus Restmomenten und entwickelte einen hierarchischen Klassifikator für Fehlertyp, betroffenes Gelenk und Schweregrad. Die Fallstudie berichtete eine Diagnosegenauigkeit von 94,4 ± 1,6 % und umfasste eine Sensitivitätsanalyse für Trägheitsabweichungen zwischen Digital Twin und Anlage.',
+      en: 'A Simscape digital twin of a robotic arm, used to study predictive maintenance. Bearing wear, gear wear and imbalance are modelled in the twin, and the classifier has to say which fault, which joint and how severe.',
+      de: 'Ein Simscape-Digital-Twin eines Roboterarms für die Untersuchung vorausschauender Instandhaltung. Lagerverschleiß, Zahnradverschleiß und Unwucht sind im Twin modelliert, und der Klassifikator muss Fehlerart, betroffenes Gelenk und Schweregrad benennen.',
     },
+    highlights: [
+      { en: 'Faults are diagnosed from residual torque, the difference between what the twin expects and what the plant does.',
+        de: 'Fehler werden aus dem Restmoment diagnostiziert, also aus der Differenz zwischen der Erwartung des Twins und dem Verhalten der Anlage.' },
+      { en: 'Sensitivity to inertial mismatch between twin and plant was measured, since a twin is never exact.',
+        de: 'Die Empfindlichkeit gegenüber Trägheitsabweichungen zwischen Twin und Anlage wurde gemessen, denn ein Twin ist nie exakt.' },
+    ],
     tags: ['MATLAB', 'Simulink', 'Simscape', 'Machine Learning'],
   },
   {
     id: 'warehouse',
-    title: 'Multi-Agent Warehouse Logistics',
+    title: 'Multi-Robot Warehouse Logistics',
     category: 'featured',
     media: '/media/warehouse.mp4',
     poster: '/media/warehouse-poster.jpg',
     repo: 'https://github.com/MKamel7/warehouse-fleet',
     metrics: [
-      { value: { en: '3', de: '3' }, label: { en: 'robots coordinated as a fleet', de: 'Roboter als Flotte koordiniert' } },
-      { value: { en: 'ROS 2', de: 'ROS 2' }, label: { en: 'Humble with Nav2', de: 'Humble mit Nav2' } },
+      { value: { en: '3', de: '3' }, label: { en: 'robots navigating under one coordinator', de: 'Roboter, die unter einer Koordination navigieren' } },
+      { value: { en: '2', de: '2' }, label: { en: 'coordination modes: convoy and independent', de: 'Koordinationsmodi: Konvoi und unabhängig' } },
     ],
     desc: {
-      en: 'Multi-agent warehouse-logistics simulation with three robots on ROS 2 Humble, Nav2 and Gazebo. I implemented two coordination modes: a convoy following a Nav2-planned leader and three independent namespaced navigation stacks managed by a fleet coordinator. The architecture demonstrates multi-robot namespace isolation, coordinated task execution and reusable navigation components.',
-      de: 'Multi-Agenten-Simulation für die Lagerlogistik mit drei Robotern auf Basis von ROS 2 Humble, Nav2 und Gazebo. Ich implementierte zwei Koordinationsmodi: einen Konvoi hinter einem durch Nav2 geplanten Führungsroboter sowie drei unabhängige, über Namespaces getrennte Navigations-Stacks unter einer Flottensteuerung. Die Architektur demonstriert Namespace-Isolation, koordinierte Aufgabenausführung und wiederverwendbare Navigationskomponenten.',
+      en: 'A multi-robot warehouse simulation on ROS 2 Humble, Nav2 and Gazebo, built as coursework. Three robots share one map and one coordinator.',
+      de: 'Eine Multi-Roboter-Lagersimulation auf ROS 2 Humble, Nav2 und Gazebo, entstanden als Studienleistung. Drei Roboter teilen sich eine Karte und eine Koordination.',
     },
+    highlights: [
+      { en: 'Two coordination modes: a convoy following a planned leader, and three independent navigation stacks under a coordinator.',
+        de: 'Zwei Koordinationsmodi: ein Konvoi hinter einem geplanten Führungsroboter und drei unabhängige Navigations-Stacks unter einer Koordination.' },
+      { en: 'Each robot runs in its own namespace, which is how a multi-robot ROS 2 system keeps its topics apart.',
+        de: 'Jeder Roboter läuft in einem eigenen Namespace, so hält ein Multi-Roboter-System in ROS 2 seine Topics auseinander.' },
+    ],
     tags: ['ROS 2 Humble', 'Nav2', 'Gazebo', 'Python'],
   },
   {
@@ -267,9 +360,15 @@ export const projects: Project[] = [
       { value: { en: 'FEA', de: 'FEM' }, label: { en: 'stress-verified chassis', de: 'spannungsanalysiertes Chassis' } },
     ],
     desc: {
-      en: 'Autonomous fire-fighting robot developed as a B.Sc. mechatronics project. I integrated smoke, flame and proximity sensors for fire detection, approach control and obstacle avoidance, with an onboard tank, pump and hose for suppression. Finite-element stress analysis guided reinforcement of the chassis before implementation.',
-      de: 'Autonomer Feuerlöschroboter, entwickelt als Mechatronikprojekt im Bachelorstudium. Ich integrierte Rauch-, Flammen- und Abstandssensoren für Branderkennung, Annäherungsregelung und Hindernisvermeidung sowie Tank, Pumpe und Schlauch für die Brandbekämpfung. Eine Finite-Elemente-Spannungsanalyse diente als Grundlage für die konstruktive Verstärkung des Chassis.',
+      en: 'An autonomous fire-fighting robot built as a bachelor mechatronics project. It finds a fire, drives to a safe distance and puts it out with an onboard tank, pump and hose.',
+      de: 'Ein autonomer Feuerlöschroboter als Mechatronikprojekt im Bachelorstudium. Er findet einen Brand, fährt auf sicheren Abstand heran und löscht ihn mit Tank, Pumpe und Schlauch an Bord.',
     },
+    highlights: [
+      { en: 'Smoke, flame and proximity sensors drive detection, approach control and obstacle avoidance.',
+        de: 'Rauch-, Flammen- und Abstandssensoren steuern Erkennung, Annäherung und Hindernisvermeidung.' },
+      { en: 'Finite-element stress analysis found the weak points in the chassis before it was built rather than after.',
+        de: 'Eine Finite-Elemente-Spannungsanalyse fand die Schwachstellen des Chassis vor dem Bau statt danach.' },
+    ],
     tags: ['Arduino', 'FEA', 'Obstacle avoidance', 'Mechatronics'],
   },
   {
@@ -283,9 +382,15 @@ export const projects: Project[] = [
       { value: { en: 'BT', de: 'BT' }, label: { en: 'control through an Android app', de: 'Steuerung über eine Android-App' } },
     ],
     desc: {
-      en: 'Arduino Mega home-automation system developed as a B.Sc. mechatronics project and controlled through an Android app over Bluetooth. I integrated four automated subsystems: temperature-based heating and cooling, ambient-light dimming, proximity-triggered garage access and a keypad-secured entrance with an alarm.',
-      de: 'Hausautomationssystem auf Basis eines Arduino Mega, entwickelt als Mechatronikprojekt im Bachelorstudium und über eine Android-App per Bluetooth gesteuert. Ich integrierte vier automatisierte Subsysteme: temperaturgeführtes Heizen und Kühlen, Umgebungslicht-Dimmung, näherungsabhängige Garagenzufahrt sowie einen per Zahlencode gesicherten Eingang mit Alarmanlage.',
+      en: 'An Arduino Mega home-automation system built as a bachelor mechatronics project, controlled from an Android app over Bluetooth.',
+      de: 'Ein Hausautomationssystem auf Arduino Mega als Mechatronikprojekt im Bachelorstudium, gesteuert über eine Android-App per Bluetooth.',
     },
+    highlights: [
+      { en: 'Four subsystems automated: heating and cooling, light dimming, garage access, and a keypad-secured entrance with an alarm.',
+        de: 'Vier automatisierte Subsysteme: Heizen und Kühlen, Lichtdimmung, Garagenzufahrt und ein per Zahlencode gesicherter Eingang mit Alarm.' },
+      { en: 'Each subsystem runs on its own sensors, with the app as an override rather than as the only way in.',
+        de: 'Jedes Subsystem läuft über eigene Sensoren, die App dient als Übersteuerung und nicht als einziger Zugang.' },
+    ],
     tags: ['Arduino Mega', 'Bluetooth', 'Home automation', 'Sensors'],
   },
 ];
