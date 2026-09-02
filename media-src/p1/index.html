@@ -67,13 +67,15 @@
 
   <div class="main">
     <div>
-      <h2>Fault seeding &mdash; three deliberately broken controllers</h2>
+      <h2>Fault seeding &mdash; five deliberately broken controllers</h2>
       <div class="sub" id="sub">The suite must REJECT every one of them. If it passes them, it proves nothing.</div>
     </div>
     <div class="seeds">
       <div class="seed" id="s0"><span class="n">01</span><span class="nm">overheat trip raised above the limit</span><span class="vd" id="v0">&mdash;</span></div>
       <div class="seed" id="s1"><span class="n">02</span><span class="nm">SET_SPEED range check off by one</span><span class="vd" id="v1">&mdash;</span></div>
       <div class="seed" id="s2"><span class="n">03</span><span class="nm">fault latch clears itself on cooldown</span><span class="vd" id="v2">&mdash;</span></div>
+      <div class="seed" id="s3"><span class="n">04</span><span class="nm">RESET zeroes the thermal model, so a hot motor reads cold</span><span class="vd" id="v3">&mdash;</span></div>
+      <div class="seed" id="s4"><span class="n">05</span><span class="nm">RESET leaves the watchdog armed, so the device reboots into a fault loop</span><span class="vd" id="v4">&mdash;</span></div>
     </div>
     <div class="scatter">
       <h3 id="scTitle">Values the property suite generated for SET_SPEED</h3>
@@ -87,7 +89,7 @@
       <h2>Suite</h2>
       <div class="row"><span>tests</span><b class="acc" id="mTests">0</b></div>
       <div class="row"><span>branch coverage</span><b class="ok" id="mCov">0%</b></div>
-      <div class="row"><span>seeded defects rejected</span><b id="mSeed">0 of 3</b></div>
+      <div class="row"><span>seeded defects rejected</span><b id="mSeed">0 of 5</b></div>
       <div class="row"><span>released at</span><b id="mVer">v1.1</b></div>
     </div>
     <div class="card">
@@ -104,17 +106,21 @@
       <div class="ln"><span class="t">[00:06]</span> <span class="r">seed 02 SURVIVED</span> &middot; range check</div>
       <div class="ln"><span class="t">[00:08]</span> unbounded floats: 0 samples in (6000, 6001]</div>
       <div class="ln"><span class="t">[00:10]</span> <span class="o">adding boundary-neighbourhood sampling</span></div>
-      <div class="ln"><span class="t">[00:12]</span> <span class="g">seed 02 rejected</span> &middot; 3 of 3</div>
-      <div class="ln"><span class="t">[00:13]</span> 80 passed &middot; 100% branch &middot; ruff, mypy strict</div>
+      <div class="ln"><span class="t">[00:12]</span> <span class="g">seed 02 rejected</span> &middot; 3 of 5</div>
+      <div class="ln"><span class="t">[00:14]</span> <span class="g">seed 04 rejected</span> &middot; reset postcondition</div>
+      <div class="ln"><span class="t">[00:15]</span> <span class="g">seed 05 rejected</span> &middot; watchdog left armed</div>
+      <div class="ln"><span class="t">[00:16]</span> 129 passed &middot; 100% branch &middot; ruff, mypy strict</div>
     </div>
   </div>
 </div>
 
 <script>
-// Every figure here comes from the repository: three seeded defects, the range
-// defect that survived because SET_SPEED was fuzzed with unbounded floats and
-// only values in (6000, 6001] expose a one-unit boundary error, and the 80
-// tests at 100% branch coverage the suite reports today.
+// Every figure here comes from the repository: five seeded defects, all five
+// rejected, the range defect that survived because SET_SPEED was fuzzed with
+// unbounded floats and only values in (6000, 6001] expose a one-unit boundary
+// error, and the 129 tests at 100% branch coverage the suite reports today.
+// Seeds 04 and 05 are the two RESET postcondition defects, and 04 is not
+// hypothetical: that bug shipped, and the suite of the day did not catch it.
 const W = 768, H = 516, PADL = 8, PADR = 8, PADB = 26, PADT = 8;
 const LO = 0, HI = 6100, BAND_LO = 6000, BAND_HI = 6001;
 const x = v => PADL + ((v - LO) / (HI - LO)) * (W - PADL - PADR);
@@ -162,8 +168,15 @@ const seeds = [
   { el:'s0', v:'v0', at:2.4, verdict:'REJECTED', colour:'#46d18a' },
   { el:'s1', v:'v1', at:3.6, verdict:'SURVIVED', colour:'#ff5f56' },
   { el:'s2', v:'v2', at:3.0, verdict:'REJECTED', colour:'#46d18a' },
+  { el:'s3', v:'v3', at:7.3, verdict:'REJECTED', colour:'#46d18a' },
+  { el:'s4', v:'v4', at:7.6, verdict:'REJECTED', colour:'#46d18a' },
 ];
 const logs = [...document.querySelectorAll('#log .ln')];
+// Explicit times rather than an even cadence, because most of these lines
+// narrate an event the panels above show at a fixed moment. On a cadence the
+// log announced seed 05 rejected before its seed box flipped, which is the
+// scene contradicting itself.
+const logAt = [0.8, 2.4, 3.0, 3.6, 4.3, 5.2, 7.0, 7.3, 7.6, 8.0];
 const kicker = document.getElementById('kicker'), kickerText = document.getElementById('kickerText');
 
 window.setFrame = function(ms){
@@ -196,16 +209,17 @@ window.setFrame = function(ms){
   document.getElementById('pillText').textContent = t > 8.0 ? 'SUITE GREEN' : 'SUITE RUNNING';
 
   const f = Math.max(0, Math.min(1, (t - 0.5) / 1.6));
-  document.getElementById('mTests').textContent = Math.round(80 * f);
+  document.getElementById('mTests').textContent = Math.round(129 * f);
   document.getElementById('mCov').textContent = Math.round(100 * f) + '%';
-  const rejected = t >= 7.0 ? 3 : (t >= 3.0 ? 2 : (t >= 2.4 ? 1 : 0));
-  document.getElementById('mSeed').textContent = rejected + ' of 3';
+  const rejected = t >= 7.6 ? 5 : (t >= 7.3 ? 4 : (t >= 7.0 ? 3
+    : (t >= 3.0 ? 2 : (t >= 2.4 ? 1 : 0))));
+  document.getElementById('mSeed').textContent = rejected + ' of 5';
   document.getElementById('mVer').textContent = t > 7.4 ? 'v3.1' : 'v1.1';
 
   for (let i = 0; i < 4; i++) {
     document.getElementById('rel' + i).style.opacity = t > 7.4 + i * 0.18 ? '1' : '0';
   }
-  logs.forEach((ln, i) => { ln.style.opacity = t > 0.8 + i * 0.82 ? '1' : '0'; });
+    logs.forEach((ln, i) => { ln.style.opacity = t > logAt[i] ? '1' : '0'; });
 
   const kt = (t - 8.5) / 0.35;
   kicker.style.opacity = String(Math.max(0, Math.min(1, kt)));
