@@ -14,7 +14,7 @@
       <circle cx="32" cy="34" r="8" fill="#f4602a"/>
       <text x="28" y="88" fill="#f2f4f7" font-size="22" font-weight="700">Hazard</text>
       <text x="28" y="116" fill="#f2f4f7" font-size="22" font-weight="700">Analysis</text>
-      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">27 derived faults</text>
+      <text x="28" y="157" fill="#96a0ad" font-family="monospace" font-size="14">29 derived faults</text>
     </g>
     <path d="M278 302H318" stroke="#f4602a" stroke-width="3"/><path d="m310 294 10 8-10 8" fill="none" stroke="#f4602a" stroke-width="3"/>
     <g transform="translate(330 208)">
@@ -53,7 +53,7 @@
   <g transform="translate(72 500)" font-family="monospace">
     <rect width="1136" height="118" rx="16" fill="#11161d" stroke="#343e4a"/>
     <text x="32" y="42" fill="#96a0ad" font-size="14">VERIFICATION SUMMARY</text>
-    <text x="32" y="82" fill="#f4602a" font-size="28" font-weight="700">204 tests</text>
+    <text x="32" y="82" fill="#f4602a" font-size="28" font-weight="700">323 tests</text>
     <text x="274" y="82" fill="#f2f4f7" font-size="28" font-weight="700">100% branch coverage</text>
     <text x="727" y="82" fill="#f2f4f7" font-size="28" font-weight="700">7 review findings closed</text>
   </g>

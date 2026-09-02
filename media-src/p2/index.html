@@ -55,7 +55,7 @@
   <header>
     <div>
       <h1>Functional-Safety Fault-Injection Harness</h1>
-      <p>27 hazard-derived faults &middot; FTTI budgets &middot; bidirectional traceability gated in CI</p>
+      <p>29 hazard-derived faults &middot; FTTI budgets &middot; bidirectional traceability gated in CI</p>
     </div>
     <div class="pill"><span class="d"></span><span id="pillText">CAMPAIGN RUNNING</span></div>
   </header>
@@ -91,7 +91,7 @@
     </div>
     <div class="log" id="log">
       <div class="ln"><span class="t">[00:01]</span> <span class="b">campaign</span> loading catalog/faults.yaml</div>
-      <div class="ln"><span class="t">[00:02]</span> 27 faults, 11 requirements, DUT pinned v3.1</div>
+      <div class="ln"><span class="t">[00:02]</span> 29 faults, 11 requirements, DUT pinned v3.1</div>
       <div class="ln"><span class="t">[00:04]</span> <span class="o">FLT-S01</span> winding sensor stuck, stalled</div>
       <div class="ln"><span class="t">[00:06]</span> <span class="r">one sensor: no trip, runaway</span></div>
       <div class="ln"><span class="t">[00:08]</span> <span class="o">two sensors: trip late, past limit</span></div>
@@ -201,8 +201,8 @@ window.setFrame = function(ms){
 
   // counters fill during the final phase
   const f = Math.max(0, Math.min(1, (t - 5.7) / 1.8));
-  document.getElementById('mFaults').textContent = Math.round(27 * f);
-  document.getElementById('mDet').textContent = Math.round(23 * f);
+  document.getElementById('mFaults').textContent = Math.round(29 * f);
+  document.getElementById('mDet').textContent = Math.round(24 * f);
   document.getElementById('mLate').textContent = '0';
   document.getElementById('mRes').textContent = Math.round(4 * f);
   document.getElementById('mUnmet').textContent = (f > .96 ? '3' : '0') + ' of 11';

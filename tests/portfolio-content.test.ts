@@ -143,3 +143,28 @@ test('gives the fault-harness architecture a large intrinsic modal size', () => 
 
   assert.match(svg, /<svg[^>]*\bwidth="1280"[^>]*\bheight="720"/)
 })
+
+// The diagram is this card's poster and its only enlarged view, so it is a
+// second place the same two numbers live, and the second place is the one that
+// goes stale. It did: the card was corrected to 29 faults and 323 tests on
+// 2026-09-01 and the diagram was still drawing 27 and 204 the next day. The
+// numbers are read out of the card rather than written here, so there is still
+// only one source and this only checks that the picture agrees with it.
+test('the fault-harness diagram draws the same numbers as its card', () => {
+  const svg = readFileSync(new URL('../public/media/p2-architecture.svg', import.meta.url), 'utf8')
+  const p2 = projects.find((project) => project.id === 'p2')
+  assert.ok(p2, 'the fault-injection card is gone, so this check has no subject')
+
+  const faults = p2.metrics.find((metric) => /faults from hazard analysis/i.test(metric.label.en))
+  const tests = p2.metrics.find((metric) => /automated tests/i.test(metric.label.en))
+  assert.ok(faults && tests, 'the card no longer carries a fault count and a test count')
+
+  assert.ok(
+    svg.includes(`>${faults.value.en} derived faults<`),
+    `the diagram does not say "${faults.value.en} derived faults"`,
+  )
+  assert.ok(
+    svg.includes(`>${tests.value.en} tests<`),
+    `the diagram does not say "${tests.value.en} tests"`,
+  )
+})
