@@ -139,6 +139,42 @@ export const projects: Project[] = [
     tags: ['IEC 61131-3', 'CODESYS', 'PackML', 'Modbus TCP', 'OPC UA', 'ISA-95'],
   },
   {
+    id: 'bearing-rul',
+    title: 'Bearing RUL Digital Twin',
+    category: 'featured',
+    media: '/media/bearing-rul-hybrid-live-replay.mp4',
+    poster: '/media/bearing-rul-hybrid-live-replay-poster.png',
+    shots: [
+      { src: '/media/bearing-rul-hybrid-comparison.png', caption: {
+        en: 'Held-out Bearing3_1 replay: actual remaining useful life against the age-only, feature-similarity and hybrid health-rate estimates.',
+        de: 'Replay von Bearing3_1 im Hold-out: tatsächliche Restlebensdauer gegen Age-only-, Feature-Similarity- und Hybrid-Health-Rate-Schätzung.' } },
+      { src: '/media/bearing-rul-geometry.png', caption: {
+        en: 'Bearing-like geometry visualization from the audited LDK UER204 dimensions used for the MATLAB/Simscape model boundary.',
+        de: 'Lagerähnliche Geometrievisualisierung aus den geprüften LDK-UER204-Abmessungen für die MATLAB/Simscape-Modellgrenze.' } },
+      { src: '/media/bearing-rul-simscape-body.png', caption: {
+        en: 'Reduced Simscape Multibody body used as the physical scaffold, deliberately separated from the measured-data RUL evidence.',
+        de: 'Reduzierter Simscape-Multibody-Körper als physikalisches Gerüst, bewusst getrennt von der gemessenen RUL-Evidenz.' } },
+    ],
+    metrics: [
+      { value: { en: '757.05 min', de: '757,05 min' }, label: { en: 'nested held-out weighted mean absolute error', de: 'gewichteter mittlerer absoluter Fehler im Nested-Hold-out' } },
+      { value: { en: '0.3806', de: '0,3806' }, label: { en: 'weighted normalized mean absolute error', de: 'gewichteter normalisierter mittlerer absoluter Fehler' } },
+      { value: { en: '9,216', de: '9.216' }, label: { en: 'official XJTU-SY lifecycle snapshots processed', de: 'verarbeitete offizielle XJTU-SY-Lifecycle-Snapshots' } },
+    ],
+    desc: {
+      en: 'A MATLAB/Simscape bearing remaining-useful-life prototype using official XJTU-SY LDK UER204 lifecycle data. It verifies the archive, extracts measured vibration features and replays a held-out bearing while a hybrid health-rate estimator predicts RUL online from recorded sensor-derived prefixes.',
+      de: 'Ein MATLAB/Simscape-Prototyp zur Restlebensdauer-Schätzung eines Lagers mit offiziellen XJTU-SY-LDK-UER204-Lifecycle-Daten. Er verifiziert das Archiv, extrahiert gemessene Vibrationsmerkmale und spielt ein Hold-out-Lager ab, während ein Hybrid-Health-Rate-Schätzer die RUL online aus aufgezeichneten sensorbasierten Präfixen prognostiziert.',
+    },
+    highlights: [
+      { en: 'Evaluation uses nested leave-one-bearing-out on eight outer-race bearings, with thresholds and preprocessing fit on training bearings only.',
+        de: 'Die Auswertung nutzt Nested Leave-One-Bearing-Out auf acht Outer-Race-Lagern, mit Schwellwerten und Vorverarbeitung nur aus Trainingslagern.' },
+      { en: 'The hybrid estimator improves weighted mean absolute error from 898.90 to 757.05 minutes and mean per-bearing error from 201.12 to 172.97 minutes.',
+        de: 'Der Hybrid-Schätzer verbessert den gewichteten mittleren absoluten Fehler von 898,90 auf 757,05 Minuten und den mittleren Fehler pro Lager von 201,12 auf 172,97 Minuten.' },
+      { en: 'The claim boundary is explicit: recorded accelerated bearing-rig data, not live hardware acquisition or conveyor and robot-joint validation.',
+        de: 'Die Aussagegrenze ist explizit: aufgezeichnete beschleunigte Lagerprüfstandsdaten, keine Live-Hardware-Erfassung und keine Validierung an Förderer oder Robotergelenk.' },
+    ],
+    tags: ['MATLAB', 'Simscape', 'RUL', 'XJTU-SY', 'Predictive maintenance', 'Signal processing'],
+  },
+  {
     id: 'p2',
     title: 'Fault-Injection Harness',
     category: 'featured',
