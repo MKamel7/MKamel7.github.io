@@ -42,3 +42,9 @@ npm run dev
 ```
 
 Deployed to GitHub Pages via Actions on every push to `main`.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE). It covers the source code of the site. It does not
+cover the personal content, the photographs, the CV text, or the name and
+likeness of Mohamed Kamel, which are not licensed for reuse.
