@@ -157,14 +157,8 @@ const en: Content = {
         title: 'Mechatronics Engineer',
         featured: true,
         org: 'Invictus UMVs',
-        period: 'Jan 2021 - Mar 2022',
-        note: 'Frame design, 8-thruster propulsion, control architecture, and the autonomous vision pipeline for the Brotta II ROV.',
-      },
-      {
-        title: 'Mechatronics Engineering Intern',
-        org: 'Invictus UMVs',
-        period: 'Jul - Dec 2020',
-        note: 'Hands-on prototyping and testing that led into the Brotta II engineering role.',
+        period: 'Jul 2020 - Mar 2022',
+        note: 'Frame design, 8-thruster propulsion, control architecture, and the autonomous vision pipeline for the Brotta II ROV. I defined and ran the test methodology.',
       },
       {
         title: 'Chief of Organizers',
@@ -331,14 +325,8 @@ const de: Content = {
         title: 'Mechatronics Engineer',
         featured: true,
         org: 'Invictus UMVs',
-        period: 'Jan 2021 - Mär 2022',
-        note: 'Rahmenkonstruktion, Antrieb mit 8 Thrustern, Regelungsarchitektur und autonome Vision-Pipeline für das ROV Brotta II.',
-      },
-      {
-        title: 'Mechatronics Engineering Intern',
-        org: 'Invictus UMVs',
-        period: 'Jul - Dez 2020',
-        note: 'Prototyping und Tests, die in die Brotta-II-Ingenieursrolle mündeten.',
+        period: 'Jul 2020 - Mär 2022',
+        note: 'Rahmenkonstruktion, Antrieb mit 8 Thrustern, Regelungsarchitektur und autonome Vision-Pipeline für das ROV Brotta II. Die Testmethodik habe ich definiert und durchgeführt.',
       },
       {
         title: 'Chef-Organisator',
