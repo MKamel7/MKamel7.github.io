@@ -117,6 +117,52 @@
   .cm i.misshot{background:var(--miss);box-shadow:0 0 10px rgba(229,84,75,.5)}
   /* freeze mode: crisp single frames for capture */
   .freeze *{transition:none !important;animation:none !important}
+
+  /* ── Acts 2 to 4: the figures from the case-study report ──
+     These are the real exported figures rather than redrawings, so what the
+     video claims and what the report claims cannot drift apart. */
+  .act{
+    position:absolute;inset:0;width:1280px;height:960px;
+    background:radial-gradient(120% 90% at 12% -8%, #16181d 0%, var(--bg) 55%);
+    color:var(--ink);font-family:var(--font);
+    display:none;flex-direction:column;gap:18px;padding:34px 40px 30px;
+  }
+  .act.on{display:flex}
+  .act h2{font-size:29px;font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+  .act h2 em{font-style:normal;color:var(--accent)}
+  .act .sub{font-size:14px;color:var(--muted);font-family:var(--mono);margin-top:8px}
+  .figs{flex:1;display:flex;gap:20px;align-items:stretch;min-height:0}
+  .fig{flex:1;display:flex;align-items:center;justify-content:center;min-width:0;padding:10px;
+       border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+  .fig.light{background:#fff}
+  .fig img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+  .fig.wide{flex:1.5}
+  /* Act 4 holds two figures side by side, so the row is capped and centred:
+     at full row height a 4:3 figure can only use its width and the leftover
+     shows up as dead space above and below it. */
+  #act4 .figs{flex:none;height:600px;margin:auto 0;width:100%}
+  #act4 .fig{padding:6px}
+  #act4 .fig.pca{flex:1.28}
+  .note .card p{font-size:14px;line-height:1.5;color:var(--muted);margin-top:10px}
+  .note .card p b{color:var(--ink);font-weight:700}
+  .eq{font-family:var(--mono);font-size:16px;color:var(--ink);margin-top:11px}
+  .note{width:322px;flex:none;display:flex;flex-direction:column;gap:14px}
+  .note .card{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:17px 19px}
+  .note .card h3{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .stages{margin-top:13px;display:flex;flex-direction:column;gap:9px}
+  .stg{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--muted)}
+  .stg b{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:500;
+         border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;min-width:26px;text-align:center}
+  .stg.hi{color:var(--ink);font-weight:700}
+  .stg.hi b{color:var(--accent);border-color:rgba(244,96,42,.55);background:rgba(244,96,42,.10)}
+  .big{font-size:42px;font-weight:900;letter-spacing:-0.03em;line-height:1;margin-top:12px}
+  .big span{font-size:14.5px;font-weight:600;color:var(--muted);margin-left:9px;letter-spacing:0}
+  .foot{font-size:13px;color:var(--muted);font-family:var(--mono);
+        border-top:1px solid var(--line);padding-top:13px}
+  /* reveal: each act wipes up into place, so a held figure still carries motion */
+  .rise{opacity:0;transform:translateY(18px)}
+  .rise.in{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease}
+  .freeze .rise{transition:none}
 </style>
 </head>
 <body>
@@ -132,7 +178,7 @@
 
   <div class="tiles">
     <div class="tile"><div class="k">Model</div><div class="v" id="tModel">Ready</div></div>
-    <div class="tile"><div class="k">Model Accuracy</div><div class="v accent" id="tAcc">0.0%</div></div>
+    <div class="tile"><div class="k">Full Accuracy</div><div class="v accent" id="tAcc">0.0%</div></div>
     <div class="tile"><div class="k">Correct Samples</div><div class="v" id="tSamp">0 / 10</div></div>
     <div class="tile"><div class="k">Feature Extractor</div><div class="v" style="font-size:18px">Phase 4 exact</div></div>
   </div>
@@ -175,6 +221,81 @@
 
   <div class="console" id="console"></div>
 </div>
+
+<!-- ACT 2: the SVM stage. Figure and numbers are the report's own exports. -->
+<section class="act" id="act2">
+  <div class="rise" data-r="0">
+    <h2>Stage 3 localises the joint with an <em>RBF SVM</em></h2>
+    <p class="sub">fitcecoc + templateSVM &middot; kernel rbf &middot; kernel scale 10 &middot; C = 3</p>
+  </div>
+  <div class="figs">
+    <div class="fig wide rise" data-r="1"><img src="fig/fig_phase4_hier_confusion.png" alt="Hierarchical SVM test confusion matrix"></div>
+    <div class="note">
+      <div class="card rise" data-r="2">
+        <h3>Four-stage hierarchy</h3>
+        <div class="stages">
+          <div class="stg"><b>1</b>Bagged Trees &middot; healthy or faulty</div>
+          <div class="stg"><b>2</b>k-NN, k = 1 &middot; fault type</div>
+          <div class="stg hi"><b>3</b>RBF SVM &middot; affected joint</div>
+          <div class="stg"><b>4</b>Bagged Trees &middot; severity</div>
+        </div>
+      </div>
+      <div class="card rise" data-r="3">
+        <h3>Hierarchical SVM, fault type</h3>
+        <div class="big">96.94%<span>test split</span></div>
+      </div>
+      <div class="card rise" data-r="4">
+        <h3>What every stage reads</h3>
+        <div class="eq">&Delta;&tau; = &tau;<sub>measured</sub> &minus; &tau;<sub>twin</sub></div>
+        <p>Residual torque: the gap between the plant and a <b>healthy</b> reference twin running the same trajectory.</p>
+      </div>
+    </div>
+  </div>
+  <p class="foot rise" data-r="5">Bearing separates perfectly. What is left confuses gear wear, healthy and imbalance with each other.</p>
+</section>
+
+<!-- ACT 3: why the hierarchy exists at all. -->
+<section class="act" id="act3">
+  <div class="rise" data-r="0">
+    <h2>One flat SVM was <em>not enough</em></h2>
+    <p class="sub">the first prototype: a single SVM, 42 windowed features, four fault classes</p>
+  </div>
+  <div class="figs">
+    <div class="fig wide light rise" data-r="1"><img src="fig/fig_old_vs_new_accuracy.png" alt="Old flat SVM prototype against the new pipeline"></div>
+    <div class="note">
+      <div class="card rise" data-r="2">
+        <h3>What changed</h3>
+        <div class="stages">
+          <div class="stg"><b>+</b>42 features become 366</div>
+          <div class="stg"><b>+</b>one flat model becomes four staged ones</div>
+          <div class="stg"><b>+</b>a synthetic encoder-noise term removed</div>
+        </div>
+      </div>
+      <div class="card rise" data-r="3">
+        <h3>Full diagnosis</h3>
+        <div class="big">94.4%<span>&plusmn; 1.6</span></div>
+      </div>
+      <div class="card rise" data-r="4">
+        <h3>Why it was weak</h3>
+        <p>Not one cause. The report separates <b>cleaner data</b>, a <b>far larger feature set</b> and the <b>hierarchy</b>, and credits the gain to all three.</p>
+      </div>
+    </div>
+  </div>
+  <p class="foot rise" data-r="5">Full diagnosis means fault type, joint and severity all correct on the same case.</p>
+</section>
+
+<!-- ACT 4: the evidence behind the number. -->
+<section class="act" id="act4">
+  <div class="rise" data-r="0">
+    <h2>What the classifier is separating</h2>
+    <p class="sub">feature PCA by condition &middot; repeated hold-out accuracy by stage, 10 runs</p>
+  </div>
+  <div class="figs">
+    <div class="fig pca rise" data-r="1"><img src="fig/fig_pca_by_condition.png" alt="Feature PCA by condition"></div>
+    <div class="fig light rise" data-r="2"><img src="fig/fig_accuracy_by_stage.png" alt="Accuracy by diagnosis stage"></div>
+  </div>
+  <p class="foot rise" data-r="3">Trained and tested on data from the twin. Not validated on real hardware.</p>
+</section>
 
 <script>
 // 5th element = wrong predicted label (a realistic miss); absent = correct.
@@ -259,8 +380,11 @@ function reset(){
   tAcc.textContent='0.0%';tSamp.textContent='0 / 10';tModel.textContent='Running';
 }
 function at(t){
-  // console streams first 1.6s
-  lnEls.forEach((l,i)=>l.classList.toggle('in', t> i*230+150));
+  // Console streams over the first 1.6 s, except the closing [DONE] line, which
+  // is held until the last case has actually been processed: it reports the
+  // batch result, so it must not appear while the batch is still running.
+  const last=lnEls.length-1;
+  lnEls.forEach((l,i)=>l.classList.toggle('in', i===last ? t>5900 : t> i*230+150));
   // traces draw in
   const draw=Math.max(0,Math.min(1,(t-500)/1400));
   ['j1','j2','j3'].forEach(id=>document.getElementById(id).style.strokeDashoffset=String(2600*(1-draw)));
@@ -283,25 +407,78 @@ function at(t){
     c.el.classList.toggle('hot', processed > (i/diagCells.length)*10 );
   });
   cmCells[3*8+2].el.classList.toggle('misshot', processed > MISS_INDEX);
-  // counters: model accuracy climbs to the reported 94.4%; live batch = 9/10
-  const acc = 94.4 * (processed/N);
+  // Counters mirror the app: the tile is the accuracy of THIS blind batch, so it
+  // is correct-over-processed and ends at 90.0% for the 9 of 10 live run. The
+  // model's own 94.4% is a different number and stays in the console line.
+  const acc = processed ? (correct/processed)*100 : 0;
   tAcc.textContent = acc.toFixed(1)+'%';
   tSamp.textContent = correct+' / 10';
   tModel.textContent = processed===N ? 'Ready' : 'Running';
 }
+// ── Master timeline ────────────────────────────────────────────────────────
+// Act 1 is the dashboard run and keeps its original 8.2 s schedule untouched.
+// Acts 2 to 4 hold a report figure each, with their elements rising in, so a
+// still frame still reads as motion when the card autoplays.
+const stageEl=document.getElementById('stage');
+const ACTS=[
+  {el:stageEl,            start:0,     end:LOOP},
+  {el:document.getElementById('act2'), start:8200,  end:11600},
+  {el:document.getElementById('act3'), start:11600, end:14800},
+  {el:document.getElementById('act4'), start:14800, end:18200},
+];
+const MASTER=18200;
+const riseEls=[...document.querySelectorAll('.rise')];
+
+const XFADE=260;                     // ms of overlap between two acts
+function show(a,on,opacity,z){
+  if(a.el===stageEl) a.el.style.display = on ? 'flex' : 'none';
+  else a.el.classList.toggle('on', on);
+  a.el.style.opacity=String(opacity);
+  a.el.style.zIndex=String(z);
+}
+function render(t){
+  const idx=Math.max(0,ACTS.findIndex(a=>t>=a.start&&t<a.end));
+  const act=ACTS[idx];
+  const ap=Math.max(0,Math.min(1,(t-act.start)/XFADE));
+  // The outgoing act is held underneath while the new one fades up. Without the
+  // overlap the first frames of every act were an empty dark screen, which
+  // looks like a dropped frame rather than a cut.
+  const prev = (idx>0 && ap<1) ? ACTS[idx-1] : null;
+  ACTS.forEach(a=>{ if(a!==act && a!==prev) show(a,false,0,0); });
+  if(prev) show(prev,true,1,1);
+  show(act,true,idx===0?1:ap,2);
+  if(act.el===stageEl){ reset(); at(Math.min(t,LOOP-1)); }
+  else if(prev && prev.el===stageEl){ reset(); at(LOOP-1); }
+  // Reveal, computed per frame rather than left to a CSS transition, because
+  // freeze mode disables transitions and the capture would get a hard cut.
+  // The act fades in as ONE block with only a small stagger inside it: an
+  // element-by-element cascade left the first ~0.5 s of every act almost black,
+  // which reads as a dropped frame rather than as a transition.
+  riseEls.forEach(e=>{
+    const owner=e.closest('.act');
+    // The outgoing act keeps its content while it fades out underneath. Blanking
+    // it here was what still made the act-2 and act-3 handovers go dark.
+    if(prev && owner===prev.el){ e.style.opacity='1'; e.style.transform='none'; return; }
+    if(owner!==act.el){ e.style.opacity='0'; e.style.transform='translateY(14px)'; return; }
+    const d=60*parseInt(e.dataset.r||'0',10);
+    const p=Math.max(0,Math.min(1,(t-act.start-d)/340));
+    const k=1-Math.pow(1-p,3);              // ease-out cubic
+    e.style.opacity=String(k);
+    e.style.transform='translateY('+(14*(1-k)).toFixed(2)+'px)';
+  });
+}
+
 const params=new URLSearchParams(location.search);
 if(params.has('t')){                 // deterministic freeze frame for capture
   document.documentElement.classList.add('freeze');
-  const t=Math.max(0,Math.min(LOOP-1,parseInt(params.get('t'),10)||0));
-  reset(); at(t);
-  window.LOOP=LOOP;
-  window.setFrame=(tt)=>{const v=Math.max(0,Math.min(LOOP-1,tt|0));reset();at(v);};
+  const t=Math.max(0,Math.min(MASTER-1,parseInt(params.get('t'),10)||0));
+  render(t);
+  window.LOOP=MASTER;
+  window.setFrame=(tt)=>{render(Math.max(0,Math.min(MASTER-1,tt|0)));};
   document.body.dataset.ready='1';
 }else{
   function frame(now){
-    const t=now%LOOP;
-    if(t<40) reset();
-    at(t);
+    render(now%MASTER);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
