@@ -99,7 +99,7 @@ const en: Content = {
       {
         title: 'Lagerhelfer',
         org: 'DHL',
-        period: 'Apr 2026 - Present',
+        period: 'Apr 2026 - Sep 2026',
         note: 'Warehouse and parcel handling alongside full-time studies.',
       },
       {
@@ -267,7 +267,7 @@ const de: Content = {
       {
         title: 'Lagerhelfer',
         org: 'DHL',
-        period: 'Apr 2026 - heute',
+        period: 'Apr 2026 - Sep 2026',
         note: 'Lager- und Paketabwicklung neben dem Vollzeitstudium.',
       },
       {
