@@ -58,7 +58,7 @@ const en: Content = {
   about: {
     heading: 'About',
     paragraph:
-      'I am a mechatronics engineer working in robotics, industrial automation and functional safety. What I build gets measured: protective fields derived from vehicle data, control software traced to the requirements it satisfies, a success rate counted over a hundred trials rather than estimated. Before engineering full time I ran operations for an international olympiad of more than 1,000 participants and selected its 216 organizers.',
+      "I am a mechatronics engineering master's student who enjoys working in a team and expanding my horizons. I mainly build things that are meant to withstand hardship, and then I look for ways to make them fail myself. It is a loop I always find myself stuck in. What I build gets measured, traced, and tested rather than estimated: protective fields derived from real vehicle data, control software tied back to the requirements it satisfies, a success rate counted over a hundred trials. Open to new paths, connections, opportunities and experiences.",
     languagesLabel: 'Languages',
     languages: 'English (C1), German (B1, improving), French (B1), Arabic (native)',
   },
@@ -226,7 +226,7 @@ const de: Content = {
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich bin Mechatronikingenieur in den Bereichen Robotik, industrielle Automatisierung und funktionale Sicherheit. Was ich baue, wird gemessen: Schutzfelder aus Fahrzeugdaten abgeleitet, Steuerungssoftware bis zu den Anforderungen rückverfolgt, die sie erfüllt, eine Erfolgsquote über hundert Versuche gezählt statt geschätzt. Vor der Technik habe ich den Ablauf einer internationalen Olympiade mit über 1.000 Teilnehmenden geleitet und ihre 216 Organisatoren ausgewählt.',
+      'Ich bin Masterstudent der Mechatronik, arbeite gern im Team und erweitere gern meinen Horizont. Ich baue vor allem Dinge, die etwas aushalten sollen, und suche anschließend selbst nach Wegen, sie zum Scheitern zu bringen. Das ist eine Schleife, in der ich immer wieder lande. Was ich baue, wird gemessen, rückverfolgt und getestet, nicht nur geschätzt: Schutzfelder aus echten Fahrzeugdaten abgeleitet, Steuerungssoftware an die Anforderungen gekoppelt, die sie erfüllt, eine Erfolgsquote über hundert Versuche gezählt. Offen für neue Wege, Kontakte, Möglichkeiten und Erfahrungen.',
     languagesLabel: 'Sprachen',
     languages: 'Englisch (C1), Deutsch (B1, im Ausbau), Französisch (B1), Arabisch (Muttersprache)',
   },
