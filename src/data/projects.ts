@@ -85,8 +85,8 @@ export const projects: Project[] = [
       { value: { en: '124 ms', de: '124 ms' }, label: { en: 'sensor to command latency, 95th percentile', de: 'Latenz von Sensor bis Kommando, 95. Perzentil' } },
     ],
     desc: {
-      en: 'A 250 kg class transport robot that moves load carriers through a warehouse shared with people on foot, built on ROS 2 Jazzy, Nav2 and C++ perception. Its protective fields come from the vehicle’s own braking data rather than from hand tuning, and an independent safety layer sits after the planner and can override it.',
-      de: 'Ein Transportroboter der 250-kg-Klasse, der Ladungsträger durch ein gemeinsam mit Personen genutztes Lager bewegt, auf Basis von ROS 2 Jazzy, Nav2 und C++-Wahrnehmung. Die Schutzfelder stammen aus den Bremsdaten des Fahrzeugs statt aus manueller Einstellung, und eine unabhängige Sicherheitsschicht sitzt hinter dem Planer und kann ihn übersteuern.',
+      en: 'A 100 kg class transport robot that moves load carriers through a warehouse shared with people on foot, built on ROS 2 Jazzy, Nav2 and C++ perception. Its protective fields come from the vehicle’s own braking data rather than from hand tuning, and an independent safety layer sits after the planner and can override it.',
+      de: 'Ein Transportroboter der 100-kg-Klasse, der Ladungsträger durch ein gemeinsam mit Personen genutztes Lager bewegt, auf Basis von ROS 2 Jazzy, Nav2 und C++-Wahrnehmung. Die Schutzfelder stammen aus den Bremsdaten des Fahrzeugs statt aus manueller Einstellung, und eine unabhängige Sicherheitsschicht sitzt hinter dem Planer und kann ihn übersteuern.',
     },
     highlights: [
       { en: 'Protective fields generated from the vehicle specification, following ISO 3691-4 for driverless industrial trucks.',
@@ -113,14 +113,14 @@ export const projects: Project[] = [
         en: 'The same cell moments after the plant process was killed. The heartbeat stopped, the link watchdog fired, and PackML went to state 9, Aborted, with every actuator dropped.',
         de: 'Dieselbe Zelle kurz nach dem Abschalten des Anlagenprozesses. Der Heartbeat blieb stehen, der Link-Watchdog löste aus, PackML ging in Zustand 9, Aborted, und alle Aktoren fielen ab.' } },
       { src: '/media/p4-shot-channels.webp', caption: {
-        en: 'The Modbus client configuration: read discrete inputs, read input registers, write multiple coils, each cyclic at 20 ms against the plant’s 50 ms scan.',
-        de: 'Die Modbus-Client-Konfiguration: Diskrete Eingänge lesen, Eingangsregister lesen, mehrere Spulen schreiben, jeweils zyklisch mit 20 ms gegen den 50-ms-Zyklus der Anlage.' } },
+        en: 'The Modbus client configuration: read discrete inputs and input registers every 20 ms, write multiple coils every 100 ms, against the plant’s 50 ms scan.',
+        de: 'Die Modbus-Client-Konfiguration: Diskrete Eingänge und Eingangsregister alle 20 ms lesen, mehrere Spulen alle 100 ms schreiben, gegen den 50-ms-Zyklus der Anlage.' } },
       { src: '/media/p4-shot-mapping.webp', caption: {
-        en: 'The process image mapped bit by bit onto the PLC’s variables. The address map is generated from one enum, so the two halves cannot disagree.',
-        de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus einem einzigen Enum erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
+        en: 'The process image mapped bit by bit onto the PLC’s variables. The address map is generated from the process image’s enums, so the two halves cannot disagree.',
+        de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus den Enums des Prozessabbilds erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
     ],
     metrics: [
-      { value: { en: '299', de: '299' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '300', de: '300' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
       { value: { en: '14', de: '14' }, label: { en: 'safety requirements traced to their tests', de: 'Sicherheitsanforderungen zu ihren Tests rückverfolgt' } },
       { value: { en: '62.5%', de: '62,5 %' }, label: { en: 'baseline overall equipment effectiveness', de: 'Basis-Gesamtanlageneffektivität' } },
     ],
