@@ -34,3 +34,6 @@ PRODUCT.md
 # into public/media/<slug>.mp4. They were 112.9 MB of intermediate build output
 # tracked in git; the sources and the scripts that rebuild them are kept.
 media-src/*/frames/
+
+# Local design-review tool state, not part of the site
+.impeccable/
