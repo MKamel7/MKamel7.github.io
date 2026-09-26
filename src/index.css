@@ -27,6 +27,14 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 .display-gradient {
-  color: #C3CBD5;
+  color: var(--color-ink);
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+::selection {
+  background: rgba(244, 96, 42, 0.35);
+  color: var(--color-ink);
+}
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

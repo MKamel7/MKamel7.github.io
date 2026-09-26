@@ -165,7 +165,7 @@ export function Experience() {
               aria-controls="experience-timeline"
               whileHover={reduced ? undefined : { x: 2 }}
               transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-              className="group/exp relative -my-3 flex w-full cursor-pointer items-center py-3 text-left focus-visible:outline-none"
+              className="group/exp relative -my-3 flex w-full cursor-pointer items-center py-3 text-left"
             >
               <span
                 aria-hidden

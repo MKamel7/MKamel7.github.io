@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { Lang } from '../i18n'
 import type { Localized } from '../types'
@@ -24,6 +24,9 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
   const [shown, setShown] = useState(media ? -1 : 0)
   const [open, setOpen] = useState(false)
   const id = useId()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
   const labels = lang === 'de'
     ? {
         open: media ? `${title}-Demo abspielen` : `Screenshots zu ${title} ansehen`,
@@ -55,29 +58,51 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
     setOpen(true)
   }
 
+  // Focus goes into the dialog when it opens, Tab cycles inside it, and on close
+  // it returns to the poster that opened it. Without that a keyboard user was
+  // left tabbing through the page underneath a full-screen overlay.
   useEffect(() => {
     if (!open) return
+    const trigger = triggerRef.current
+    closeRef.current?.focus()
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') {
+        setOpen(false)
+        return
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>('button, video[controls], [href]')
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
+      trigger?.focus({ preventScroll: true })
     }
   }, [open])
 
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         onClick={openPlayer}
         aria-label={labels.open}
         className="group relative block h-full w-full cursor-pointer overflow-hidden bg-surface"
       >
         {poster ? (
-          <img src={poster} alt={title} loading="lazy" className="h-full w-full object-cover" />
+          <img src={poster} alt="" loading="lazy" className="h-full w-full object-cover" />
         ) : (
           <div className="h-full w-full bg-surface" />
         )}
@@ -95,13 +120,14 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
             )}
           </span>
         </span>
-        <span className="pointer-events-none absolute bottom-3 left-4 font-mono text-[11px] tracking-wide text-ink/85">
+        <span className="pointer-events-none absolute bottom-3 left-4 font-mono text-xs tracking-wide text-ink [text-shadow:0_1px_2px_rgba(0,0,0,0.8)]">
           {labels.hint}
         </span>
       </button>
 
       {open && createPortal(
         <div
+          ref={dialogRef}
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-3 backdrop-blur-sm md:p-6"
           onClick={() => setOpen(false)}
           role="dialog"
@@ -142,7 +168,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
                 <button
                   type="button"
                   onClick={() => setShown(-1)}
-                  className={`rounded-[8px] border px-3 py-2 font-mono text-[11px] transition-colors ${
+                  className={`rounded-[8px] border px-3 py-2 font-mono text-xs transition-colors ${
                     shown === -1 ? 'border-accent text-accent' : 'border-line text-muted hover:text-ink'
                   }`}
                 >
@@ -166,6 +192,7 @@ export function ProjectVideo({ media, poster, title, shots = [], lang = 'en' }: 
             )}
           </div>
           <button
+            ref={closeRef}
             type="button"
             onClick={() => setOpen(false)}
             aria-label={labels.close}

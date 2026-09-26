@@ -15,32 +15,39 @@ export function Contact() {
             {t.contact.heading}
           </h2>
         </FadeIn>
+        {/* The ask. The page used to end on a heading and an address, so a
+            reader who got this far was never told what the address is for. */}
+        <FadeIn delay={0.1}>
+          <p className="mt-8 max-w-[46ch] text-balance text-[clamp(1.2rem,2vw,1.6rem)] font-medium leading-snug text-ink">
+            {t.contact.body}
+          </p>
+        </FadeIn>
         <FadeIn delay={0.2}>
           <a
             href={`mailto:${links.email}`}
-            className="mt-10 block break-all text-[clamp(1.5rem,4.5vw,3rem)] font-black tracking-tight text-ink transition-colors hover:text-accent"
+            className="mt-10 block break-all text-[clamp(1.5rem,4.5vw,3rem)] font-black tracking-tight text-accent underline decoration-accent/40 decoration-2 underline-offset-[0.2em] transition-colors hover:text-accent-soft hover:decoration-accent-soft"
           >
             {links.email}
           </a>
         </FadeIn>
-        <FadeIn delay={0.3} className="mt-10 flex gap-6">
+        <FadeIn delay={0.3} className="mt-10 flex gap-2">
           <a
             href={links.github}
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-ink"
+            className="-ml-3 inline-flex min-h-11 items-center gap-1.5 px-3 text-sm font-medium text-muted transition-colors hover:text-ink"
           >
             GitHub
-            <ArrowUpRight size={14} />
+            <ArrowUpRight size={14} aria-hidden />
           </a>
           <a
             href={links.linkedin}
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-ink"
+            className="inline-flex min-h-11 items-center gap-1.5 px-3 text-sm font-medium text-muted transition-colors hover:text-ink"
           >
             LinkedIn
-            <ArrowUpRight size={14} />
+            <ArrowUpRight size={14} aria-hidden />
           </a>
         </FadeIn>
         <div className="mt-24 flex items-center justify-between border-t border-line py-8 text-xs text-muted">
@@ -48,10 +55,10 @@ export function Contact() {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="inline-flex items-center gap-1.5 hover:text-ink"
-            aria-label="Back to top"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm transition-colors hover:text-ink"
           >
-            <ArrowUp size={14} />
+            {t.backToTop}
+            <ArrowUp size={14} aria-hidden />
           </button>
         </div>
       </div>

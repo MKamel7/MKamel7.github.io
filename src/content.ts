@@ -2,12 +2,15 @@ import type { Lang } from './i18n';
 import type { SkillGroup } from './types';
 
 export interface Content {
-  nav: { about: string; projects: string; experience: string; education: string; contact: string };
+  nav: { about: string; projects: string; skills: string; experience: string; education: string; contact: string };
+  skipLink: string;
+  backToTop: string;
   hero: {
     chip: string;
     headline: string;
     subline: string;
     cta: string;
+    contactCta: string;
   };
   about: {
     heading: string;
@@ -18,6 +21,7 @@ export interface Content {
   projects: {
     heading: string;
     pipelineHeading: string;
+    moreHeading: string;
     demoSoon: string;
     repoLabel: string;
   };
@@ -48,23 +52,27 @@ export interface Content {
 }
 
 const en: Content = {
-  nav: { about: 'About', projects: 'Projects', experience: 'Experience', education: 'Education', contact: 'Contact' },
+  nav: { about: 'About', projects: 'Projects', skills: 'Skills', experience: 'Experience', education: 'Education', contact: 'Contact' },
+  skipLink: 'Skip to content',
+  backToTop: 'Back to top',
   hero: {
     chip: 'Open to Werkstudent roles and internships · Regensburg',
     headline: 'Mo Kamel',
     subline: 'Mechatronics engineer. I make machines think, move, and fail safely.',
     cta: 'View projects',
+    contactCta: 'Get in touch',
   },
   about: {
     heading: 'About',
     paragraph:
-      "I am a mechatronics engineering master's student who enjoys working in a team and expanding my horizons. I mainly build things that are meant to withstand hardship, and then I look for ways to make them fail myself. It is a loop I always find myself stuck in. What I build gets measured, traced, and tested rather than estimated: protective fields derived from real vehicle data, control software tied back to the requirements it satisfies, a success rate counted over a hundred trials. Open to new paths, connections, opportunities and experiences.",
+      "I am a mechatronics engineering master's student. I mainly build things that are meant to withstand hardship, and then I look for ways to make them fail myself. It is a loop I always find myself stuck in. What I build gets measured, traced, and tested rather than estimated: protective fields derived from real vehicle data, control software tied back to the requirements it satisfies, a success rate counted over a hundred trials. Open to new paths, connections, opportunities and experiences.",
     languagesLabel: 'Languages',
     languages: 'English (C1), German (B1, improving), French (B1), Arabic (native)',
   },
   projects: {
     heading: 'Projects',
     pipelineHeading: 'In the pipeline',
+    moreHeading: 'More projects',
     demoSoon: 'Demo coming soon',
     repoLabel: 'View repository',
   },
@@ -209,30 +217,34 @@ const en: Content = {
   },
   contact: {
     heading: 'Contact',
-    body: 'Open to Werkstudent and internship roles in robotics, AI/ML, automation, and mechatronics.',
+    body: 'Open to Werkstudent and internship roles in robotics, automation, mechanical design, and AI/ML. Email is the fastest way to reach me.',
     emailLabel: 'Email me',
   },
   footer: '© 2026 Mo Kamel',
 };
 
 const de: Content = {
-  nav: { about: 'Über mich', projects: 'Projekte', experience: 'Werdegang', education: 'Ausbildung', contact: 'Kontakt' },
+  nav: { about: 'Über mich', projects: 'Projekte', skills: 'Kompetenzen', experience: 'Werdegang', education: 'Ausbildung', contact: 'Kontakt' },
+  skipLink: 'Zum Inhalt springen',
+  backToTop: 'Nach oben',
   hero: {
     chip: 'Offen für Werkstudentenstellen und Praktika · Regensburg',
     headline: 'Mo Kamel',
     subline: 'Mechatronikingenieur. Ich entwickle Maschinen, die denken, sich bewegen und im Fehlerfall sicher reagieren.',
     cta: 'Projekte ansehen',
+    contactCta: 'Kontakt aufnehmen',
   },
   about: {
     heading: 'Über mich',
     paragraph:
-      'Ich bin Masterstudent der Mechatronik, arbeite gern im Team und erweitere gern meinen Horizont. Ich baue vor allem Dinge, die etwas aushalten sollen, und suche anschließend selbst nach Wegen, sie zum Scheitern zu bringen. Das ist eine Schleife, in der ich immer wieder lande. Was ich baue, wird gemessen, rückverfolgt und getestet, nicht nur geschätzt: Schutzfelder aus echten Fahrzeugdaten abgeleitet, Steuerungssoftware an die Anforderungen gekoppelt, die sie erfüllt, eine Erfolgsquote über hundert Versuche gezählt. Offen für neue Wege, Kontakte, Möglichkeiten und Erfahrungen.',
+      'Ich bin Masterstudent der Mechatronik. Ich baue vor allem Dinge, die etwas aushalten sollen, und suche anschließend selbst nach Wegen, sie zum Scheitern zu bringen. Das ist eine Schleife, in der ich immer wieder lande. Was ich baue, wird gemessen, rückverfolgt und getestet, nicht nur geschätzt: Schutzfelder aus echten Fahrzeugdaten abgeleitet, Steuerungssoftware an die Anforderungen gekoppelt, die sie erfüllt, eine Erfolgsquote über hundert Versuche gezählt. Offen für neue Wege, Kontakte, Möglichkeiten und Erfahrungen.',
     languagesLabel: 'Sprachen',
     languages: 'Englisch (C1), Deutsch (B1, im Ausbau), Französisch (B1), Arabisch (Muttersprache)',
   },
   projects: {
     heading: 'Projekte',
     pipelineHeading: 'In Arbeit',
+    moreHeading: 'Weitere Projekte',
     demoSoon: 'Demo folgt in Kürze',
     repoLabel: 'Repository ansehen',
   },
@@ -376,8 +388,8 @@ const de: Content = {
     ],
   },
   contact: {
-    heading: 'Kontakt aufnehmen',
-    body: 'Offen für Werkstudenten- und Praktikumsstellen in Robotik, KI/ML, Automatisierung und Mechatronik.',
+    heading: 'Kontakt',
+    body: 'Offen für Werkstudenten- und Praktikumsstellen in Robotik, Automatisierung, Konstruktion und KI/ML. Am schnellsten erreichen Sie mich per E-Mail.',
     emailLabel: 'E-Mail schreiben',
   },
   footer: '© 2026 Mo Kamel',

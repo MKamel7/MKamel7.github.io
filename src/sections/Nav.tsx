@@ -1,18 +1,56 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { FadeIn } from '../components/motion/FadeIn'
 import { LangToggle, useLang } from '../i18n'
 import { content } from '../content'
 
+const SECTION_IDS = ['about', 'projects', 'skills', 'experience', 'education', 'contact']
+
+// The section whose body currently crosses a band just under the nav. One
+// observer for all six; the band is thin so exactly one section is inside it at
+// any time, except in the gaps, where the last match is kept.
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState<string | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        }
+      },
+      { rootMargin: '-30% 0px -65% 0px' },
+    )
+    for (const id of ids) {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    }
+    // Above About the reader is in the hero, and nothing should read as current.
+    const onScroll = () => {
+      const first = document.getElementById(ids[0])
+      if (first && first.getBoundingClientRect().top > window.innerHeight * 0.3) setActive(null)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [ids])
+
+  return active
+}
+
 export function Nav() {
   const { lang } = useLang()
   const t = content[lang]
   const [open, setOpen] = useState(false)
+  const active = useActiveSection(SECTION_IDS)
 
   const items = [
     { href: '#about', label: t.nav.about },
     { href: '#projects', label: t.nav.projects },
+    { href: '#skills', label: t.nav.skills },
     { href: '#experience', label: t.nav.experience },
     { href: '#education', label: t.nav.education },
     { href: '#contact', label: t.nav.contact },
@@ -34,7 +72,8 @@ export function Nav() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-[13px] font-medium text-muted transition-colors hover:text-ink"
+                aria-current={active === item.href.slice(1) ? 'location' : undefined}
+                className="relative py-2 text-sm font-medium text-muted transition-colors hover:text-ink aria-[current]:text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-accent after:transition-transform after:duration-300 aria-[current]:after:scale-x-100"
               >
                 {item.label}
               </a>
@@ -69,7 +108,8 @@ export function Nav() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg px-2 py-3 text-base font-medium text-muted transition-colors hover:bg-surface hover:text-ink"
+                  aria-current={active === item.href.slice(1) ? 'location' : undefined}
+                  className="rounded-lg aria-[current]:text-ink px-2 py-3 text-base font-medium text-muted transition-colors hover:bg-surface hover:text-ink"
                 >
                   {item.label}
                 </a>

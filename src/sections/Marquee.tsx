@@ -26,7 +26,10 @@ const rowB = repeat(finished.slice(half))
 // project added without one degrades to a heavy image rather than a broken one.
 const thumbOf = (poster: string) => poster.replace(/-poster\.jpg$/, '-thumb.jpg')
 
-function Card({ poster, title }: { poster: string; title: string }) {
+// Decorative: every image here is a thumbnail of a card further down, and the
+// strip shows each one twice. Announced, it read 28 titles to a screen reader
+// before the first sentence of the page. The titles live on the cards.
+function Card({ poster }: { poster: string }) {
   return (
     <div className="h-[200px] w-[320px] shrink-0 overflow-hidden rounded-[20px] border border-line md:h-[240px] md:w-[400px]">
       <img
@@ -34,7 +37,7 @@ function Card({ poster, title }: { poster: string; title: string }) {
         onError={(e) => {
           if (e.currentTarget.src !== poster) e.currentTarget.src = poster
         }}
-        alt={title}
+        alt=""
         width={800}
         height={480}
         loading="lazy"
@@ -58,19 +61,19 @@ export function Marquee() {
   const row2X = useTransform(scrollYProgress, [0, 1], ['-14%', '-2%'])
 
   return (
-    <div ref={sectionRef} className="overflow-hidden py-10">
+    <div ref={sectionRef} aria-hidden className="overflow-hidden py-10">
       <div className="flex flex-col gap-3">
         {/* No will-change. Motion promotes an element while it animates anyway,
             and declaring it here pinned two multi-megabyte layers for the whole
             page even though the strip is only on screen at the very top. */}
         <motion.div className="flex w-max gap-3" style={shouldReduceMotion ? undefined : { x: row1X }}>
           {rowA.map((project, i) => (
-            <Card key={`${project.id}-a-${i}`} poster={project.poster!} title={project.title} />
+            <Card key={`${project.id}-a-${i}`} poster={project.poster!} />
           ))}
         </motion.div>
         <motion.div className="flex w-max gap-3" style={shouldReduceMotion ? undefined : { x: row2X }}>
           {rowB.map((project, i) => (
-            <Card key={`${project.id}-b-${i}`} poster={project.poster!} title={project.title} />
+            <Card key={`${project.id}-b-${i}`} poster={project.poster!} />
           ))}
         </motion.div>
       </div>

@@ -24,7 +24,7 @@ export function Education() {
               <div className="flex items-center justify-between gap-3">
                 <span className="font-mono text-xs uppercase tracking-wide text-muted">{entry.period}</span>
                 {entry.status && (
-                  <span className="rounded-full border border-accent/40 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-accent-soft">
+                  <span className="rounded-full border border-accent/40 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-accent-soft">
                     {entry.status}
                   </span>
                 )}

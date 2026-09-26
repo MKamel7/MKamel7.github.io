@@ -19,7 +19,9 @@ interface WordProps {
 }
 
 function Word({ progress, range, children }: WordProps) {
-  const opacity = useTransform(progress, range, [0.15, 1])
+  // 0.4, not 0.15: the unread words still have to be readable to anyone who
+  // stops scrolling, and at 0.15 they were below 2:1 against the background.
+  const opacity = useTransform(progress, range, [0.4, 1])
   return <motion.span style={{ opacity }}>{children}</motion.span>
 }
 

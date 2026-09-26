@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import type { MotionValue } from 'motion/react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ChevronRight } from 'lucide-react'
 import { FadeIn } from '../components/motion/FadeIn'
 import { MediaSlot } from '../components/MediaSlot'
 import { ProjectVideo } from '../components/ProjectVideo'
@@ -19,6 +19,12 @@ import type { Lang } from '../i18n'
 // from the LAST card rather than from the active one: at thirteen projects the
 // first card sat at 0.52 scale from the moment it appeared, and seven cards were
 // crushed into a 60px band with their text, metrics and repo links clipped.
+// The first FLAGSHIPS projects, in Mo's own ranking order from projects.ts, get
+// the full sticky card. The rest go in a compact grid below. Fourteen full cards
+// ran the section past 10,000px, and by the eighth the stack was scroll toil
+// that buried everything after it at the same volume as everything before it.
+const FLAGSHIPS = 5
+
 const DEPTH = 4
 const SCALE_STEP = 0.03
 const LIFT_STEP = 12 // px each receding card rises, so its top edge stays visible
@@ -119,18 +125,18 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
         {/* Same hover as the skills chips: accent border, brighter text and a
             warm shadow, plus the small lift. Deliberately identical values
             rather than similar ones, so the two sections read as one system. */}
-        <div className="mt-7 flex flex-wrap gap-2">
+        <ul className="mt-7 flex flex-wrap gap-2">
           {project.tags.map((tag) => (
-            <motion.span
+            <motion.li
               key={tag}
               whileHover={shouldReduceMotion ? undefined : { y: -3 }}
               transition={{ type: 'spring', stiffness: 400, damping: 22 }}
               className="cursor-default rounded-full border border-line px-3 py-1 text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-ink hover:shadow-[0_6px_18px_-6px_rgba(244,96,42,0.45)]"
             >
               {tag}
-            </motion.span>
+            </motion.li>
           ))}
-        </div>
+        </ul>
         {project.repo && (
           <a
             href={project.repo}
@@ -164,12 +170,79 @@ function StackedCard({ project, index, count, progress, lang, repoLabel, demoSoo
   )
 }
 
+interface CompactCardProps {
+  project: Project
+  lang: Lang
+  repoLabel: string
+  demoSoon: string
+  detailsLabel: string
+}
+
+// The same facts as a full card at a third of the height: what it is, the lead
+// number, the tools and the repository. The highlights sit behind a disclosure
+// rather than being dropped, because each one is a claim a reviewer can check.
+function CompactCard({ project, lang, repoLabel, demoSoon, detailsLabel }: CompactCardProps) {
+  const lead = project.metrics[0]
+  return (
+    <article className="flex flex-col overflow-hidden rounded-[20px] border border-line bg-surface">
+      <div className="aspect-[16/10] overflow-hidden border-b border-line">
+        {project.media || project.shots?.length ? (
+          <ProjectVideo media={project.media} poster={project.poster} title={project.title}
+            shots={project.shots} lang={lang} />
+        ) : (
+          <MediaSlot media={project.media} poster={project.poster} title={project.title} label={demoSoon} />
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h4 className="text-xl font-bold leading-tight tracking-tight">{project.title}</h4>
+        {lead && (
+          <p className="mt-3 flex items-baseline gap-2.5">
+            <span className="font-mono text-lg text-accent">{displayMetricValue(lead.value, lang)}</span>
+            <span className="text-sm text-muted">{lead.label[lang]}</span>
+          </p>
+        )}
+        <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{project.desc[lang]}</p>
+        {project.highlights && project.highlights.length > 0 && (
+          <details className="group mt-4">
+            <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-ink transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
+              <ChevronRight size={16} aria-hidden className="transition-transform group-open:rotate-90" />
+              {detailsLabel}
+            </summary>
+            <ul className="mt-1 space-y-2">
+              {project.highlights.map((highlight) => (
+                <li key={highlight.en} className="flex gap-3 text-sm leading-relaxed text-ink">
+                  <span aria-hidden className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  <span>{highlight[lang]}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+        <p className="mt-auto pt-5 text-xs leading-relaxed text-muted">{project.tags.join(' · ')}</p>
+        {project.repo && (
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="mt-3 inline-flex min-h-11 w-fit items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-soft"
+          >
+            {repoLabel}
+            <ArrowUpRight size={16} aria-hidden />
+          </a>
+        )}
+      </div>
+    </article>
+  )
+}
+
 export function Projects() {
   const { lang } = useLang()
   const t = content[lang]
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const featured = projects.filter((p) => p.category === 'featured')
+  const allFeatured = projects.filter((p) => p.category === 'featured')
+  const featured = allFeatured.slice(0, FLAGSHIPS)
+  const more = allFeatured.slice(FLAGSHIPS)
   const pipeline = projects.filter((p) => p.category === 'pipeline')
 
   const { scrollYProgress } = useScroll({
@@ -199,6 +272,25 @@ export function Projects() {
             />
           ))}
         </div>
+        {more.length > 0 && (
+          <div className="mt-28">
+            <h3 className="text-[clamp(1.5rem,3vw,2.25rem)] font-black uppercase tracking-[-0.02em]">
+              {t.projects.moreHeading}
+            </h3>
+            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {more.map((project) => (
+                <CompactCard
+                  key={project.id}
+                  project={project}
+                  lang={lang}
+                  repoLabel={t.projects.repoLabel}
+                  demoSoon={t.projects.demoSoon}
+                  detailsLabel="Details"
+                />
+              ))}
+            </div>
+          </div>
+        )}
         {/* Rendered only when something is actually in the pipeline. Everything
             shipped, so the heading would otherwise sit above nothing. */}
         {pipeline.length > 0 && (

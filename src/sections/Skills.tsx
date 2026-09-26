@@ -20,7 +20,7 @@ export function Skills() {
     : { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }
 
   return (
-    <section className="px-6 py-28 md:px-10 md:py-40" aria-labelledby="skills-heading">
+    <section id="skills" className="px-6 py-28 md:px-10 md:py-40" aria-labelledby="skills-heading">
       <div className="mx-auto max-w-[1400px]">
         <FadeIn>
           <h2 id="skills-heading" className="display-gradient font-black uppercase tracking-[-0.03em] leading-[0.95] text-[clamp(2rem,5vw,3.5rem)]">
