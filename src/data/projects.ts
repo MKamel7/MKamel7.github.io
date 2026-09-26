@@ -48,8 +48,8 @@ export const projects: Project[] = [
       { value: { en: 'URSim', de: 'URSim' }, label: { en: 'validated against the real Universal Robots software', de: 'gegen die echte Universal-Robots-Software validiert' } },
     ],
     desc: {
-      en: 'An industrial colour-sorting cell for a UR5e robot arm on ROS 2 Jazzy and MoveIt 2. An overhead depth camera locates the selected part, and the planner carries it to the matching outfeed lane without hitting anything on the way.',
-      de: 'Eine industrielle Farbsortierzelle für einen UR5e-Roboterarm auf Basis von ROS 2 Jazzy und MoveIt 2. Eine Tiefenkamera über der Zelle lokalisiert das gewählte Teil, und der Planer bringt es kollisionsfrei zur passenden Auslaufbahn.',
+      en: 'Vision-guided pick-and-place for a UR5e robot arm on ROS 2 Jazzy and MoveIt 2. An overhead depth camera locates the part and the planner reaches it without hitting anything on the way. A colour-sorting cell with three outfeed lanes is built on top, currently fed from known part positions.',
+      de: 'Kameragestütztes Pick-and-Place für einen UR5e-Roboterarm auf Basis von ROS 2 Jazzy und MoveIt 2. Eine Tiefenkamera über der Zelle lokalisiert das Teil, und der Planer erreicht es kollisionsfrei. Darauf aufgebaut ist eine Farbsortierzelle mit drei Auslaufbahnen, die derzeit mit bekannten Teilepositionen arbeitet.',
     },
     highlights: [
       { en: 'The success rate is measured rather than asserted: 100 randomised placements, reproducible from a committed results file.',
@@ -120,8 +120,8 @@ export const projects: Project[] = [
         de: 'Das Prozessabbild wird Bit für Bit auf die SPS-Variablen abgebildet. Die Adressliste wird aus den Enums des Prozessabbilds erzeugt, sodass beide Hälften nicht auseinanderlaufen können.' } },
     ],
     metrics: [
-      { value: { en: '300', de: '300' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
-      { value: { en: '14', de: '14' }, label: { en: 'safety requirements traced to their tests', de: 'Sicherheitsanforderungen zu ihren Tests rückverfolgt' } },
+      { value: { en: '304', de: '304' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '15', de: '15' }, label: { en: 'safety requirements traced to their tests', de: 'Sicherheitsanforderungen zu ihren Tests rückverfolgt' } },
       { value: { en: '62.5%', de: '62,5 %' }, label: { en: 'baseline overall equipment effectiveness', de: 'Basis-Gesamtanlageneffektivität' } },
     ],
     desc: {
@@ -156,7 +156,7 @@ export const projects: Project[] = [
         de: 'Reduzierter Simscape-Multibody-Körper als physikalisches Gerüst, bewusst getrennt von der gemessenen RUL-Evidenz.' } },
     ],
     metrics: [
-      { value: { en: '757.05 min', de: '757,05 min' }, label: { en: 'nested held-out weighted mean absolute error', de: 'gewichteter mittlerer absoluter Fehler im Nested-Hold-out' } },
+      { value: { en: '757.05 min', de: '757,05 min' }, label: { en: 'held-out weighted mean absolute error', de: 'gewichteter mittlerer absoluter Fehler auf Hold-out-Lagern' } },
       { value: { en: '0.3806', de: '0,3806' }, label: { en: 'weighted normalized mean absolute error', de: 'gewichteter normalisierter mittlerer absoluter Fehler' } },
       { value: { en: '9,216', de: '9.216' }, label: { en: 'official XJTU-SY lifecycle snapshots processed', de: 'verarbeitete offizielle XJTU-SY-Lifecycle-Snapshots' } },
     ],
@@ -165,8 +165,8 @@ export const projects: Project[] = [
       de: 'Ein MATLAB/Simscape-Prototyp zur Restlebensdauer-Schätzung eines Lagers mit offiziellen XJTU-SY-LDK-UER204-Lifecycle-Daten. Er verifiziert das Archiv, extrahiert gemessene Vibrationsmerkmale und spielt ein Hold-out-Lager ab, während ein Hybrid-Health-Rate-Schätzer die RUL online aus aufgezeichneten sensorbasierten Präfixen prognostiziert.',
     },
     highlights: [
-      { en: 'Evaluation uses nested leave-one-bearing-out on eight outer-race bearings, with thresholds and preprocessing fit on training bearings only.',
-        de: 'Die Auswertung nutzt Nested Leave-One-Bearing-Out auf acht Outer-Race-Lagern, mit Schwellwerten und Vorverarbeitung nur aus Trainingslagern.' },
+      { en: 'Evaluation uses leave-one-bearing-out on eight outer-race bearings, with thresholds and preprocessing fit on training bearings only.',
+        de: 'Die Auswertung nutzt Leave-One-Bearing-Out auf acht Outer-Race-Lagern, mit Schwellwerten und Vorverarbeitung nur aus Trainingslagern.' },
       { en: 'The hybrid estimator improves weighted mean absolute error from 898.90 to 757.05 minutes and mean per-bearing error from 201.12 to 172.97 minutes.',
         de: 'Der Hybrid-Schätzer verbessert den gewichteten mittleren absoluten Fehler von 898,90 auf 757,05 Minuten und den mittleren Fehler pro Lager von 201,12 auf 172,97 Minuten.' },
       { en: 'The claim boundary is explicit: recorded accelerated bearing-rig data, not live hardware acquisition or conveyor and robot-joint validation.',
@@ -187,8 +187,8 @@ export const projects: Project[] = [
     ],
     metrics: [
       { value: { en: '29', de: '29' }, label: { en: 'faults from hazard analysis, 24 caught in time', de: 'Fehler aus der Gefährdungsanalyse, 24 rechtzeitig erkannt' } },
-      { value: { en: '323', de: '323' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
-      { value: { en: '7', de: '7' }, label: { en: 'independent-review findings closed', de: 'Befunde aus unabhängigem Review geschlossen' } },
+      { value: { en: '326', de: '326' }, label: { en: 'automated tests, 100% branch coverage', de: 'automatisierte Tests, 100 % Branch Coverage' } },
+      { value: { en: '7', de: '7' }, label: { en: 'independent-review findings, 6 fixed and 1 documented as a limit', de: 'Befunde aus unabhängigem Review, 6 behoben und 1 als Grenze dokumentiert' } },
     ],
     desc: {
       en: 'A functional-safety verification framework for an embedded motor controller, built the way a safety case is built. Faults come from the hazard analysis rather than from imagination, each one carries a detection deadline, and every requirement is traced in both directions to the tests that cover it.',

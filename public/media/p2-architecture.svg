@@ -53,7 +53,7 @@
   <g transform="translate(72 500)" font-family="monospace">
     <rect width="1136" height="118" rx="16" fill="#11161d" stroke="#343e4a"/>
     <text x="32" y="42" fill="#96a0ad" font-size="14">VERIFICATION SUMMARY</text>
-    <text x="32" y="82" fill="#f4602a" font-size="28" font-weight="700">323 tests</text>
+    <text x="32" y="82" fill="#f4602a" font-size="28" font-weight="700">326 tests</text>
     <text x="274" y="82" fill="#f2f4f7" font-size="28" font-weight="700">100% branch coverage</text>
     <text x="727" y="82" fill="#f2f4f7" font-size="28" font-weight="700">7 review findings closed</text>
   </g>
