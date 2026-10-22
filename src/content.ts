@@ -98,6 +98,13 @@ const en: Content = {
     heading: 'Experience',
     entries: [
       {
+        title: 'Intern, Continuous Testing (BLE, UWB, CAN)',
+        featured: true,
+        org: 'AUMOVIO, Regensburg',
+        period: 'Oct 2026 - Present',
+        note: 'Continuous testing of Bluetooth Low Energy, Ultra-Wideband and CAN communication in the Architecture and Network Solutions unit.',
+      },
+      {
         title: 'Club Advisor',
         featured: true,
         org: 'Rotaract Alexandria New Era (remote)',
@@ -269,6 +276,13 @@ const de: Content = {
   experience: {
     heading: 'Werdegang',
     entries: [
+      {
+        title: 'Praktikant, Continuous Testing (BLE, UWB, CAN)',
+        featured: true,
+        org: 'AUMOVIO, Regensburg',
+        period: 'Okt 2026 - heute',
+        note: 'Kontinuierliches Testen der Kommunikation über Bluetooth Low Energy, Ultra-Wideband und CAN im Bereich Architecture and Network Solutions.',
+      },
       {
         title: 'Club Advisor',
         featured: true,
